@@ -27,16 +27,9 @@ class Source:
 
     def fill(self, max=None):
         raise NotImplementedError('Source.fill')
-    
-    def mono_to_many(self, mix):
-        assert self.channels == 1
-        return MonoToMany(self, numpy.asarray(mix))
-        
-    def many_to_mono(self, mix=None):
-        if mix is None:
-            mix = numpy.ones(self.channels) / self.channels
-        assert self.channels == len(mix)
-        return ManyToMono(self, numpy.asarray(mix))
+
+    def remix(self, mix):
+        return Mix(self, numpy.asarray(mix))
     
     def resample(self, newrate):
         if newrate == self.samplerate:
@@ -48,21 +41,23 @@ class Source:
         if channels and channels < src.channels:
             if not channels == 1:
                 raise RuntimeError("can only downmix {} channels to mono".format(src.channels))
-            src = src.many_to_mono()
+            src = src.remix(numpy.ones((1, src.channels)) / src.channels)
         if samplerate and samplerate != src.samplerate:
             src = src.resample(samplerate)
         if channels and channels > src.channels:
             if not src.channels == 1:
                 raise RuntimeError("can only upmix mono to {} channels".format(channels))
-            src = src.mono_to_many(numpy.ones(channels))
+            src = src.remix(numpy.ones((channels, 1)))
         return src
     
     def reformat_like(self, other):
         return self.reformat(other.samplerate, other.channels)
 
-class MonoToMany(Source):
+class Mix(Source):
+    # mix has shape (new_channels, old_channels)
     def __init__(self, inner, mix):
-        super().__init__(inner.samplerate, len(mix), size=inner.size)
+        assert mix.shape[1] == inner.channels
+        super().__init__(inner.samplerate, mix.shape[0], size=inner.size)
         self.inner = inner
         self.mix = mix
     
@@ -72,24 +67,9 @@ class MonoToMany(Source):
     
     def fill(self, max=None):
         filled = self.inner.fill(max=max)
-        self.buffer[:] = self.inner.buffer * self.mix[numpy.newaxis, :]
+        self.buffer[:] = self.inner.buffer @ self.mix.T
         return self.buffer[:len(filled)]
         
-class ManyToMono(Source):
-    def __init__(self, inner, mix):
-        super().__init__(inner.samplerate, 1, size=inner.size)
-        self.inner = inner
-        self.mix = mix
-    
-    def allocate(self, frames):
-        self.inner.allocate(frames)
-        return super().allocate(frames)
-    
-    def fill(self, max=None):
-        filled = self.inner.fill(max=max)
-        self.buffer[:, 0] = self.inner.buffer @ self.mix
-        return self.buffer[:len(filled)]
-
 class Resample(Source):
     def __init__(self, inner, newrate):
         newsize = None
