@@ -1,0 +1,7 @@
+cffi==1.12.3
+Click==7.0
+numpy==1.17.2
+PyAudio==0.2.11
+pycparser==2.19
+samplerate==0.1.0
+SoundFile==0.10.2

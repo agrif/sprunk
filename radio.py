@@ -1,18 +1,22 @@
 import sys
 
+import click
 import numpy
-import attr
-import pyaudio
+try:
+    import pyaudio
+except ImportError:
+    pass
 import samplerate
 import soundfile
 
-# pip install numpy attrs pyaudio samplerate SoundFile
+# pip install numpy pyaudio samplerate SoundFile
 
-@attr.s
 class Source:
-    samplerate = attr.ib()
-    channels = attr.ib()
-    size = attr.ib() # in samples, None if unsized
+    def __init__(self, samplerate, channels, size=None):
+        self.samplerate = samplerate
+        self.channels = channels
+        self.size = size
+        self.buffer = None
 
     def allocate(self, frames):
         buf = numpy.zeros((frames, self.channels), dtype=numpy.float32)
@@ -24,37 +28,18 @@ class Source:
     
     def mono_to_many(self, mix):
         assert self.channels == 1
-        return MonoToMany(
-            samplerate=self.samplerate,
-            channels=len(mix),
-            size=self.size,
-            mix=numpy.asarray(mix),
-            inner=self,
-        )
+        return MonoToMany(self, numpy.asarray(mix))
         
     def many_to_mono(self, mix=None):
         if mix is None:
             mix = numpy.ones(self.channels) / self.channels
         assert self.channels == len(mix)
-        return ManyToMono(
-            samplerate=self.samplerate,
-            channels=1,
-            size=self.size,
-            mix=numpy.asarray(mix),
-            inner=self,
-        )
+        return ManyToMono(self, numpy.asarray(mix))
     
     def resample(self, newrate):
         if newrate == self.samplerate:
             return self
-        return Resample(
-            samplerate=newrate,
-            channels=self.channels,
-            size=int(numpy.ceil(self.size * newrate / self.samplerate)) if self.size else None,
-            resampler=samplerate.converters.Resampler(channels=self.channels),
-            ratio=newrate / self.samplerate,
-            inner=self,
-        )
+        return Resample(self, newrate)
     
     def reformat(self, samplerate=None, channels=None):
         src = self
@@ -73,10 +58,11 @@ class Source:
     def reformat_like(self, other):
         return self.reformat(other.samplerate, other.channels)
 
-@attr.s
 class MonoToMany(Source):
-    mix = attr.ib()
-    inner = attr.ib(repr=False)
+    def __init__(self, inner, mix):
+        super().__init__(inner.samplerate, len(mix), size=inner.size)
+        self.inner = inner
+        self.mix = mix
     
     def allocate(self, frames):
         self.inner.allocate(frames)
@@ -87,10 +73,11 @@ class MonoToMany(Source):
         self.buffer[:] = self.inner.buffer * self.mix[numpy.newaxis, :]
         return self.buffer[:len(filled)]
         
-@attr.s
 class ManyToMono(Source):
-    mix = attr.ib()
-    inner = attr.ib(repr=False)
+    def __init__(self, inner, mix):
+        super().__init__(inner.samplerate, 1, size=inner.size)
+        self.inner = inner
+        self.mix = mix
     
     def allocate(self, frames):
         self.inner.allocate(frames)
@@ -101,11 +88,15 @@ class ManyToMono(Source):
         self.buffer[:, 0] = self.inner.buffer @ self.mix
         return self.buffer[:len(filled)]
 
-@attr.s
 class Resample(Source):
-    inner = attr.ib(repr=False)
-    resampler = attr.ib(repr=False)
-    ratio = attr.ib()
+    def __init__(self, inner, newrate):
+        newsize = None
+        if self.size:
+            newsize = int(numpy.ceil(self.size * newrate / self.samplerate))
+        super().__init__(newrate, inner.channels, size=newsize)
+        self.resampler = samplerate.converters.Resampler(channels=self.channels)
+        self.ratio = newrate / self.samplerate
+        self.inner = inner
     
     def allocate(self, frames):
         innerframes = int(frames * self.inner.samplerate / self.samplerate)
@@ -125,20 +116,16 @@ class Resample(Source):
         self.buffer[:len(proc)] = proc
         return self.buffer[:len(proc)]
 
-@attr.s
 class Sink:
-    samplerate = attr.ib()
-    channels = attr.ib()
+    def __init__(self, samplerate, channels):
+        self.samplerate = samplerate
+        self.channels = channels
     
     def write(self, buf):
         raise NotImplementedError('Sink.write')
 
-@attr.s
 class FileSource(Source):
-    data = attr.ib(repr=False)
-
-    @classmethod
-    def open(cls, path):
+    def __init__(self, path):
         data = soundfile.SoundFile(path)
         if data.seekable():
             data.seek(0, soundfile.SEEK_END)
@@ -146,150 +133,17 @@ class FileSource(Source):
             data.seek(0, soundfile.SEEK_SET)
         else:
             end = None
-        return cls(
-            samplerate=data.samplerate,
-            channels=data.channels,
-            size=end,
-            data=data,
-        )
+
+        super().__init__(data.samplerate, data.channels, size=end)
+        self.data = data
 
     def fill(self, max=None):
         if max is None:
             max = len(self.buffer)
         return self.data.read(out=self.buffer[:max])
 
-@attr.s
-class VolumeControl(Source):
-    inner = attr.ib(repr=False)
-    condlist = attr.ib(repr=False, default=attr.Factory(list))
-    funclist = attr.ib(repr=False, default=attr.Factory(list))
-    last_frame = attr.ib(default=0, repr=False)
-    
-    # volume keys must be added in order, or weird things happen
-    
-    @classmethod
-    def new(cls, inner):
-        return cls(
-            samplerate=inner.samplerate,
-            channels=inner.channels,
-            size=inner.size,
-            inner=inner,
-        ).set_volume(0, 1.0)
-    
-    def set_volume(self, frame, volume):
-        keyframe = int(numpy.round(frame))
-        self.condlist.append(lambda f: f >= keyframe)
-        self.funclist.append(volume)
-        return self
-    
-    def ramp_volume(self, frame, end, duration):
-        start = self.funclist[-1]
-        variance = end - start
-        keyframe = int(numpy.round(frame))
-        keyduration = int(numpy.round(duration))
-        keyframeend = keyframe + keyduration
-        self.condlist.append(lambda f: (f >= keyframe) & (f <= keyframeend))
-        self.funclist.append(lambda f: start + (f - keyframe) * variance / keyduration)
-        return self.set_volume(frame + duration, end)
-    
-    def allocate(self, frames):
-        self.inner.allocate(frames)
-        self.framebuffer = numpy.arange(self.last_frame, self.last_frame + frames, dtype=numpy.float)
-        return super().allocate(frames)
-    
-    def fill(self, max=None):
-        filled = self.inner.fill(max=max)
-        self.buffer[:] = self.inner.buffer * numpy.piecewise(self.framebuffer, [f(self.framebuffer) for f in self.condlist], self.funclist)[:, numpy.newaxis]
-        self.framebuffer += len(filled)
-        self.last_frame += len(filled)
-        return self.buffer[:len(filled)]
-
-@attr.s
-class Scheduler(Source):
-    sources = attr.ib(default=attr.Factory(list))
-    active = attr.ib(default=attr.Factory(list))
-    last_frame = attr.ib(default=0)
-    
-    @classmethod
-    def new(cls, samplerate=48000, channels=2):
-        return cls(
-            samplerate=samplerate,
-            channels=channels,
-            size=None,
-        )
-    
-    def schedule(self, start, src):
-        assert self.samplerate == src.samplerate
-        assert self.channels == src.channels
-        if start < self.last_frame:
-            start = self.last_frame
-        self.sources.append((int(start), src))
-        if getattr(self, 'buffer', None):
-            src.allocate(len(self.buffer))
-        if src.size:
-            return start + src.size
-        return None
-    
-    def allocate(self, frames):
-        for _, src in self.sources:
-            src.allocate(frames)
-        for src in self.active:
-            src.allocate(frames)
-        return super().allocate(frames)
-    
-    def fill(self, max=None):
-        if max is None:
-            max = len(self.buffer)
-        
-        # do not fill if there is nothing left
-        if not self.sources and not self.active:
-            return self.buffer[0:0]
-        
-        # zero our buffer
-        self.buffer[:max] = 0
-        
-        # helper to keep trying to fill a buffer until it's filled
-        def fill_into(buf, src):
-            filled = src.fill(max=len(buf))
-            buf[:len(filled)] += filled
-            if len(filled) == 0:
-                return False
-            if len(filled) < len(buf):
-                return fill_into(buf[len(filled):], src)
-            return True
-        
-        # handle all our actives
-        to_remove = []
-        for src in self.active:
-            if not fill_into(self.buffer[:max], src):
-                to_remove.append(src)
-        for src in to_remove:
-            self.active.remove(src)
-        
-        # look for new actives
-        to_remove = []
-        for startframe, src in self.sources:
-            if not startframe < self.last_frame + max:
-                continue
-            # this source starts in this block
-            local_start = startframe - self.last_frame
-            if local_start < 0:
-                local_start = 0
-            if fill_into(self.buffer[local_start:max], src):
-                self.active.append(src)
-            to_remove.append((startframe, src))
-        for t in to_remove:
-            self.sources.remove(t)
-        
-        self.last_frame += max
-        return self.buffer[:max]
-
-@attr.s
 class PyAudioSink(Sink):
-    stream = attr.ib(repr=False)
-    
-    @classmethod
-    def open(cls, samplerate, channels):
+    def __init__(self, samplerate, channels):
         p = pyaudio.PyAudio()
         stream = p.open(
             format=pyaudio.paFloat32,
@@ -297,47 +151,46 @@ class PyAudioSink(Sink):
             rate=samplerate,
             output=True,
         )
-        return cls(
-            samplerate=samplerate,
-            channels=channels,
-            stream=stream,
-        )
+        super().__init__(samplerate, channels)
+        self.stream = stream
     
     def write(self, buf):
         self.stream.write(buf, num_frames=len(buf))
 
-@attr.s
 class FileSink(Sink):
-    data = attr.ib(repr=False)
-    
-    @classmethod
-    def open(cls, path, samplerate, channels, **kwargs):
+    def __init__(self, path, samplerate, channels, **kwargs):
         data = soundfile.SoundFile(path, mode='w', samplerate=samplerate, channels=channels, **kwargs)
-        return cls(
-            samplerate=samplerate,
-            channels=channels,
-            data=data,
-        )
+        super().__init__(samplerate, channels)
+        self.data = data
     
     def write(self, buf):
         self.data.write(buf)
 
-if __name__ == '__main__':
-    sched = Scheduler.new()
-    src1 = FileSource.open(sys.argv[1]).reformat_like(sched)
-    src2 = VolumeControl.new(FileSource.open(sys.argv[2]).reformat_like(sched))
-    
-    t = sched.schedule(sched.samplerate, src1)
-    _ = sched.schedule(0, src2)
-    
-    src2.set_volume(0, 1.0)
-    src2.ramp_volume(0, 0.3, src2.samplerate)
-    src2.ramp_volume(t, 1.0, src2.samplerate)
-    
-    #sink = PyAudioSink.open(sched.samplerate, sched.channels)
-    sink = FileSink.open('output.ogg', sched.samplerate, sched.channels)
-    sched.allocate(int(sched.samplerate * 0.1))
-    filled = sched.buffer
+def run(src, sink):
+    src = src.reformat_like(sink)
+    src.allocate(int(src.samplerate * 0.1))
+    filled = src.buffer
     while len(filled) > 0:
-        filled = sched.fill()
+        filled = src.fill()
         sink.write(filled)
+
+def output_option(f):
+    def open_sink(ctx, param, value):
+        if value:
+            return FileSink(value, 48000, 2)
+        return PyAudioSink(48000, 2)
+    return click.option('-o', '--output', type=str, callback=open_sink)(f)
+
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+@output_option
+@click.argument('PATH')
+def play(output, path):
+    src = FileSource(path)
+    run(src, output)
+
+if __name__ == '__main__':
+    cli()
