@@ -94,7 +94,7 @@ class Resample(Source):
     def __init__(self, inner, newrate):
         newsize = None
         if inner.size:
-            newsize = int(numpy.ceil(self.size * newrate / self.samplerate))
+            newsize = int(numpy.ceil(inner.size * newrate / inner.samplerate))
         super().__init__(newrate, inner.channels, size=newsize)
         self.resampler = samplerate.converters.Resampler(channels=self.channels)
         self.ratio = newrate / self.samplerate
