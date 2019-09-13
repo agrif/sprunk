@@ -93,7 +93,7 @@ class ManyToMono(Source):
 class Resample(Source):
     def __init__(self, inner, newrate):
         newsize = None
-        if self.size:
+        if inner.size:
             newsize = int(numpy.ceil(self.size * newrate / self.samplerate))
         super().__init__(newrate, inner.channels, size=newsize)
         self.resampler = samplerate.converters.Resampler(channels=self.channels)
