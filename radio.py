@@ -16,14 +16,20 @@ class Radio:
 
     def choice(self, key):
         # FIXME better random
+        if len(self.defs.get(key, [])) == 0:
+            return None
         i = self.random_lasts.get(key, None)
         if i is None:
             i = 0
             random.shuffle(self.defs.get(key))
+        if i >= len(self.defs.get(key)):
+            i = 0
         self.random_lasts[key] = i + 1
         return self.defs.get(key)[i]
 
     def go_soft(self, soft_time, mainpath, overpath, pre=0, post=None, force=False):
+        if mainpath is None:
+            return soft_time
         main = sprunk.FileSource(mainpath)
         if overpath:
             over = sprunk.FileSource(overpath)
@@ -74,7 +80,8 @@ class Radio:
 
         print('### AD')
 
-        soft_time = yield from self.go_soft(soft_time, ad, p, force=True)
+        if ad is not None:
+            soft_time = yield from self.go_soft(soft_time, ad, p, force=True)
         duration = self.music.add_source(soft_time, idsrc)
         yield soft_time + duration
         return 0
@@ -102,7 +109,7 @@ class Radio:
         self.talk = sched.subscheduler()
 
         soft_time = 0
-        for _ in range(3):
+        while True:
             for _ in range(3):
                 soft_time = yield from self.go_music(sched, soft_time)
                 yield self.padding

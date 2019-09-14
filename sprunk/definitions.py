@@ -8,6 +8,7 @@ __all__ = [
 
 DEF_KEYS = [
     'prefix',
+    'include',
     'id',
     'solo',
     'to-ad',
@@ -18,6 +19,8 @@ DEF_KEYS = [
     'ad',
     'music',
 ]
+
+SPECIAL_KEYS = ['prefix', 'include', 'music']
 
 MUSIC_KEYS = [
     'path',
@@ -34,8 +37,6 @@ MUSIC_OPTIONAL_KEYS = [
     'album',
 ]
 
-SPECIAL_KEYS = ['prefix', 'music']
-
 def load_definitions(files, extension):
     whole = {'music': []}
     for k in DEF_KEYS:
@@ -43,25 +44,33 @@ def load_definitions(files, extension):
             continue
         whole[k] = list()
 
-    def locate_file(base, fname):
-        return os.path.abspath(os.path.join(base, fname) + '.' + extension)
+    def locate_file(base, fname, ext=None):
+        if ext is None:
+            ext = '.' + extension
+        return os.path.abspath(os.path.join(base, fname) + ext)
 
     def locate_files(base, data, key):
         l = data.get(key, [])
         for n in l:
-            whole[key].append(locate_file(base, n))
+            path = locate_file(base, n)
+            if not path in whole[key]:
+                whole[key].append(path)
 
     def parse_timestamp(s):
         a, b = s.split(':', 1)
         return int(a, base=10) * 60 + float(b)
 
-    for fname in files:
+    def handle_file(fname):
         with open(fname) as f:
             data = strictyaml.load(f.read()).data
         base = os.path.split(fname)[0]
         prefix = data.get('prefix')
         if prefix:
             base = os.path.join(base, prefix)
+
+        for sub_fname in data.get('include', []):
+            full_fname = locate_file(base, sub_fname, ext='')
+            handle_file(full_fname)
 
         for k in data:
             if k not in DEF_KEYS:
@@ -85,7 +94,11 @@ def load_definitions(files, extension):
                 m['intro'] = locate_file(base, m['intro'])
             m['pre'] = parse_timestamp(m['pre'])
             m['post'] = parse_timestamp(m['post'])
-            whole['music'].append(m)
+            if not [n for n in whole['music'] if n['path'] == m['path']]:
+                whole['music'].append(m)
+
+    for fname in files:
+        handle_file(fname)
 
     return whole
 
