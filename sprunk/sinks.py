@@ -1,3 +1,5 @@
+import subprocess
+
 import soundfile
 try:
     import pyaudio
@@ -9,6 +11,7 @@ __all__ = [
     'Sink',
     'PyAudioSink',
     'FileSink',
+    'FFmpegSink',
 ]
 
 class Sink:
@@ -37,6 +40,16 @@ class PyAudioSink(Sink):
 class FileSink(Sink):
     def __init__(self, path, samplerate, channels, **kwargs):
         data = soundfile.SoundFile(path, mode='w', samplerate=samplerate, channels=channels, **kwargs)
+        super().__init__(samplerate, channels)
+        self.data = data
+    
+    def write(self, buf):
+        self.data.write(buf)
+
+class FFmpegSink(Sink):
+    def __init__(self, samplerate, channels, args):
+        self.process = subprocess.Popen(['ffmpeg', '-f', 's16le', '-ar', str(samplerate), '-ac', str(channels), '-i', '-'] + args, stdin=subprocess.PIPE)
+        data = soundfile.SoundFile(self.process.stdin, mode='w', samplerate=samplerate, channels=channels, format='RAW', subtype='PCM_16', endian='LITTLE')
         super().__init__(samplerate, channels)
         self.data = data
     

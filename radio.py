@@ -3,6 +3,7 @@
 import os.path
 import sys
 import random
+import shlex
 
 import click
 import sprunk
@@ -129,7 +130,29 @@ def run(src, sink):
 def output_option(f):
     def open_sink(ctx, param, value):
         if value:
-            return sprunk.FileSink(value, 48000, 2)
+            types = ['file', 'stdout', 'ffmpeg']
+            typ = 'file'
+            if value == '-':
+                typ = 'stdout'
+                value = ''
+            if ':' in value:
+                testtyp, testvalue = value.split(':', 1)
+                if testtyp in types:
+                    typ = testtyp
+                    value = testvalue
+
+            if typ == 'file':
+                return sprunk.FileSink(value, 48000, 2)
+            elif typ == 'stdout':
+                # do some munging
+                inputfile = sys.stdout.buffer
+                sys.stdout = sys.stderr
+                return sprunk.FileSink(inputfile, 48000, 2, format='RAW', subtype='PCM_16', endian='LITTLE')
+            elif typ == 'ffmpeg':
+                args = shlex.split(value)
+                return sprunk.FFmpegSink(48000, 2, args)
+            else:
+                raise RuntimeError('unhandled output type')
         return sprunk.PyAudioSink(48000, 2)
     return click.option('-o', '--output', type=str, callback=open_sink)(f)
 
