@@ -7,6 +7,7 @@ import sprunk.sources
 __all__ = [
     'Scheduler',
     'coroutine',
+    'coroutine_method',
 ]
 
 class Scheduler(sprunk.sources.Source):
@@ -106,10 +107,6 @@ class Scheduler(sprunk.sources.Source):
         if max is None:
             max = len(self.buffer)
 
-        # check if there is nothing left to do
-        if not (self.active or self.sources or self.callbacks):
-            return self.buffer[0:0]
-
         # a helper function to ensure a buffer is fully filled
         # returns False if src is over, True if still has data
         def force_fill(buf, src):
@@ -136,11 +133,20 @@ class Scheduler(sprunk.sources.Source):
 
         # render all our active sources
         to_remove = []
+        scheduler_states = []
         for src in self.active:
-            if not force_fill(self.buffer[:max], src):
-                to_remove.append(src)
+            alive = force_fill(self.buffer[:max], src)
+            if isinstance(src, Scheduler):
+                scheduler_states.append(alive)
+            else:
+                if not alive:
+                    to_remove.append(src)
         for src in to_remove:
             self.active.remove(src)
+
+        # check if there is nothing left to do
+        if not ([a for a in self.active if not isinstance(a, Scheduler)] or self.sources or self.callbacks or any(scheduler_states)):
+            return self.buffer[0:0]
 
         # figure out which scheduled sources are now active,
         # and partially render them
@@ -167,6 +173,24 @@ def coroutine(f):
     @functools.wraps(f)
     def inner(scheduler, *args, **kwargs):
         runner = f(scheduler, *args, **kwargs)
+        try:
+            runner = iter(runner)
+        except TypeError:
+            runner = iter([])
+        def callback(s):
+            try:
+                delay = next(runner)
+            except StopIteration:
+                return
+            s.add_callback(delay, callback)
+        scheduler.add_callback(0, callback)
+        # FIXME allow yield from to be used to block on subcalls
+    return inner
+
+def coroutine_method(f):
+    @functools.wraps(f)
+    def inner(self, scheduler, *args, **kwargs):
+        runner = f(self, scheduler, *args, **kwargs)
         try:
             runner = iter(runner)
         except TypeError:

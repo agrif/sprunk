@@ -102,3 +102,10 @@ music:
     album: Adrenalin EP
     pre: 0:30
     post: 3:05
+
+  - path: applause/APPLAUSE
+    title: Applause
+    artist: Lady Gaga
+    album: Artpop
+    pre: 0:12
+    post: 3:27
