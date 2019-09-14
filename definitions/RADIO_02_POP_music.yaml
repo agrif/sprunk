@@ -89,3 +89,108 @@ music:
     album: Millennium
     pre: 0:09
     post: 3:29
+    
+  - path: work/WORK
+    title: Work (Freemasons Remix)
+    artist: Kelly Rowland
+    album: unknown
+    pre: 0:19
+    post: 3:06
+    
+  - path: with_every_heartbeat/WITH_EVERY_HEARTBEAT
+    title: With Every Heartbeat
+    artist: Robyn
+    album: unknown
+    pre: 0:30
+    post: 3:43
+    
+  - path: west_end_girls/WEST_END_GIRLS
+    title: West End Girls
+    artist: Pet Shop Boys
+    album: unkown
+    pre: 0:27
+    post: 3:22
+   
+  - path: wait/WAIT
+    title: Wait
+    artist: Dr Robert & Kym Mazelle
+    album: unknown
+    pre: 0:21
+    post: 2:38
+    
+  - path: the_time_is_now/THE_TIME_IS_NOW
+    title: THe Time Is Now
+    artist: Moloko
+    album: unkown
+    pre: 0:14
+    post: 3:33
+    
+  - path: tennis_court/TENNIS_COURT
+    title: Tennis Court
+    artist: Lorde
+    album: unknown
+    pre: 0:00
+    post:3:17
+    
+  - path: tell_to_my_heart/TELL_TO_MY_HEART
+    title: Tell It To My Heart
+    artist: Taylor Dayne
+    album: unknown
+    pre: 0:16
+    post: 3:24
+    
+  - path: tape_loop/TAPE_LOOP
+    title: Tape Loop (Diabolical Brothers Remix)
+    artist: Morcheeba
+    album: unkown
+    pre: 0:10
+    post: 3:00
+    
+  - path: something_got_me_started_remix/SOMETHING_GOT_ME_STARTED_REMIX
+    title: Something GOt Me Started (Hurley's House Mix)
+    artist: Simply Red
+    album: unknown
+    pre: 0:33
+    post: 3:41
+    
+  - path: smalltown_boy/SMALLTOWN_BOY
+    title: Smalltown Boy
+    artist: Bronski Beat
+    album: unknown
+    pre: 0:29
+    post: 4:10
+    
+  - path: six_underground/SIX_UNDERGROUND
+    title: 6 Underground
+    artist: Sneaker Pimps
+    album: unknown
+    pre: 0:09
+    post: 3:20
+    
+  - path: send_me_an_angel/SEND_ME_AN_ANGEL
+    title: Send Me an Angel
+    artist: Real Life
+    album: unknown
+    pre: 0:05
+    post: 3:42
+    
+  - path: scandalous/SCANDALOUS
+    title: Scandalous
+    artist: Mis-Teeq
+    album: unknown
+    pre: 0:11
+    post: 3:49
+
+  - path: rythm_of_the_night/RYTHM_OF_THE_NIGHT
+    title: Rythm of the Night
+    artist: Corona
+    album: unknown
+    pre: 0:00
+    post: 3:23
+    
+  - path: pure_shores/PURE_SHORES
+    title: Pure SHores
+    artist: All Saints
+    album: unknown
+    pre: 0:19
+    post: 3:50
