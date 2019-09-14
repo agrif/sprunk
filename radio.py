@@ -12,58 +12,90 @@ class Radio:
         self.defs = defs
         self.padding = 1
         self.over_volume = 0.5
+        self.random_lasts = {}
 
-    def go_soft(self, soft_time, mainpath, overpath, pre=0, post=None):
+    def choice(self, key):
+        # FIXME better random
+        i = self.random_lasts.get(key, None)
+        if i is None:
+            i = 0
+            random.shuffle(self.defs.get(key))
+        self.random_lasts[key] = i + 1
+        return self.defs.get(key)[i]
+
+    def go_soft(self, soft_time, mainpath, overpath, pre=0, post=None, force=False):
         main = sprunk.FileSource(mainpath)
-        over = sprunk.FileSource(overpath)
+        if overpath:
+            over = sprunk.FileSource(overpath)
+        else:
+            over = None
 
         # find the over start time, relative to music start time
-        over_start_time = pre - (over.size / over.samplerate + 2 * self.padding)
+        if over:
+            over_start_time = pre - (over.size / over.samplerate + 2 * self.padding)
+            skip_over = False
+        else:
+            over_start_time = 0
+            skip_over = True
 
         # find out when the music starts
         if soft_time >= -over_start_time:
             # seamless music, nice
             main_start = soft_time
-        else:
+        elif force:
             # there must be a break to fit this in
             main_start = -over_start_time
+        else:
+            # we need a break but we can't force it
+            main_start = soft_time
+            skip_over = True
         over_start_time += main_start
 
         # ok, now we can do this
         md = self.music.add_source(main_start, main)
         if post is None:
             post = md
-        self.music.set_volume(over_start_time, self.over_volume, duration=self.padding)
-        od = self.talk.add_source(over_start_time + self.padding, over)
-        yield over_start_time + self.padding + od
-        self.music.set_volume(0, 1.0, duration=self.padding)
-        yield main_start + post - (over_start_time + self.padding + od)
+        if skip_over:
+            yield main_start + post
+        else:
+            self.music.set_volume(over_start_time, self.over_volume, duration=self.padding)
+            od = self.talk.add_source(over_start_time + self.padding, over)
+            yield over_start_time + self.padding + od
+            self.music.set_volume(0, 1.0, duration=self.padding)
+            yield main_start + post - (over_start_time + self.padding + od)
         return md - post
 
     def go_ad(self, sched, soft_time):
-        idpath = random.choice(self.defs['id']) # FIXME
-        ad = random.choice(self.defs['ad'])
-        p = random.choice(self.defs['to-ad'])
+        idpath = self.choice('id')
+        ad = self.choice('ad')
+        p = self.choice('to-ad')
 
         idsrc = sprunk.FileSource(idpath)
 
-        soft_time = yield from self.go_soft(soft_time, ad, p)
+        print('### AD')
+
+        soft_time = yield from self.go_soft(soft_time, ad, p, force=True)
         duration = self.music.add_source(soft_time, idsrc)
         yield soft_time + duration
         return 0
-        
+
+    def go_solo(self, sched, soft_time):
+        solo = self.choice('solo')
+
+        print('### SOLO')
+
+        yield self.padding
+        return (yield from self.go_soft(soft_time, solo, None))
 
     def go_music(self, sched, soft_time):
-        # select a song randomly (FIXME: no repeats)
-        m = random.choice(self.defs['music'])
+        # select a song randomly
+        m = self.choice('music')
+        p = self.choice('general')
 
-        # select a preroll randomly
-        p = random.choice(self.defs['time-morning'] + self.defs['time-evening'])
+        print('###', m['title'])
+        print('   ', 'by', m['artist'])
 
-        print(m['title'])
-        print('by', m['artist'])
-
-        return self.go_soft(soft_time, m['path'], p, pre=m['pre'], post=m['post'])
+        return self.go_soft(soft_time, m['path'], p, pre=m['pre'], post=m['post'],)
 
     @sprunk.coroutine_method
     def go(self, sched):
@@ -71,9 +103,11 @@ class Radio:
         self.talk = sched.subscheduler()
 
         soft_time = 0
-        #soft_time = yield from self.go_music(sched, soft_time)
-        soft_time = yield from self.go_ad(sched, soft_time)
-        soft_time = yield from self.go_music(sched, soft_time)
+        for _ in range(3):
+            for _ in range(3):
+                soft_time = yield from self.go_music(sched, soft_time)
+            soft_time = yield from self.go_ad(sched, soft_time)
+            soft_time = yield from self.go_solo(sched, soft_time)
 
 def run(src, sink):
     src = src.reformat_like(sink)

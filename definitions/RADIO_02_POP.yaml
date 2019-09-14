@@ -50,6 +50,54 @@ solo:
   - mono_solo_28/MONO_SOLO_28
   - mono_solo_29/MONO_SOLO_29
 
+general:
+  - general/GENERAL_01
+  - general/GENERAL_02
+  - general/GENERAL_03
+  - general/GENERAL_04
+  - general/GENERAL_05
+  - general/GENERAL_06
+  - general/GENERAL_07
+  - general/GENERAL_08
+  - general/GENERAL_09
+  - general/GENERAL_10
+  - general/GENERAL_11
+  - general/GENERAL_12
+  - general/GENERAL_13
+  - general/GENERAL_14
+  - general/GENERAL_15
+  - general/GENERAL_16
+  - general/GENERAL_17
+  - general/GENERAL_18
+  - general/GENERAL_19
+  - general/GENERAL_20
+  - general/GENERAL_21
+  - general/GENERAL_22
+  - general/GENERAL_23
+  - general/GENERAL_24
+  - general/GENERAL_25
+  - general/GENERAL_26
+  - general/GENERAL_27
+  - general/GENERAL_28
+  - general/GENERAL_29
+  - general/GENERAL_30
+  - general/GENERAL_31
+  - general/GENERAL_32
+  - general/GENERAL_33
+  - general/GENERAL_34
+  - general/GENERAL_35
+  - general/GENERAL_36
+  - general/GENERAL_37
+  - general/GENERAL_38
+  - general/GENERAL_39
+  - general/GENERAL_40
+  - general/GENERAL_41
+  - general/GENERAL_42
+  - general/GENERAL_43
+  - general/GENERAL_44
+  - general/GENERAL_45
+  - general/GENERAL_46
+
 to-ad:
   - to/TO_AD_01
   - to/TO_AD_02

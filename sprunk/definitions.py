@@ -14,6 +14,7 @@ DEF_KEYS = [
     'to-news',
     'time-morning',
     'time-evening',
+    'general',
     'ad',
     'music',
 ]
