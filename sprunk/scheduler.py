@@ -1,3 +1,5 @@
+import numpy
+
 import sprunk.sources
 
 __all__ = [
@@ -15,6 +17,11 @@ class Scheduler(sprunk.sources.Source):
         # schedules
         self.frame_offset = 0
 
+        # we can only schedule one volume ramp at a time
+        # wait until one is finished to set the next
+        # [startframe, endframe, m, startvol, endvol]
+        self.volume_ramp = [0, 1, 0, 1.0, 1.0]
+
     def schedule_source(self, start, src):
         startframe = int(self.samplerate * start)
         startframe += self.frame_offset
@@ -31,11 +38,35 @@ class Scheduler(sprunk.sources.Source):
             startframe = 0
         self.callbacks.append([startframe, src])
 
+    def set_volume(self, start, volume, duration=0.005):
+        startframe = int(self.samplerate * start) + self.frame_offset
+        endframe = int(self.samplerate * (start + duration)) + self.frame_offset
+        if startframe < 0:
+            startframe = 0
+        if endframe < 0:
+            endframe = 0
+        if startframe == endframe:
+            endframe += 1
+
+        # figure out existing volume
+        oldstart, oldend, oldm, oldvol1, oldvol2 = self.volume_ramp
+        if self.frame_offset < oldstart:
+            oldvolume = oldvol1
+        elif self.frame_offset >= oldend:
+            oldvolume = oldvol2
+        else:
+            oldvolume = (self.frame_offset - oldstart) * oldm + oldvol1
+
+        m = (volume - oldvolume) / (endframe - startframe)
+        self.volume_ramp = [startframe, endframe, m, oldvolume, volume]
+
     def allocate(self, frames):
         for _, src in self.sources:
             src.allocate(frames)
         for src in self.active:
             src.allocate(frames)
+        self.bufferframes = numpy.arange(0, frames)
+        self.buffervolume = numpy.zeros(frames)
         return super().allocate(frames)
 
     def _process_schedule(self, scheduled, window):
@@ -95,5 +126,18 @@ class Scheduler(sprunk.sources.Source):
         for start, src in self._process_schedule(self.sources, max):
             if force_fill(self.buffer[start:max], src):
                 self.active.append(src)
+
+        # apply volume ramp
+        startframe, endframe, m, volstart, volend = self.volume_ramp
+        self.buffervolume[:max] = (self.bufferframes[:max] - startframe) * m + volstart
+        if startframe > 0:
+            i = startframe if startframe < max else max
+            self.buffervolume[:i] = volstart
+        if endframe <= max:
+            i = endframe if endframe > 0 else 0
+            self.buffervolume[i:max] = volend
+        self.buffer[:max] *= self.buffervolume[:max, numpy.newaxis]
+        self.volume_ramp[0] -= max
+        self.volume_ramp[1] -= max
 
         return self.buffer[:max]

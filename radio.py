@@ -39,8 +39,12 @@ def play(output, src):
 @input_argument('OVER')
 def over(output, song, over):
     sched = sprunk.Scheduler(output.samplerate, output.channels)
+    sched.set_volume(0, 0.0)
     sched.schedule_source(0, song)
-    sched.schedule_callback(1, lambda s: s.schedule_source(0, over))
+    def more(s):
+        s.schedule_source(0, over)
+        s.set_volume(0, 1.0, duration=10)
+    sched.schedule_callback(1, more)
     run(sched, output)
 
 if __name__ == '__main__':
