@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+import os.path
+import sys
+
 import click
 import sprunk
 
@@ -56,6 +59,13 @@ def over(output, song, over):
     sched = sprunk.Scheduler(output.samplerate, output.channels)
     over_coroutine(sched, song, over)
     run(sched, output)
+
+@cli.command()
+@click.argument('DEFINITIONS', nargs=-1)
+@click.option('-e', '--extension', default='ogg')
+def lint(definitions, extension):
+    defs = sprunk.load_definitions(definitions, extension)
+    return sprunk.definitions.lint(defs)
 
 if __name__ == '__main__':
     cli()
