@@ -130,7 +130,7 @@ def run(src, sink):
 def output_option(f):
     def open_sink(ctx, param, value):
         if value:
-            types = ['file', 'stdout', 'ffmpeg']
+            types = ['file', 'stdout', 'ffmpeg', 'ffmpegre']
             typ = 'file'
             if value == '-':
                 typ = 'stdout'
@@ -150,7 +150,10 @@ def output_option(f):
                 return sprunk.FileSink(inputfile, 48000, 2, format='RAW', subtype='PCM_16', endian='LITTLE')
             elif typ == 'ffmpeg':
                 args = shlex.split(value)
-                return sprunk.FFmpegSink(48000, 2, args)
+                return sprunk.FFmpegSink(48000, 2, False, args)
+            elif typ == 'ffmpegre':
+                args = shlex.split(value)
+                return sprunk.FFmpegSink(48000, 2, True, args)
             else:
                 raise RuntimeError('unhandled output type')
         return sprunk.PyAudioSink(48000, 2)
