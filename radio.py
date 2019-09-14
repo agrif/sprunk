@@ -18,16 +18,30 @@ def output_option(f):
         return sprunk.PyAudioSink(48000, 2)
     return click.option('-o', '--output', type=str, callback=open_sink)(f)
 
+def input_argument(*args, **kwargs):
+    def open_file(ctx, param, value):
+        return sprunk.FileSource(value)
+    return click.argument(*args, **kwargs, callback=open_file)
+
 @click.group()
 def cli():
     pass
 
 @cli.command()
 @output_option
-@click.argument('PATH')
-def play(output, path):
-    src = sprunk.FileSource(path)
+@input_argument('SRC')
+def play(output, src):
     run(src, output)
+
+@cli.command()
+@output_option
+@input_argument('SONG')
+@input_argument('OVER')
+def over(output, song, over):
+    sched = sprunk.Scheduler(output.samplerate, output.channels)
+    sched.schedule_source(0, song)
+    sched.schedule_callback(1, lambda s: s.schedule_source(0, over))
+    run(sched, output)
 
 if __name__ == '__main__':
     cli()
