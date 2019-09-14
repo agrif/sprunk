@@ -22,7 +22,13 @@ class Scheduler(sprunk.sources.Source):
         # [startframe, endframe, m, startvol, endvol]
         self.volume_ramp = [0, 1, 0, 1.0, 1.0]
 
-    def schedule_source(self, start, src):
+    def subscheduler(self):
+        s = Scheduler(self.samplerate, self.channels)
+        self.active.append(s)
+        return s
+
+    def add_source(self, start, src):
+        src = src.reformat_like(self)
         startframe = int(self.samplerate * start)
         startframe += self.frame_offset
         if startframe < 0:
@@ -30,13 +36,29 @@ class Scheduler(sprunk.sources.Source):
         if self.buffer is not None:
             src.allocate(len(self.buffer))
         self.sources.append([startframe, src])
+        if src.size:
+            return src.size / self.samplerate
 
-    def schedule_callback(self, start, src):
+    def add_callback(self, start, src):
         startframe = int(self.samplerate * start)
         startframe += self.frame_offset
         if startframe < 0:
             startframe = 0
         self.callbacks.append([startframe, src])
+
+    def add_agent(self, start, agent):
+        agent.scheduler = self
+        self.add_callback(start, lambda _: agent.run())
+
+    def get_volume(self, time):
+        timeframe = int(self.samplerate * time) + self.frame_offset
+        start, end, m, vol1, vol2 = self.volume_ramp
+        if timeframe < start:
+            return vol1
+        elif timeframe >= end:
+            return vol2
+        else:
+            return (timeframe - start) * m + vol1
 
     def set_volume(self, start, volume, duration=0.005):
         startframe = int(self.samplerate * start) + self.frame_offset
@@ -49,13 +71,7 @@ class Scheduler(sprunk.sources.Source):
             endframe += 1
 
         # figure out existing volume
-        oldstart, oldend, oldm, oldvol1, oldvol2 = self.volume_ramp
-        if self.frame_offset < oldstart:
-            oldvolume = oldvol1
-        elif self.frame_offset >= oldend:
-            oldvolume = oldvol2
-        else:
-            oldvolume = (self.frame_offset - oldstart) * oldm + oldvol1
+        oldvolume = self.get_volume(start)
 
         m = (volume - oldvolume) / (endframe - startframe)
         self.volume_ramp = [startframe, endframe, m, oldvolume, volume]
