@@ -1,0 +1,91 @@
+prefix: ../RADIO_02_POP
+
+music:
+  - path: adult_education/ADULT_EDUCATION
+    title: Adult Education
+    artist: Daryl Hall & John Oates
+    pre: 0:30
+    post: 4:00
+
+  - path: alright/ALRIGHT
+    title: Alright
+    artist: Jamiroquai
+    album: Travelling Without Moving
+    pre: 0:17
+    post: 3:39
+
+  - path: anthem/ANTHEM
+    title: Anthem
+    artist: N-Joi
+    album: Adrenalin EP
+    pre: 0:30
+    post: 3:05
+
+  - path: applause/APPLAUSE
+    title: Applause
+    artist: Lady Gaga
+    album: Artpop
+    pre: 0:12
+    post: 3:27
+
+  - path: bad_girls/BAD_GIRLS
+    title: Bad Girls
+    artist: M.I.A.
+    album: Matangi
+    pre: 0:19
+    post: 3:27
+
+  - path: cooler_than_me/COOLER_THAN_ME
+    title: Cooler Than Me
+    artist: Mike Posner
+    album: 31 Minutes to Takeoff
+    pre: 0:00
+    post: 3:00
+
+  - path: days_go_by/DAYS_GO_BY
+    title: Days Go By
+    artist: Dirty Vegas
+    album: Dirty Vegas
+    pre: 0:44
+    post: 4:50
+
+  - path: dont_wanna_fall_in_love/DONT_WANNA_FALL_IN_LOVE
+    title: Don't Wanna Fall in Love
+    artist: Jane Child
+    album: Jane Child
+    pre: 0:29
+    post: 3:10
+
+  - path: everything_she_wants/EVERYTHING_SHE_WANTS
+    title: Everything She Wants
+    artist: Wham!
+    pre: 0:16
+    post: 3:30
+
+  - path: feel_good_inc/FEEL_GOOD_INC
+    title: Feel Good Inc.
+    artist: Gorillaz
+    album: Demon Days
+    pre: 0:33
+    post: 3:30
+
+  - path: gimme_more/GIMME_MORE
+    title: Gimme More
+    artist: Britney Spears
+    album: Blackout
+    pre: 0:20
+    post: 3:15
+
+  - path: glamorous/GLAMOROUS
+    title: Glamorous
+    artist: Fergie
+    album: The Dutchess
+    pre: 0:15
+    post: 3:40
+
+  - path: i_want_it_that_way/I_WANT_IT_THAT_WAY
+    title: I Want It That Way
+    artist: Backstreet Boys
+    album: Millennium
+    pre: 0:09
+    post: 3:29
