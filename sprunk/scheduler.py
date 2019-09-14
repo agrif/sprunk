@@ -1,9 +1,12 @@
+import functools
+
 import numpy
 
 import sprunk.sources
 
 __all__ = [
     'Scheduler',
+    'coroutine',
 ]
 
 class Scheduler(sprunk.sources.Source):
@@ -25,6 +28,8 @@ class Scheduler(sprunk.sources.Source):
     def subscheduler(self):
         s = Scheduler(self.samplerate, self.channels)
         self.active.append(s)
+        if self.buffer is not None:
+            s.allocate(len(self.buffer))
         return s
 
     def add_source(self, start, src):
@@ -157,3 +162,21 @@ class Scheduler(sprunk.sources.Source):
         self.volume_ramp[1] -= max
 
         return self.buffer[:max]
+
+def coroutine(f):
+    @functools.wraps(f)
+    def inner(scheduler, *args, **kwargs):
+        runner = f(scheduler, *args, **kwargs)
+        try:
+            runner = iter(runner)
+        except TypeError:
+            runner = iter([])
+        def callback(s):
+            try:
+                delay = next(runner)
+            except StopIteration:
+                return
+            s.add_callback(delay, callback)
+        scheduler.add_callback(0, callback)
+        # FIXME allow yield from to be used to block on subcalls
+    return inner

@@ -33,19 +33,28 @@ def cli():
 def play(output, src):
     run(src, output)
 
+@sprunk.coroutine
+def over_coroutine(sched, song, over):
+    padding = 1
+    start_over = 3
+    oversched = sched.subscheduler()
+    songsched = sched.subscheduler()
+
+    songsched.add_source(0, song)
+    over_length = oversched.add_source(start_over, over)
+    yield start_over - padding
+    full_volume = songsched.get_volume(0)
+    songsched.set_volume(0, 0.5, duration=padding)
+    yield padding + over_length
+    songsched.set_volume(0, full_volume)
+
 @cli.command()
 @output_option
 @input_argument('SONG')
 @input_argument('OVER')
 def over(output, song, over):
     sched = sprunk.Scheduler(output.samplerate, output.channels)
-    oversched = sched.subscheduler()
-    songsched = sched.subscheduler()
-    
-    songsched.add_source(0, song)
-    over_length = oversched.add_source(3, over)
-    songsched.add_agent(2, sprunk.VolumePeriodAgent(0.5, over_length, duration=1))
-
+    over_coroutine(sched, song, over)
     run(sched, output)
 
 if __name__ == '__main__':
