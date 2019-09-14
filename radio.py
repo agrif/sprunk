@@ -46,7 +46,7 @@ def over_coroutine(sched, song, over):
     full_volume = songsched.get_volume(0)
     songsched.set_volume(0, 0.5, duration=padding)
     yield padding + over_length
-    songsched.set_volume(0, full_volume)
+    songsched.set_volume(0, full_volume, duration=padding)
 
 @cli.command()
 @output_option
