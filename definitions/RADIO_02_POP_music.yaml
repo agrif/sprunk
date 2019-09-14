@@ -107,7 +107,7 @@ music:
   - path: west_end_girls/WEST_END_GIRLS
     title: West End Girls
     artist: Pet Shop Boys
-    album: unkown
+    album: unknown
     pre: 0:27
     post: 3:22
    
@@ -119,7 +119,7 @@ music:
     post: 2:38
     
   - path: the_time_is_now/THE_TIME_IS_NOW
-    title: THe Time Is Now
+    title: The Time Is Now
     artist: Moloko
     album: unkown
     pre: 0:14
@@ -130,7 +130,7 @@ music:
     artist: Lorde
     album: unknown
     pre: 0:00
-    post:3:17
+    post: 3:17
     
   - path: tell_to_my_heart/TELL_TO_MY_HEART
     title: Tell It To My Heart
@@ -147,7 +147,7 @@ music:
     post: 3:00
     
   - path: something_got_me_started_remix/SOMETHING_GOT_ME_STARTED_REMIX
-    title: Something GOt Me Started (Hurley's House Mix)
+    title: Something Got Me Started (Hurley's House Mix)
     artist: Simply Red
     album: unknown
     pre: 0:33
@@ -182,14 +182,14 @@ music:
     post: 3:49
 
   - path: rythm_of_the_night/RYTHM_OF_THE_NIGHT
-    title: Rythm of the Night
+    title: Rhythm of the Night
     artist: Corona
     album: unknown
     pre: 0:00
     post: 3:23
     
   - path: pure_shores/PURE_SHORES
-    title: Pure SHores
+    title: Pure Shores
     artist: All Saints
     album: unknown
     pre: 0:19
