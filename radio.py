@@ -84,8 +84,7 @@ class Radio:
 
         print('### SOLO')
 
-        yield self.padding
-        return (yield from self.go_soft(soft_time, solo, None))
+        return self.go_soft(soft_time, solo, None)
 
     def go_music(self, sched, soft_time):
         # select a song randomly
@@ -106,8 +105,11 @@ class Radio:
         for _ in range(3):
             for _ in range(3):
                 soft_time = yield from self.go_music(sched, soft_time)
+                yield self.padding
             soft_time = yield from self.go_ad(sched, soft_time)
+            yield self.padding
             soft_time = yield from self.go_solo(sched, soft_time)
+            yield self.padding
 
 def run(src, sink):
     src = src.reformat_like(sink)
