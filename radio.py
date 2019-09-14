@@ -41,10 +41,16 @@ class Radio:
         return md - post
 
     def go_ad(self, sched, soft_time):
-        ad = random.choice(self.defs['id']) # FIXME
+        idpath = random.choice(self.defs['id']) # FIXME
+        ad = random.choice(self.defs['ad'])
         p = random.choice(self.defs['to-ad'])
 
-        return self.go_soft(soft_time, ad, p)
+        idsrc = sprunk.FileSource(idpath)
+
+        soft_time = yield from self.go_soft(soft_time, ad, p)
+        duration = self.music.add_source(soft_time, idsrc)
+        yield soft_time + duration
+        return 0
         
 
     def go_music(self, sched, soft_time):
@@ -65,7 +71,7 @@ class Radio:
         self.talk = sched.subscheduler()
 
         soft_time = 0
-        soft_time = yield from self.go_music(sched, soft_time)
+        #soft_time = yield from self.go_music(sched, soft_time)
         soft_time = yield from self.go_ad(sched, soft_time)
         soft_time = yield from self.go_music(sched, soft_time)
 
