@@ -71,7 +71,7 @@ class Resample(Source):
             newsize = int(numpy.ceil(inner.size * newrate / inner.samplerate))
         super().__init__(newrate, inner.channels, size=newsize)
         self.resampler = samplerate.converters.Resampler(channels=self.channels)
-        self.ratio = newrate / self.samplerate
+        self.ratio = newrate / inner.samplerate
         self.inner = inner
     
     def allocate(self, frames):
