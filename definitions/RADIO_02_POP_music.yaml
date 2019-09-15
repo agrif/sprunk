@@ -125,7 +125,7 @@ music:
     pre: 0:09
     post: 3:10
 
-  - path: meet_me_halfway/MEET_ME_HALFWAY/
+  - path: meet_me_halfway/MEET_ME_HALFWAY
     title: Meet Me Halfway
     artist: The Black Eyed Peas
     album: The E.N.D
@@ -134,6 +134,7 @@ music:
 
   - path: midnight_city/MIDNIGHT_CITY
     title: Midnight City
+    artist: M83
     album: Hurry Up, We're Dreaming
     pre: 0:18
     post: 3:16
