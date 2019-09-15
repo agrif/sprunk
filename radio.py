@@ -132,7 +132,7 @@ class Radio:
     def go_music(self, sched, soft_time):
         # select a song randomly
         m = self.choice('music')
-        if random.random() < 0.3:
+        if random.random() < 0.5:
             p = self.choice('general')
         else:
             p = None
