@@ -4,3 +4,4 @@ include:
   - RADIO_02_POP_host.yaml
   - RADIO_02_POP_music.yaml
   - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

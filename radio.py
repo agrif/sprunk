@@ -14,7 +14,7 @@ class Radio:
     def __init__(self, defs, meta_url=None):
         self.defs = defs
         self.meta_url = meta_url
-        self.padding = 1
+        self.padding = 0.5
         self.over_volume = 0.5
         self.random_lasts = {}
 
@@ -94,26 +94,31 @@ class Radio:
         return md - post
 
     def go_ad(self, sched, soft_time):
-        idpath = self.choice('id')
-        ad = self.choice('ad')
-        p = self.choice('to-ad')
+        return self.go_break(sched, soft_time, 'ad', 'to-ad', 'Advertisement')
 
-        idsrc = sprunk.FileSource(idpath)
+    def go_news(self, sched, soft_time):
+        return self.go_break(sched, soft_time, 'news', 'to-news', 'News')
+
+    def go_break(self, sched, soft_time, main_set, over_set, title):
+        ad = self.choice(main_set)
+        p = self.choice(over_set)
 
         admeta = {
-            'title': 'Advertisement',
-        }
-        idmeta = {
-            'title': 'Identification',
+            'title': title,
         }
 
         if ad is not None:
             soft_time = yield from self.go_soft(soft_time, ad, p, admeta, force=True)
-        duration = self.music.add_source(soft_time, idsrc)
-        yield soft_time
-        self.set_metadata(idmeta)
-        yield duration
-        return 0
+        return soft_time
+
+    def go_id(self, sched, soft_time):
+        idpath = self.choice('id')
+
+        idmeta = {
+            'title': 'Identification',
+        }
+
+        return self.go_soft(soft_time, idpath, None, idmeta)
 
     def go_solo(self, sched, soft_time):
         solo = self.choice('solo')
@@ -127,7 +132,10 @@ class Radio:
     def go_music(self, sched, soft_time):
         # select a song randomly
         m = self.choice('music')
-        p = self.choice('general')
+        if random.random() < 0.3:
+            p = self.choice('general')
+        else:
+            p = None
 
         return self.go_soft(soft_time, m['path'], p, m, pre=m['pre'], post=m['post'],)
 
@@ -138,13 +146,16 @@ class Radio:
 
         soft_time = 0
         while True:
-            for _ in range(3):
-                soft_time = yield from self.go_music(sched, soft_time)
+            for go_break in [self.go_ad, self.go_news]:
+                for _ in range(4):
+                    soft_time = yield from self.go_music(sched, soft_time)
+                    yield self.padding
+                soft_time = yield from go_break(sched, soft_time)
                 yield self.padding
-            soft_time = yield from self.go_ad(sched, soft_time)
-            yield self.padding
-            soft_time = yield from self.go_solo(sched, soft_time)
-            yield self.padding
+                soft_time = yield from self.go_id(sched, soft_time)
+                yield self.padding
+                soft_time = yield from self.go_solo(sched, soft_time)
+                yield self.padding
 
 def run(src, sink):
     src = src.reformat_like(sink)
