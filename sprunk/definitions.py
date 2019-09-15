@@ -7,6 +7,7 @@ __all__ = [
 ]
 
 DEF_KEYS = [
+    'name',
     'prefix',
     'include',
     'id',
@@ -20,7 +21,7 @@ DEF_KEYS = [
     'music',
 ]
 
-SPECIAL_KEYS = ['prefix', 'include', 'music']
+SPECIAL_KEYS = ['name', 'prefix', 'include', 'music']
 
 MUSIC_KEYS = [
     'path',
@@ -38,7 +39,7 @@ MUSIC_OPTIONAL_KEYS = [
 ]
 
 def load_definitions(files, extension):
-    whole = {'music': []}
+    whole = {'music': [], 'name': 'Sprunk'}
     for k in DEF_KEYS:
         if k in SPECIAL_KEYS:
             continue
@@ -71,6 +72,9 @@ def load_definitions(files, extension):
         for sub_fname in data.get('include', []):
             full_fname = locate_file(base, sub_fname, ext='')
             handle_file(full_fname)
+
+        if 'name' in data:
+            whole['name'] = data['name']
 
         for k in data:
             if k not in DEF_KEYS:

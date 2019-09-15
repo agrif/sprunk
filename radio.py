@@ -4,16 +4,36 @@ import os.path
 import sys
 import random
 import shlex
+import urllib.parse
 
 import click
+import requests
 import sprunk
 
 class Radio:
-    def __init__(self, defs):
+    def __init__(self, defs, meta_url=None):
         self.defs = defs
+        self.meta_url = meta_url
         self.padding = 1
         self.over_volume = 0.5
         self.random_lasts = {}
+
+    def set_metadata(self, meta):
+        parts = [self.defs.get('name'), meta.get('artist'), meta.get('title')]
+        parts = [p for p in parts if p is not None]
+        song = ' - '.join(parts)
+        if not song:
+            song = 'NO INFORMATION'
+
+        print('###', song)
+
+        if self.meta_url:
+            parts = list(urllib.parse.urlparse(self.meta_url))
+            query = dict(urllib.parse.parse_qsl(parts[4]))
+            query['song'] = song
+            parts[4] = urllib.parse.urlencode(query)
+            our_meta_url = urllib.parse.urlunparse(parts)
+            requests.get(our_meta_url)
 
     def choice(self, key):
         # FIXME better random
@@ -28,7 +48,7 @@ class Radio:
         self.random_lasts[key] = i + 1
         return self.defs.get(key)[i]
 
-    def go_soft(self, soft_time, mainpath, overpath, pre=0, post=None, force=False):
+    def go_soft(self, soft_time, mainpath, overpath, meta, pre=0, post=None, force=False):
         if mainpath is None:
             return soft_time
         main = sprunk.FileSource(mainpath)
@@ -60,6 +80,7 @@ class Radio:
 
         # ok, now we can do this
         md = self.music.add_source(main_start, main)
+        self.music.add_callback(main_start, lambda _: self.set_metadata(meta))
         if post is None:
             post = md
         if skip_over:
@@ -79,30 +100,36 @@ class Radio:
 
         idsrc = sprunk.FileSource(idpath)
 
-        print('### AD')
+        admeta = {
+            'title': 'Advertisement',
+        }
+        idmeta = {
+            'title': 'Identification',
+        }
 
         if ad is not None:
-            soft_time = yield from self.go_soft(soft_time, ad, p, force=True)
+            soft_time = yield from self.go_soft(soft_time, ad, p, admeta, force=True)
         duration = self.music.add_source(soft_time, idsrc)
-        yield soft_time + duration
+        yield soft_time
+        self.set_metadata(idmeta)
+        yield duration
         return 0
 
     def go_solo(self, sched, soft_time):
         solo = self.choice('solo')
 
-        print('### SOLO')
+        solometa = {
+            'title': 'Monologue',
+        }
 
-        return self.go_soft(soft_time, solo, None)
+        return self.go_soft(soft_time, solo, None, solometa)
 
     def go_music(self, sched, soft_time):
         # select a song randomly
         m = self.choice('music')
         p = self.choice('general')
 
-        print('###', m['title'])
-        print('   ', 'by', m['artist'])
-
-        return self.go_soft(soft_time, m['path'], p, pre=m['pre'], post=m['post'],)
+        return self.go_soft(soft_time, m['path'], p, m, pre=m['pre'], post=m['post'],)
 
     @sprunk.coroutine_method
     def go(self, sched):
@@ -209,9 +236,10 @@ def lint(definitions, extension):
 @output_option
 @click.argument('DEFINITIONS', nargs=-1)
 @click.option('-e', '--extension', default='ogg')
-def radio(output, definitions, extension):
+@click.option('-m', '--meta-url')
+def radio(output, definitions, extension, meta_url):
     defs = sprunk.load_definitions(definitions, extension)
-    r = Radio(defs)
+    r = Radio(defs, meta_url)
     sched = sprunk.Scheduler(output.samplerate, output.channels)
     r.go(sched)
     run(sched, output)
