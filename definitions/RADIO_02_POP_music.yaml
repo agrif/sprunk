@@ -90,7 +90,102 @@ music:
     pre: 0:09
     post: 3:29
 
-  # middle is missing
+  - path: kids/KIDS
+    title: Kids
+    artist: Robbie Williams & Kylie Minogue
+    album: Light Years
+    pre: 0:09
+    post: 4:17
+
+  - path: lady_hear_me_tonight/LADY_HEAR_ME_TONIGHT
+    title: Lady (Hear Me Tonight)
+    artist: Modjo
+    album: Modjo
+    pre: 0:22
+    post: 3:23
+
+  - path: lets_go_all_the_way/LETS_GO_ALL_THE_WAY
+    title: Let's Go All the Way
+    artist: Sly Fox
+    album: Let's Go All The Way
+    pre: 0:09
+    post: 3:38
+
+  - path: living_in_a_box/LIVING_IN_A_BOX
+    title: Living In A Box
+    artist: Living In A Box
+    album: Living In A Box
+    pre: 0:18
+    post: 2:59
+
+  - path: me_and_you/ME_AND_YOU
+    title: Me & U
+    artist: Cassie
+    album: Cassie
+    pre: 0:09
+    post: 3:10
+
+  - path: meet_me_halfway/MEET_ME_HALFWAY/
+    title: Meet Me Halfway
+    artist: The Black Eyed Peas
+    album: The E.N.D
+    pre: 0:01
+    post: 3:56
+
+  - path: midnight_city/MIDNIGHT_CITY
+    title: Midnight City
+    album: Hurry Up, We're Dreaming
+    pre: 0:18
+    post: 3:16
+
+  - path: moves_like_jagger/MOVES_LIKE_JAGGER
+    title: Moves Like Jagger
+    artist: Maroon 5
+    album: Hands All Over
+    pre: 0:12
+    post: 3:17
+
+  - path: music_sounds_better_with_you/MUSIC_SOUNDS_BETTER_WITH_YOU
+    title: Music Sounds Better With You
+    artist: Stardust
+    album: Music Sounds Better With You
+    pre: 0:15
+    post: 3:52
+
+  - path: new_sensation/NEW_SENSATION
+    title: New Sensation
+    artist: INXS
+    album: Up Close
+    pre: 0:07
+    post: 3:39
+
+  - path: on_our_own/ON_OUR_OWN
+    title: On Our Own
+    artist: Bobby Brown
+    album: Dance!...Ya Know It!
+    pre: 0:03
+    post: 4:14
+
+  - path: one_thing/ONE_THING
+    title: 1 THing
+    artist: Amerie
+    album: Touch
+    pre: 0:09
+    post: 3:32
+
+  - path: only_girl_in_the_world/ONLY_GIRL_IN_THE_WORLD
+    title: Only Girl (In The World)
+    artist: Rihanna
+    album: Loud
+    pre: 0:00
+    post: 3:50
+
+  - path: promises_promises/PROMISES_PROMISES
+    title: Promises, Promises
+    artist: Naked Eyes
+    album: Burning Bridges
+    pre: 0:17
+    post: 3:38
 
   - path: pure_shores/PURE_SHORES
     title: Pure Shores
