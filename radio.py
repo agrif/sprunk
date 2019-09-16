@@ -147,7 +147,7 @@ class Radio:
         soft_time = 0
         while True:
             for go_break in [self.go_ad, self.go_news]:
-                for _ in range(4):
+                for _ in range(12):
                     soft_time = yield from self.go_music(sched, soft_time)
                     yield self.padding
                 soft_time = yield from go_break(sched, soft_time)
