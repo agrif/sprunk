@@ -169,9 +169,9 @@ class Radio:
                 soft_time = yield from self.go_solo(sched, soft_time)
                 yield self.padding
 
-def run(src, sink):
+def run(src, sink, buffer_size=0.5):
     src = src.reformat_like(sink)
-    src.allocate(int(src.samplerate * 0.1))
+    src.allocate(int(src.samplerate * buffer_size))
     filled = src.buffer
     while len(filled) > 0:
         filled = src.fill()
@@ -220,9 +220,10 @@ def cli():
 
 @cli.command()
 @output_option
+@click.option('-s', '--buffer-size', default=0.5, type=float)
 @input_argument('SRC')
-def play(output, src):
-    run(src, output)
+def play(output, src, buffer_size):
+    run(src, output, buffer_size=buffer_size)
 
 @sprunk.coroutine
 def over_coroutine(sched, song, over):
@@ -243,10 +244,11 @@ def over_coroutine(sched, song, over):
 @output_option
 @input_argument('SONG')
 @input_argument('OVER')
-def over(output, song, over):
+@click.option('-s', '--buffer-size', default=0.5, type=float)
+def over(output, song, over, buffer_size):
     sched = sprunk.Scheduler(output.samplerate, output.channels)
     over_coroutine(sched, song, over)
-    run(sched, output)
+    run(sched, output, buffer_size=buffer_size)
 
 @cli.command()
 @click.argument('DEFINITIONS', nargs=-1)
@@ -260,12 +262,13 @@ def lint(definitions, extension):
 @click.argument('DEFINITIONS', nargs=-1)
 @click.option('-e', '--extension', default='ogg')
 @click.option('-m', '--meta-url')
-def radio(output, definitions, extension, meta_url):
+@click.option('-s', '--buffer-size', default=0.5, type=float)
+def radio(output, definitions, extension, meta_url, buffer_size):
     defs = sprunk.load_definitions(definitions, extension)
     r = Radio(defs, meta_url)
     sched = sprunk.Scheduler(output.samplerate, output.channels)
     r.go(sched)
-    run(sched, output)
+    run(sched, output, buffer_size)
 
 if __name__ == '__main__':
     cli()
