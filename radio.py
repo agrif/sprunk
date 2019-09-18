@@ -6,19 +6,35 @@ import random
 import shlex
 import urllib.parse
 import collections
+import traceback
 
 import click
 import requests
 import sprunk
 
 class Radio:
-    def __init__(self, defs, meta_url=None):
-        self.defs = defs
+    def __init__(self, definitions, extension='ogg', meta_url=None):
+        self.definition_files = definitions
+        self.extension = extension
+        self.defs = None
         self.meta_url = meta_url
         self.padding = 0.5
         self.over_volume = 0.5
         self.no_repeat_percent = 0.5
         self.random_lasts = collections.defaultdict(lambda: collections.deque())
+
+        self.reload()
+
+    def reload(self):
+        if self.defs is None:
+            self.defs = sprunk.load_definitions(self.definition_files, self.extension)
+        else:
+            # we already have definitions, don't fail if this fails
+            try:
+                self.defs = sprunk.load_definitions(self.definition_files, self.extension)
+            except Exception as e:
+                print('Error while reloading definitions:', file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
 
     def set_metadata(self, meta):
         parts = [self.defs.get('name'), meta.get('artist'), meta.get('title')]
@@ -142,6 +158,9 @@ class Radio:
         return self.go_soft(soft_time, solo, None, solometa)
 
     def go_music(self, sched, soft_time):
+        # reload before each song!
+        self.reload()
+
         # select a song randomly
         m = self.choice('music')
         if random.random() < 0.5:
@@ -264,8 +283,7 @@ def lint(definitions, extension):
 @click.option('-m', '--meta-url')
 @click.option('-s', '--buffer-size', default=0.5, type=float)
 def radio(output, definitions, extension, meta_url, buffer_size):
-    defs = sprunk.load_definitions(definitions, extension)
-    r = Radio(defs, meta_url)
+    r = Radio(definitions, extension, meta_url)
     sched = sprunk.Scheduler(output.samplerate, output.channels)
     r.go(sched)
     run(sched, output, buffer_size)
