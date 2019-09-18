@@ -5,6 +5,7 @@ import sys
 import random
 import shlex
 import urllib.parse
+import collections
 
 import click
 import requests
@@ -16,7 +17,8 @@ class Radio:
         self.meta_url = meta_url
         self.padding = 0.5
         self.over_volume = 0.5
-        self.random_lasts = {}
+        self.no_repeat_percent = 0.5
+        self.random_lasts = collections.defaultdict(lambda: collections.deque())
 
     def set_metadata(self, meta):
         parts = [self.defs.get('name'), meta.get('artist'), meta.get('title')]
@@ -36,17 +38,27 @@ class Radio:
             requests.get(our_meta_url)
 
     def choice(self, key):
-        # FIXME better random
-        if len(self.defs.get(key, [])) == 0:
+        def key_of(m):
+            if isinstance(m, dict) and 'path' in m:
+                return m['path']
+            return m
+
+        choices = self.defs.get(key, [])
+        if len(choices) == 0:
             return None
-        i = self.random_lasts.get(key, None)
-        if i is None:
-            i = 0
-            random.shuffle(self.defs.get(key))
-        if i >= len(self.defs.get(key)):
-            i = 0
-        self.random_lasts[key] = i + 1
-        return self.defs.get(key)[i]
+
+        no_repeat = int(len(choices) * self.no_repeat_percent)
+        used = self.random_lasts[key]
+        while len(used) > no_repeat:
+            used.pop()
+
+        choices_left = [m for m in choices if not key_of(m) in used]
+        while not choices_left:
+            k = used.pop()
+            choices_left = [m for m in choices if key_of(m) == k]
+        m = random.choice(choices_left)
+        used.append(key_of(m))
+        return m
 
     def go_soft(self, soft_time, mainpath, overpath, meta, pre=0, post=None, force=False):
         if mainpath is None:
