@@ -145,7 +145,7 @@ class Scheduler(sprunk.sources.Source):
             self.active.remove(src)
 
         # check if there is nothing left to do
-        if not ([a for a in self.active if not isinstance(a, Scheduler)] or self.sources or self.callbacks or any(scheduler_states)):
+        if not ([a for a in self.active if not isinstance(a, Scheduler)] or self.sources or self.callbacks or any(scheduler_states) or to_remove):
             return self.buffer[0:0]
 
         # figure out which scheduled sources are now active,
