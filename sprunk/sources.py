@@ -84,7 +84,7 @@ class Resample(Source):
     def fill(self, max=None):
         if max is None:
             max = len(self.buffer)
-        filled = self.inner.fill(max=int(max * self.inner.samplerate / self.samplerate))
+        filled = self.inner.fill(max=int(numpy.ceil(max * self.inner.samplerate / self.samplerate)))
         if len(filled) > 0:
             proc = self.resampler.process(filled, self.ratio, end_of_input=False)
         else:
