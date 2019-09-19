@@ -34,13 +34,13 @@ class Source:
         src = self
         if channels and channels < src.channels:
             if not channels == 1:
-                raise RuntimeError("can only downmix {} channels to mono".format(src.channels))
+                raise RuntimeError("cannot downmix {} channels to mono".format(src.channels))
             src = src.remix(numpy.ones((1, src.channels)) / src.channels)
         if samplerate and samplerate != src.samplerate:
             src = src.resample(samplerate)
         if channels and channels > src.channels:
             if not src.channels == 1:
-                raise RuntimeError("can only upmix mono to {} channels".format(channels))
+                raise RuntimeError("cannot upmix mono to {} channels".format(channels))
             src = src.remix(numpy.ones((channels, 1)))
         return src
     
