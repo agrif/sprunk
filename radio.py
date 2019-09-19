@@ -73,7 +73,7 @@ class Radio:
             k = used.pop()
             choices_left = [m for m in choices if key_of(m) == k]
         m = random.choice(choices_left)
-        used.append(key_of(m))
+        used.appendleft(key_of(m))
         return m
 
     def go_soft(self, soft_time, mainpath, overpath, meta, pre=0, post=None, force=False):
