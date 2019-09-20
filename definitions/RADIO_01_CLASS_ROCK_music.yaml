@@ -1,3 +1,230 @@
-# FIXME: just play pop, for now
-include:
-  - RADIO_02_POP_music.yaml
+prefix: ../RADIO_01_CLASS_ROCK
+
+music:
+  - path: all_the_things_she_said/ALL_THE_THINGS_SHE_SAID
+    title: All the Things She Said
+    artist: Simple Minds
+    pre: 0:17
+    post: 3:54
+
+  - path: baker_street/BAKER_STREET
+    title: Baker Street
+    artist: Gerry Rafferty
+    pre: 0:14
+    post: 4:15
+
+  - path: big_log/BIG_LOG
+    title: Big Log
+    artist: Robert Plant
+    pre: 0:10
+    post: 3:25
+
+  - path: black_velvet/BLACK_VELVET
+    title: Black Velvet
+    artist: Alannah Myles
+    pre: 0:22
+    post: 4:20
+
+  - path: burning_heart/BURNING_HEART
+    title: Burning Heart
+    artist: Survivor
+    pre: 0:25
+    post: 3:20
+
+  - path: carry_on_my_wayward_sun/CARRY_ON_MY_WAYWARD_SUN
+    title: Carry On Wayward Son
+    artist: Kansas
+    pre: 0:00
+    post: 4:50
+
+  - path: cats_in_the_cradle/CATS_IN_THE_CRADLE
+    title: Cat's In the Cradle
+    artist: Harry Chapin
+    pre: 0:12
+    post: 3:30
+
+  - path: circle_in_the_sand/CIRCLE_IN_THE_SAND
+    title: Circle in the Sand
+    artist: Belinda Carlisle
+    pre: 0:22
+    post: 3:30
+
+  - path: coming_on_strong/COMING_ON_STRONG
+    title: Comin' On Strong
+    artist: Broken English
+    pre: 0:00
+    post: 3:20
+
+  - path: danger_zone/DANGER_ZONE
+    title: Danger Zone
+    artist: Kenny Loggins
+    pre: 0:16
+    post: 1:06
+
+  - path: dirty_white_boy/DIRTY_WHITE_BOY
+    title: Dirty White Boy
+    artist: Foreigner
+    pre: 0:20
+    post: 3:20
+
+  - path: fortunate_son/FORTUNATE_SON
+    title: Fortunate Son
+    artist: Creedence Clearwater Revival
+    pre: 0:18
+    post: 2:00
+
+  - path: gimme_all_your_lovin/GIMME_ALL_YOUR_LOVIN
+    title: Gimme All Your Lovin'
+    artist: ZZ Top
+    pre: 0:23
+    post: 3:48
+
+  - path: heartbeat/HEARTBEAT
+    title: Heartbeat
+    artist: Don Johnson
+    pre: 0:17
+    post: 3:15
+
+  - path: higher_love/HIGHER_LOVE
+    title: Higher Love
+    artist: Steve Winwood
+    pre: 0:03
+    post: 3:55
+
+  - path: hollywood_nights/HOLLYWOOD_NIGHTS
+    title: Hollywood Nights
+    artist: Bob Seger & The Silver Bullet Band
+    pre: 0:25
+    post: 3:30
+
+  - path: i_cant_wait/I_CANT_WAIT
+    title: I Can't Wait
+    artist: Stevie Nicks
+    pre: 0:00
+    post: 3:50
+
+  - path: i_dont_care_anymore/I_DONT_CARE_ANYMORE
+    title: I Don't Care Anymore
+    artist: Phil Collins
+    pre: 0:29
+    post: 4:40
+
+  - path: i_wouldnt_want_to_be/I_WOULDNT_WANT_TO_BE
+    title: I Wouldn't Want To Be Like You
+    artist: The Alan Parsons Project
+    pre: 0:36
+    post: 3:00
+
+  - path: if_you_leave_me_now/IF_YOU_LEAVE_ME_NOW
+    title: If You Leave Me Now
+    artist: Chicago
+    pre: 0:08
+    post: 3:00
+
+  - path: im_free/IM_FREE
+    title: I'm Free (Heaven Helps the Man)
+    artist: Kenny Loggins
+    pre: 0:18
+    post: 3:18
+
+  - path: lonely_is_the_night/LONELY_IS_THE_NIGHT
+    title: Lonely Is the Night
+    artist: Billy Squier
+    pre: 0:12
+    post: 3:30
+
+  - path: mississippi_queen/MISSISSIPPI_QUEEN
+    title: Mississippi Queen
+    artist: Mountain
+    pre: 0:10
+    post: 2:22
+
+  - path: night_moves/NIGHT_MOVES
+    title: Night Moves
+    artist: Bob Seger & The Silver Bullet Band
+    pre: 0:16
+    post: 4:04
+
+  - path: ogdens_nut_gone_flake/OGDENS_NUT_GONE_FLAKE
+    title: Ogdens' Nut Gone Flake
+    artist: The Small Faces
+    pre: 0:51
+    post: 2:10
+
+  - path: peace_of_mind/PEACE_OF_MIND
+    title: Peace Of Mind
+    artist: Boston
+    pre: 0:21
+    post: 1:06
+
+  - path: photograph/PHOTOGRAPH
+    title: Photograph
+    artist: Def Leppard
+    pre: 0:14
+    post: 3:30
+
+  - path: radio_ga_ga/RADIO_GA_GA
+    title: Radio Ga Ga
+    artist: Queen
+    pre: 0:17
+    post: 4:08
+
+  - path: rain/RAIN
+    title: Rain
+    artist: The Cult
+    pre: 0:15
+    post: 3:30
+
+  - path: rockin_me/ROCKIN_ME
+    title: Rock'n Me
+    artist: Steve Miller Band
+    pre: 0:26
+    post: 2:40
+
+  - path: roundabout/ROUNDABOUT
+    title: Roundabout
+    artist: Yes
+    pre: 0:39
+    post: 8:00
+
+  - path: saturday_nights_alright/SATURDAY_NIGHTS_ALRIGHT
+    title: Saturday Night's Alright for Fighting
+    artist: Elton John
+    pre: 0:12
+    post: 3:20
+
+  - path: shadows_of_the_night/SHADOWS_OF_THE_NIGHT
+    title: Shadows of the Night
+    artist: Pat Benatar
+    pre: 0:00
+    post: 3:26
+
+  - path: the_breakup_song/THE_BREAKUP_SONG
+    title: The Breakup Song (They Don't Write 'Em)
+    artist: The Greg Kihn Band
+    pre: 0:12
+    post: 2:30
+
+  - path: thirty_days_in_the_hole/THIRTY_DAYS_IN_THE_HOLE
+    title: 30 Days In the Hole
+    artist: Humble Pie
+    pre: 0:11
+    post: 2:50
+
+  - path: too_late_for_goodbyes/TOO_LATE_FOR_GOODBYES
+    title: Too Late for Goodbyes
+    artist: Julian Lennon
+    pre: 0:30
+    post: 3:00
+
+  - path: we_built_this_city/WE_BUILT_THIS_CITY
+    title: We Built This City
+    artist: Starship
+    pre: 0:00
+    post: 4:23
+
+  - path: what_a_fool_believes/WHAT_A_FOOL_BELIEVES
+    title: What a Fool Believes
+    artist: The Doobie Brothers
+    pre: 0:14
+    post: 3:00
