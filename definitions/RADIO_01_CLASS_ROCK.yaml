@@ -1,0 +1,8 @@
+name: Los Santos Rock Radio
+
+include:
+  - RADIO_01_CLASS_ROCK_id.yaml
+  - RADIO_01_CLASS_ROCK_host.yaml
+  - RADIO_01_CLASS_ROCK_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml
