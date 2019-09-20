@@ -110,3 +110,144 @@ time-morning:
   - time/MORNING_04
   - time/MORNING_05
   - time/MORNING_06
+
+intro:
+  - path: intro/0x0A242E76
+    title: Moves Like Jagger
+    artist: Maroon 5
+
+  - path: intro/0x0A849B9A
+    title: Midnight City
+    artist: M83
+
+  - path: intro/0x0A221730
+    title: Promises, Promises
+    artist: Naked Eyes
+
+  - path: intro/0x0AC1810E
+    title: Lady (Hear Me Tonight)
+    artist: Modjo
+
+  - path: intro/0x0BECEC0C
+    title: Scandalous
+    artist: Mis-Teeq
+
+  - path: intro/0x0BEE766B
+    title: Gimme More
+    artist: Britney Spears
+
+  - path: intro/0x0C14E150
+    title: New Sensation
+    artist: INXS
+
+  - path: intro/0x0CA6BA3B
+    title: Living In A Box
+    artist: Living In A Box
+
+  - path: intro/0x0D5D7DF5
+    title: Feel Good Inc.
+    artist: Gorillaz
+
+  - path: intro/0x0D774C5E
+    title: The Time Is Now
+    artist: Moloko
+
+  - path: intro/0x0D503357
+    title: Only Girl (In The World)
+    artist: Rihanna
+
+  - path: intro/0x0DC1FFB9
+    title: With Every Heartbeat
+    artist: Kleerup & Robyn
+
+  - path: intro/0x0DCE021F
+    title: 6 Underground
+    artist: Sneaker Pimps
+
+  - path: intro/0x0DFB9B44
+    title: Something Got Me Started (Hurley's House Mix)
+    artist: Simply Red
+
+  - path: intro/0x0F6ED215
+    title: Let's Go All the Way
+    artist: Sly Fox
+
+  - path: intro/0x0FA856DC
+    title: Bad Girls
+    artist: M.I.A.
+
+  - path: intro/0x0FD58578
+    title: Tell It to My Heart
+    artist: Taylor Dayne
+
+  - path: intro/0x01B3B69E
+    title: Let's Go All the Way
+    artist: Sly Fox
+
+  - path: intro/0x01D23513
+    title: The Time Is Now
+    artist: Moloko
+
+  - path: intro/0x1A284883
+    title: Scandalous
+    artist: Mis-Teeq
+
+  - path: intro/0x1AAFBC22
+    title: Tennis Court
+    artist: Lorde
+
+  - path: intro/0x1ADAED40
+    title: Bad Girls
+    artist: M.I.A.
+
+  - path: intro/0x1B0C1B67
+    title: Music Sounds Better With You
+    artist: Stardust
+
+  - path: intro/0x1BEF3ACA
+    title: Promises, Promises
+    artist: Naked Eyes
+
+  - path: intro/0x1C6FB36F
+    title: Adult Education
+    artist: Daryl Hall & John Oates
+
+  - path: intro/0x1C483A1A
+    title: Kids
+    artist: Robbie Williams & Kylie Minogue
+
+  - path: intro/0x1CA67602
+    title: Smalltown Boy
+    artist: Bronski Beat
+
+  - path: intro/0x1D9D2107
+    title: Tell It to My Heart
+    artist: Taylor Dayne
+
+  - path: intro/0x1DA6209B
+    title: Music Sounds Better With You
+    artist: Stardust
+
+  - path: intro/0x1DBCD430
+    title: Only Girl (In The World)
+    artist: Rihanna
+
+  - path: intro/0x1DE515F8
+    title: Moves Like Jagger
+    artist: Maroon 5
+
+  - path: intro/0x1ECC1E86
+    title: Living In A Box
+    artist: Living In A Box
+
+  - path: intro/0x1F946939
+    title: The Rhythm of the Night
+    artist: Corona
+
+  - path: intro/0x1FA3937A
+    title: Scandalous
+    artist: Mis-Teeq
+
+  - path: intro/0x1FFE6431
+    title: With Every Heartbeat
+    artist: Kleerup & Robyn
