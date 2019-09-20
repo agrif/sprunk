@@ -17,30 +17,29 @@ DEF_KEYS = [
     'time-morning',
     'time-evening',
     'general',
+    'intro',
     'ad',
     'news',
     'music',
 ]
 
-SPECIAL_KEYS = ['name', 'prefix', 'include', 'music']
+SPECIAL_KEYS = ['name', 'prefix', 'include', 'intro', 'music']
 
 MUSIC_KEYS = [
     'path',
     'title',
     'artist',
     'album',
-    'intro',
     'pre',
     'post',
 ]
 
 MUSIC_OPTIONAL_KEYS = [
-    'intro',
     'album',
 ]
 
 def load_definitions(files, extension):
-    whole = {'music': [], 'name': 'Sprunk'}
+    whole = {'music': [], 'name': 'Sprunk', 'intro': []}
     for k in DEF_KEYS:
         if k in SPECIAL_KEYS:
             continue
@@ -95,15 +94,46 @@ def load_definitions(files, extension):
             for k in MUSIC_OPTIONAL_KEYS:
                 if not k in m:
                     m[k] = None
-            if m['intro']:
-                m['intro'] = locate_file(base, m['intro'])
             m['pre'] = parse_timestamp(m['pre'])
             m['post'] = parse_timestamp(m['post'])
             if not [n for n in whole['music'] if n['path'] == m['path']]:
                 whole['music'].append(m)
+        for i in data.get('intro', []):
+            for k in i:
+                if k not in MUSIC_KEYS:
+                    raise RuntimeError('unknown key {} in file {}'.format(k, fname))
+            if 'path' not in i:
+                raise RuntimeError('missing key {} in file {}'.format('path', fname))
+
+            i['path'] = locate_file(base, i['path'])
+            if not [n for n in whole['intro'] if n['path'] == i['path']]:
+                whole['intro'].append(i)
 
     for fname in files:
         handle_file(fname)
+
+    # resolve intros
+    def lookup_song(meta):
+        found = None
+        for m in whole['music']:
+            for k in meta:
+                if k == 'path':
+                    continue
+                if meta[k] != m[k]:
+                    break
+            else:
+                # found a match!
+                if found is not None:
+                    raise RuntimeError('ambiguous intro match for {}'.format(meta))
+                found = m
+        if found is None:
+            raise RuntimeError('no music matches intro for {}'.format(meta))
+        return found
+    for i in whole['intro']:
+        m = lookup_song(i)
+        if not 'intro' in m:
+            m['intro'] = list()
+        m['intro'].append(i['path'])
 
     return whole
 
@@ -124,8 +154,10 @@ def lint(defs):
 
     for m in defs['music']:
         check(m['path'])
-        if m['intro']:
-            check(m['intro'])
+        for i in m.get('intro', []):
+            check(i)
+    for i in defs['intro']:
+        check(i['path'])
 
     print('ok!')
 

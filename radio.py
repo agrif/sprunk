@@ -7,6 +7,7 @@ import shlex
 import urllib.parse
 import collections
 import traceback
+import datetime
 
 import click
 import requests
@@ -21,6 +22,7 @@ class Radio:
         self.padding = 0.5
         self.over_volume = 0.5
         self.no_repeat_percent = 0.5
+        self.intro_chance = 0.5
         self.random_lasts = collections.defaultdict(lambda: collections.deque())
 
         self.reload()
@@ -163,8 +165,27 @@ class Radio:
 
         # select a song randomly
         m = self.choice('music')
-        if random.random() < 0.5:
-            p = self.choice('general')
+        if random.random() < self.intro_chance:
+            # we want an intro, what are our choices...
+            p_choices = [self.choice('general')]
+
+            # time-based
+            hour = datetime.datetime.now().hour
+            if hour >= 4 and hour < 12:
+                p_choices.append(self.choice('time-morning'))
+            if hour >= 17 and hour < 24:
+                p_choices.append(self.choice('time-evening'))
+
+            # song-based
+            if m.get('intro', []):
+                p_choices.append(random.choice(m.get('intro')))
+
+            # filter and choose one randomly
+            p_choices = [p for p in p_choices if p is not None]
+            if p_choices:
+                p = random.choice(p_choices)
+            else:
+                p = None
         else:
             p = None
 
