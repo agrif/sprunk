@@ -303,7 +303,7 @@ def lint(definitions, extension):
 @click.argument('DEFINITIONS', nargs=-1)
 @click.option('-e', '--extension', default='ogg')
 @click.option('-m', '--meta-url')
-@click.option('-s', '--buffer-size', default=10, type=float)
+@click.option('-s', '--buffer-size', default=0.5, type=float)
 def radio(output, definitions, extension, meta_url, buffer_size):
     r = Radio(definitions, extension, meta_url)
     sched = sprunk.Scheduler(output.samplerate, output.channels)

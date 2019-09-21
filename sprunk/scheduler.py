@@ -39,8 +39,6 @@ class Scheduler(sprunk.sources.Source):
         startframe += self.frame_offset
         if startframe < 0:
             startframe = 0
-        if self.buffer is not None:
-            src.allocate(len(self.buffer))
         self.sources.append([startframe, src])
         if src.size:
             return src.size / self.samplerate
@@ -83,8 +81,6 @@ class Scheduler(sprunk.sources.Source):
         self.volume_ramp = [startframe, endframe, m, oldvolume, volume]
 
     def allocate(self, frames):
-        for _, src in self.sources:
-            src.allocate(frames)
         for src in self.active:
             src.allocate(frames)
         self.bufferframes = numpy.arange(0, frames)
@@ -151,6 +147,7 @@ class Scheduler(sprunk.sources.Source):
         # figure out which scheduled sources are now active,
         # and partially render them
         for start, src in self._process_schedule(self.sources, max):
+            src.allocate(len(self.buffer))
             if force_fill(self.buffer[start:max], src):
                 self.active.append(src)
 

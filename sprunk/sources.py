@@ -1,3 +1,5 @@
+import concurrent.futures
+
 import numpy
 import samplerate
 import soundfile
@@ -124,24 +126,38 @@ class Resample(Source):
         self.inner.seek(frame * self.inner.samplerate / self.samplerate)
 
 class Normalize(Source):
+    executor = concurrent.futures.ThreadPoolExecutor()
+
     def __init__(self, inner, loudness):
         super().__init__(inner.samplerate, inner.channels, size=inner.size)
         self.inner = inner
         self.loudness = loudness
-        self.meter = pyloudnorm.Meter(self.samplerate)
-        self.measured = self.meter.integrated_loudness(inner.read_all()[:, :5])
-        inner.seek(0)
+        self.worker = self.executor.submit(self._calculate_loudness)
+
+    def _calculate_loudness(self):
+        meter = pyloudnorm.Meter(self.samplerate)
+        measured = meter.integrated_loudness(self.inner.read_all()[:, :5])
+        self.inner.seek(0)
+        return measured
+
+    def _ensure_done(self):
+        if self.worker:
+            self.measured = self.worker.result()
+            self.worker = None
 
     def allocate(self, frames):
+        self._ensure_done()
         self.inner.allocate(frames)
         return super().allocate(frames)
 
     def fill(self, max=None):
+        self._ensure_done()
         filled = self.inner.fill(max=max)
         self.buffer[:] = pyloudnorm.normalize.loudness(self.inner.buffer, self.measured, self.loudness)
         return self.buffer[:len(filled)]
 
     def seek(self, frame):
+        self._ensure_done()
         self.inner.seek(frame)
 
 class FileSource(Source):
