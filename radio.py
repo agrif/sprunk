@@ -14,7 +14,7 @@ import requests
 import sprunk
 
 class Radio:
-    def __init__(self, definitions, extension='ogg', meta_url=None):
+    def __init__(self, definitions, extension='ogg', meta_url=None, loudness=-14.0):
         self.definition_files = definitions
         self.extension = extension
         self.defs = None
@@ -23,6 +23,7 @@ class Radio:
         self.over_volume = 0.5
         self.no_repeat_percent = 0.5
         self.intro_chance = 0.5
+        self.loudness = loudness
         self.random_lasts = collections.defaultdict(lambda: collections.deque())
 
         self.reload()
@@ -81,9 +82,9 @@ class Radio:
     def go_soft(self, soft_time, mainpath, overpath, meta, pre=0, post=None, force=False):
         if mainpath is None:
             return soft_time
-        main = sprunk.FileSource(mainpath)
+        main = sprunk.FileSource(mainpath).reformat_like(self.music).normalize(self.loudness)
         if overpath:
-            over = sprunk.FileSource(overpath)
+            over = sprunk.FileSource(overpath).reformat_like(self.talk).normalize(self.loudness)
         else:
             over = None
 
@@ -263,7 +264,7 @@ def cli():
 @click.option('-s', '--buffer-size', default=0.5, type=float)
 @input_argument('SRC')
 def play(output, src, buffer_size):
-    run(src, output, buffer_size=buffer_size)
+    run(src.reformat_like(output).normalize(), output, buffer_size=buffer_size)
 
 @sprunk.coroutine
 def over_coroutine(sched, song, over):
@@ -302,7 +303,7 @@ def lint(definitions, extension):
 @click.argument('DEFINITIONS', nargs=-1)
 @click.option('-e', '--extension', default='ogg')
 @click.option('-m', '--meta-url')
-@click.option('-s', '--buffer-size', default=0.5, type=float)
+@click.option('-s', '--buffer-size', default=10, type=float)
 def radio(output, definitions, extension, meta_url, buffer_size):
     r = Radio(definitions, extension, meta_url)
     sched = sprunk.Scheduler(output.samplerate, output.channels)

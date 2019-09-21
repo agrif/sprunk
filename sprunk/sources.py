@@ -1,6 +1,7 @@
 import numpy
 import samplerate
 import soundfile
+import pyloudnorm
 
 import sprunk.channels
 
@@ -24,6 +25,29 @@ class Source:
     def fill(self, max=None):
         raise NotImplementedError('Source.fill')
 
+    def seek(self, frame):
+        raise NotImplementedError('Source.seek')
+
+    def read_all(self):
+        if self.size is not None:
+            buf = numpy.zeros((self.size, self.channels))
+        else:
+            buf = numpy.zeros((1024 * 1024, self.channels))
+        if self.buffer is None:
+            self.allocate(1024 * 1024) # arbitrary!
+
+        i = 0
+        while True:
+            filled = self.fill()
+            l = len(filled)
+            if l == 0:
+                break
+            if i + l > len(buf):
+                buf.resize((len(buf), self.channels))
+            buf[i:i+l] = filled[:]
+            i += l
+        return buf[0:i]
+
     def remix(self, mix):
         return Mix(self, numpy.asarray(mix))
     
@@ -45,6 +69,9 @@ class Source:
     def reformat_like(self, other):
         return self.reformat(other.samplerate, other.channels)
 
+    def normalize(self, loudness=-14.0):
+        return Normalize(self, loudness)
+
 class Mix(Source):
     # mix has shape (new_channels, old_channels)
     def __init__(self, inner, mix):
@@ -61,6 +88,9 @@ class Mix(Source):
         filled = self.inner.fill(max=max)
         self.buffer[:] = self.inner.buffer @ self.mix.T
         return self.buffer[:len(filled)]
+
+    def seek(self, frame):
+        self.inner.seek(frame)
         
 class Resample(Source):
     def __init__(self, inner, newrate):
@@ -90,6 +120,30 @@ class Resample(Source):
         self.buffer[:len(proc)] = proc
         return self.buffer[:len(proc)]
 
+    def seek(self, frame):
+        self.inner.seek(frame * self.inner.samplerate / self.samplerate)
+
+class Normalize(Source):
+    def __init__(self, inner, loudness):
+        super().__init__(inner.samplerate, inner.channels, size=inner.size)
+        self.inner = inner
+        self.loudness = loudness
+        self.meter = pyloudnorm.Meter(self.samplerate)
+        self.measured = self.meter.integrated_loudness(inner.read_all()[:, :5])
+        inner.seek(0)
+
+    def allocate(self, frames):
+        self.inner.allocate(frames)
+        return super().allocate(frames)
+
+    def fill(self, max=None):
+        filled = self.inner.fill(max=max)
+        self.buffer[:] = pyloudnorm.normalize.loudness(self.inner.buffer, self.measured, self.loudness)
+        return self.buffer[:len(filled)]
+
+    def seek(self, frame):
+        self.inner.seek(frame)
+
 class FileSource(Source):
     def __init__(self, path):
         data = soundfile.SoundFile(path)
@@ -107,3 +161,6 @@ class FileSource(Source):
         if max is None:
             max = len(self.buffer)
         return self.data.read(out=self.buffer[:max])
+
+    def seek(self, frame):
+        self.data.seek(frame, soundfile.SEEK_SET)
