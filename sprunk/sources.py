@@ -123,7 +123,7 @@ class Resample(Source):
         return self.buffer[:len(proc)]
 
     def seek(self, frame):
-        self.inner.seek(frame * self.inner.samplerate / self.samplerate)
+        self.inner.seek(int(numpy.round(frame * self.inner.samplerate / self.samplerate)))
 
 class Normalize(Source):
     executor = concurrent.futures.ThreadPoolExecutor()
