@@ -14,9 +14,9 @@ import requests
 import sprunk
 
 class Radio:
-    def __init__(self, definitions, extension='ogg', meta_url=None, loudness=-14.0):
+    def __init__(self, definitions, extensions=None, meta_url=None, loudness=-14.0):
         self.definition_files = definitions
-        self.extension = extension
+        self.extensions = extensions
         self.defs = None
         self.meta_url = meta_url
         self.padding = 0.5
@@ -30,11 +30,11 @@ class Radio:
 
     def reload(self):
         if self.defs is None:
-            self.defs = sprunk.load_definitions(self.definition_files, self.extension)
+            self.defs = sprunk.load_definitions(self.definition_files, self.extensions)
         else:
             # we already have definitions, don't fail if this fails
             try:
-                self.defs = sprunk.load_definitions(self.definition_files, self.extension)
+                self.defs = sprunk.load_definitions(self.definition_files, self.extensions)
             except Exception as e:
                 print('Error while reloading definitions:', file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
@@ -293,19 +293,27 @@ def over(output, song, over, buffer_size):
 
 @cli.command()
 @click.argument('DEFINITIONS', nargs=-1)
-@click.option('-e', '--extension', default='ogg')
-def lint(definitions, extension):
-    defs = sprunk.load_definitions(definitions, extension)
+@click.option('-e', '--extensions', default=None)
+def lint(definitions, extensions):
+    if extensions:
+        extensions = extensions.split(',')
+    else:
+        extensions = None
+    defs = sprunk.load_definitions(definitions, extensions)
     return sprunk.definitions.lint(defs)
 
 @cli.command()
 @output_option
 @click.argument('DEFINITIONS', nargs=-1)
-@click.option('-e', '--extension', default='ogg')
+@click.option('-e', '--extensions', default=None)
 @click.option('-m', '--meta-url')
 @click.option('-s', '--buffer-size', default=0.5, type=float)
-def radio(output, definitions, extension, meta_url, buffer_size):
-    r = Radio(definitions, extension, meta_url)
+def radio(output, definitions, extensions, meta_url, buffer_size):
+    if extensions:
+        extensions = extensions.split(',')
+    else:
+        extensions = None
+    r = Radio(definitions, extensions, meta_url)
     sched = sprunk.Scheduler(output.samplerate, output.channels)
     r.go(sched)
     run(sched, output, buffer_size)
