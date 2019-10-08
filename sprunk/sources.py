@@ -120,6 +120,7 @@ class Resample(Source):
         else:
             proc = self.resampler.process(filled, self.ratio, end_of_input=True)
         self.buffer[:len(proc)] = proc
+        # FIXME len(proc) should == max, but sometimes it doesn't
         return self.buffer[:len(proc)]
 
     def seek(self, frame):

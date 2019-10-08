@@ -108,7 +108,11 @@ class Scheduler(sprunk.sources.Source):
         def force_fill(buf, src):
             filled = src.fill(max=len(buf))
             amount = len(filled)
-            buf[:amount] += filled
+            # this should be ensured by sources, but I'd rather skip samples
+            # than crash, so
+            if amount > len(buf):
+                amount = len(buf)
+            buf[:amount] += filled[:amount]
             if amount == 0:
                 return False
             if amount < len(buf):
