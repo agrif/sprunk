@@ -1,0 +1,34 @@
+prefix: ../bumps
+
+solo:
+  - bump17
+  - bump18
+  - bump34
+
+general:
+  #- bump19 # specific
+  #- bump20 # specific
+  #- bump21 # specific
+  #- bump22 # specific
+  - bump23
+  - bump24
+  - bump25
+  - bump26
+  - bump27
+  - bump28
+  #- bump29 # specific
+  #- bump30 # specific
+  - bump31
+  - bump32
+  #- bump33 # specific
+  #- bump35 # specific (?)
+  #- bump36 # specific
+  - bump37
+  #- bump38 # specific
+  - bump39
+  - bump40
+  - bump41
+  - bump42
+  #- hayashi # specific
+  #- warning # lol
+  - wave

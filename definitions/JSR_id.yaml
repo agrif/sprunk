@@ -1,0 +1,37 @@
+prefix: ../bumps
+
+id:
+  # old stuff
+  - bump1
+  - bump2
+
+  # new stuff
+  #- bump3
+  #- bump4
+  #- bump5
+  #- bump6
+  #- bump7
+  #- bump8
+  #- bump9
+
+  # new stuff style 2
+  #- bump10
+  #- bump11
+
+  # new stuff remix
+  - bump12
+  - bump13
+
+  # new stuff THX
+  #- bump14
+  #- bump15
+
+  # new stuff this is too much
+  #- bump16
+
+  # new stuff musical
+  - bump43
+  - bump44
+  - bump45
+  - bump46
+  

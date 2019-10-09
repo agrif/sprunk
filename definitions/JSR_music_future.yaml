@@ -1,0 +1,190 @@
+prefix: ../future
+
+music:
+  - path: bis - Statement of Intent (Remix)
+    title: Statement of Intent (Remix)
+    artist: bis
+    pre: 0:10
+    post: 2:43
+
+  - path: Bran Van 3000 - The Answer (The Latch Brothers Remix)
+    title: The Answer (The Latch Brothers Remix)
+    artist: Bran Van 3000
+    pre: 0:11
+    post: 4:10
+
+  - path: BS 2000 - The Scrappy (The Latch Brothers Remix)
+    title: The Scrappy (The Latch Brothers Remix)
+    artist: BS 2000
+    pre: 0:13
+    post: 2:40
+
+  - path: Cibo Matto - Birthday Cake
+    title: Birthday Cake
+    artist: Cibo Matto
+    pre: 0:11
+    post: 2:48
+
+  - path: Guitar Vader - Baby-T
+    title: Baby-T
+    artist: Guitar Vader
+    pre: 0:03
+    post: 1:34
+
+  - path: Guitar Vader - I Love Love You (Love Love Super Dimension Mix)
+    title: I Love Love You (Love Love Super Dimension Mix)
+    artist: Guitar Vader
+    pre: 0:14
+    post: 4:22
+
+  - path: Hideki Naganuma - Fly Like a Butterfly
+    title: Fly Like a Butterfly
+    artist: Hideki Naganuma
+    pre: 0:14
+    post: 3:20
+
+  - path: Hideki Naganuma - Funky Dealer
+    title: Funky Dealer
+    artist: Hideki Naganuma
+    pre: 0:00
+    post: 3:30
+
+  - path: Hideki Naganuma - Grace & Glory (B.B. M.H. Mix)
+    title: Grace & Glory (B.B. M.H. Mix)
+    artist: Hideki Naganuma
+    pre: 0:20
+    post: 3:30
+
+  - path: Hideki Naganuma - Humming the Bassline (D.S. Remix)
+    title: Humming the Bassline (D.S. Remix)
+    artist: Hideki Naganuma
+    pre: 0:10
+    post: 4:00
+
+  # no medleys
+  #- path: Hideki Naganuma - Jet Set Medley Future
+  #  title: Jet Set Medley Future
+  #  artist: Hideki Naganuma
+  #  pre: 0:04
+  #  post: 3:47
+
+  - path: Hideki Naganuma - Let Mom Sleep (No Sleep Remix)
+    title: Let Mom Sleep (No Sleep Remix)
+    artist: Hideki Naganuma
+    pre: 0:07
+    post: 3:10
+
+  - path: Hideki Naganuma - Like It Like This Like That
+    title: Like It Like This Like That
+    artist: Hideki Naganuma
+    pre: 0:07
+    post: 3:45
+
+  - path: Hideki Naganuma - Oldies But Happies
+    title: Oldies But Happies
+    artist: Hideki Naganuma
+    pre: 0:02
+    post: 3:05
+
+  - path: Hideki Naganuma - Rock It On (D.S. Remix)
+    title: Rock It On (D.S. Remix)
+    artist: Hideki Naganuma
+    pre: 0:04
+    post: 6:20
+
+  - path: Hideki Naganuma - Shape Da Future
+    title: Shape Da Future
+    artist: Hideki Naganuma
+    pre: 0:05
+    post: 3:45
+
+  - path: Hideki Naganuma - Sneakman (Toronto Mix)
+    title: Sneakman (Toronto Mix)
+    artist: Hideki Naganuma
+    pre: 0:05
+    post: 4:00
+
+  - path: Hideki Naganuma - Sweet Soul Brother (B.B. Rights Mix)
+    title: Sweet Soul Brother (B.B. Rights Mix)
+    artist: Hideki Naganuma
+    pre: 0:14
+    post: 3:05
+
+  - path: Hideki Naganuma - Teknopathetic
+    title: Teknopathetic
+    artist: Hideki Naganuma
+    pre: 0:00
+    post: 3:43
+
+  - path: Hideki Naganuma - That's Enough (B.B. Rights Mix)
+    title: That's Enough (B.B. Rights Mix)
+    artist: Hideki Naganuma
+    pre: 0:02
+    post: 3:20
+
+  - path: Hideki Naganuma - The Concept of Love
+    title: The Concept of Love
+    artist: Hideki Naganuma
+    pre: 0:04
+    post: 3:38
+
+  - path: Richard Jacques - Bokfresh
+    title: Bokfresh
+    artist: Richard Jacques
+    pre: 0:08
+    post: 3:20
+
+  - path: Richard Jacques - What About the Future
+    title: What About the Future
+    artist: Richard Jacques
+    pre: 0:14
+    post: 4:07
+
+  # what even
+  #- path: Russell Simins - I'm Not a Model
+  #  title: I'm Not a Model
+  #  artist: Russell Simins
+  #  pre: 0:24
+  #  post: 4:30
+
+  - path: Scapegoat Wax - Aisle 10 (Hello Allison)
+    title: Aisle 10 (Hello Allison)
+    artist: Scapegoat Wax
+    pre: 0:08
+    post: 3:30
+
+  - path: The Latch Brothers - Count Latchula
+    title: Count Latchula
+    artist: The Latch Brothers
+    pre: 0:15
+    post: 3:40
+
+  - path: The Latch Brothers - Ill Victory Beat
+    title: Ill Victory Beat
+    artist: The Latch Brothers
+    pre: 0:06
+    post: 3:15
+
+  - path: The Latch Brothers - Koto Stomp
+    title: Koto Stomp
+    artist: The Latch Brothers
+    pre: 0:08
+    post: 3:10
+
+  - path: The Latch Brothers - Latch Brother Bounce
+    title: Latch Brother Bounce
+    artist: The Latch Brothers
+    pre: 0:05
+    post: 4:25
+
+  - path: The Latch Brothers - Me Likey the Poom Poom
+    title: Me Likey the Poom Poom
+    artist: The Latch Brothers
+    pre: 0:13
+    post: 3:20
+
+  - path: The Prunes - Rockin' the Mic (The Latch Brothers Remix)
+    title: Rockin' the Mic (The Latch Brothers Remix)
+    artist: The Prunes
+    pre: 0:10
+    post: 3:30

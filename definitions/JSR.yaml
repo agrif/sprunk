@@ -1,0 +1,6 @@
+name: Jet Set Radio
+include:
+  - JSR_id.yaml
+  - JSR_host.yaml
+  #- JSR_music_classic.yaml
+  - JSR_music_future.yaml
