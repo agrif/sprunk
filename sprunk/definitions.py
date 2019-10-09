@@ -38,7 +38,10 @@ MUSIC_OPTIONAL_KEYS = [
     'album',
 ]
 
-def load_definitions(files, extension):
+def load_definitions(files, extensions=None):
+    if extensions is None:
+        extensions = ['wav', 'flac', 'ogg']
+
     whole = {'music': [], 'name': 'Sprunk', 'intro': []}
     for k in DEF_KEYS:
         if k in SPECIAL_KEYS:
@@ -47,8 +50,16 @@ def load_definitions(files, extension):
 
     def locate_file(base, fname, ext=None):
         if ext is None:
-            ext = '.' + extension
-        return os.path.abspath(os.path.join(base, fname) + ext)
+            exts = ['.' + e for e in extensions]
+        else:
+            exts = [ext]
+        for ext in exts:
+            p = os.path.abspath(os.path.join(base, fname) + ext)
+            if os.path.exists(p):
+                return p
+        else:
+            p = os.path.abspath(os.path.join(base, fname))
+            raise RuntimeError('could not locate: {}'.format(p))
 
     def locate_files(base, data, key):
         l = data.get(key, [])
