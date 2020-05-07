@@ -1,0 +1,7 @@
+name: Radio Mirror Park
+include:
+  - RADIO_16_SILVERLAKE_id.yaml
+  - RADIO_16_SILVERLAKE_host.yaml
+  - RADIO_16_SILVERLAKE_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

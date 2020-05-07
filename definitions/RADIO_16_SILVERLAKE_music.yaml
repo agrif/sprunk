@@ -1,0 +1,273 @@
+prefix: ../RADIO_16_SILVERLAKE
+
+music:
+  - path: always/ALWAYS
+    title: Always
+    artist: Panama
+    album: Always
+    pre: 0:00
+    post: 3:20
+
+  - path: boogie_in_zero_gravity/BOOGIE_IN_ZERO_GRAVITY
+    title: Boogie in Zero Gravity
+    artist: Black Strobe
+    album: Boogie in Zero Gravity
+    pre: 0:15
+    post: 3:30
+
+  - path: change_of_coast/CHANGE_OF_COAST
+    title: Change of Coast
+    artist: Neon Indian
+    pre: 0:00
+    post: 2:50
+
+  - path: colours/COLOURS
+    title: Colours
+    artist: Age of Consent
+    pre: 0:16
+    post: 3:20
+
+  - path: crystalfilm/CRYSTALFILM
+    title: Crystalfilm
+    artist: Little Dragon
+    album: Ritual Union
+    pre: 0:13
+    post: 3:30
+
+  - path: dark_matter/DARK_MATTER
+    title: Dark Matter
+    artist: Feathers
+    album: If All Now Here
+    pre: 0:08
+    post: 3:05
+
+  - path: do_you_believe/DO_YOU_BELIEVE
+    title: Do You Believe
+    artist: Poolside
+    album: Do You Believe
+    pre: 0:23
+    post: 3:20
+
+  - path: dont_come_close/DONT_COME_CLOSE
+    title: "Don't Come Close"
+    artist: Yeasayer
+    pre: 0:10
+    post: 2:50
+
+  - path: feel_the_same/FEEL_THE_SAME
+    title: Feel the Same
+    artist: Battle Tapes
+    album: Sweatshop Boys
+    pre: 0:28
+    post: 3:10
+
+  - path: flutes/FLUTES
+    title: Flutes
+    artist: Hot Chip
+    album: In Our Heads
+    pre: 0:24
+    post: 3:45
+
+  - path: forget/FORGET
+    title: Forget
+    artist: Twin Shadow
+    album: Forget
+    pre: 0:23
+    post: 3:25
+
+  - path: from_nowhere/FROM_NOWHERE
+    title: "From Nowhere (Baardsen Remix)"
+    artist: Dan Croll
+    album: From Nowhere
+    pre: 0:20
+    post: 3:20
+
+  - path: heart_in_the_pipes/HEART_IN_THE_PIPES
+    title: "Heart In The Pipes (KAUF Remix)"
+    artist: Tony Castles
+    pre: 0:00
+    post: 3:33
+
+  - path: heartbreak/HEARTBREAK
+    title: Heartbreak
+    artist: Age of Consent
+    album: Heartbreak
+    pre: 0:16
+    post: 3:10
+
+  - path: high_pressure/HIGH_PRESSURE
+    title: High Pressure Dave
+    artist: HEALTH
+    pre: 0:31
+    post: 2:40
+
+  - path: hold_on_holy_ghost/HOLD_ON_HOLY_GHOST
+    title: Hold On
+    artist: "Holy Ghost!"
+    album: Hold On
+    pre: 0:16
+    post: 5:20
+
+  - path: in_real_life/IN_REAL_LIFE
+    title: In Real Life
+    artist: The Ruby Suns
+    album: Christopher
+    pre: 0:15
+    post: 3:10
+
+  - path: jasmine/JASMINE
+    title: "Jasmine (Demo Version)"
+    artist: Jai Paul
+    pre: 0:15
+    post: 3:20
+
+  - path: little_white_lie/LITTLE_WHITE_LIE
+    title: Little White Lie
+    artist: Living Days
+    album: Little White Lie
+    pre: 0:00
+    post: 2:30
+
+  - path: living_in_america/LIVING_IN_AMERICA
+    title: Living In America
+    artist: DOM
+    album: Sun Bronzed Greek Gods
+    pre: 0:13
+    post: 2:40
+
+  - path: lucky_boy/LUCKY_BOY
+    title: "Lucky Boy (Outlines Remix)"
+    artist: DJ Mehdi
+    album: Lucky Boy
+    pre: 0:00
+    post: 3:20
+
+  - path: mesmerized/MESMERIZED
+    title: Mesmerised
+    artist: Scenic
+    album: Shockwaves
+    pre: 0:06
+    post: 3:15
+
+  - path: new_beat/NEW_BEAT
+    title: New Beat
+    artist: Toro y Moi
+    album: Underneath the Pine
+    pre: 0:16
+    post: 3:40
+
+  - path: nowhere_to_go/NOWHERE_TO_GO
+    title: Nowhere To Go
+    artist: Nite Jewel
+    pre: 0:13
+    post: 3:00
+
+  - path: o_n_e/O_N_E
+    title: O.N.E
+    artist: Yeasayer
+    album: Odd Blood
+    pre: 0:16
+    post: 4:00
+
+  - path: old_love/OLD_LOVE
+    title: "Old Love / New Love (feat. D'Angelo Lacy)"
+    artist: Twin Shadow
+    pre: 0:04
+    post: 3:44
+
+  - path: one_girl_one_boy/ONE_GIRL_ONE_BOY
+    title: One Girl / One Boy
+    artist: "!!!"
+    album: "Thr!!er"
+    pre: 0:08
+    post: 2:55
+
+  - path: pharaohs/PHARAOHS
+    title: Pharaohs (feat. Roses Gabor)
+    artist: SBTRKT
+    album: SKTRKT
+    pre: 0:13
+    post: 3:00
+
+  - path: polish_girl/POLISH_GIRL
+    title: Polish Girl
+    artist: Neon Indian
+    album: Era Extraña
+    pre: 0:16
+    post: 4:00
+
+  - path: psychic_city/PSYCHIC_CITY
+    title: "Psychic City (Classixx Remix)"
+    artist: Y.A.C.H.T
+    album: See Mystery Lights
+    pre: 0:26
+    post: 3:14
+
+  - path: shine_a_light/SHINE_A_LIGHT
+    title: "Shine A Light (Flight Facilities Remix)"
+    artist: The C90s
+    album: Shine A Light
+    pre: 0:18
+    post: 3:40
+
+  - path: shooting_holes/SHOOTING_HOLES
+    title: Shooting Holes
+    artist: Twin Shadow
+    album: Forget
+    pre: 0:09
+    post: 2:55
+
+  - path: sleepwalking/SLEEPWALKING
+    title: Sleepwalking
+    artist: The Chain Gang of 1974
+    album: Daydream Forever
+    pre: 0:08
+    post: 3:00
+
+  - path: so_many_details/SO_MANY_DETAILS
+    title: So Many Details
+    artist: Toro y Moi
+    album: So Many Details
+    pre: 0:12
+    post: 3:35
+
+  - path: sometimes/SOMETIMES
+    title: Sometimes
+    artist: Miami Horror
+    album: Illumination
+    pre: 0:27
+    post: 3:10
+
+  - path: strangers_in_the_wind/STRANGERS_IN_THE_WIND
+    title: Strangers in the Wind
+    artist: Cut Copy
+    album: In Ghost Colours
+    pre: 0:16
+    post: 3:55
+
+  - path: the_drummer/THE_DRUMMER
+    title: The Drummer
+    artist: "Niki & The Dove"
+    album: The Drummer
+    pre: 0:10
+    post: 3:10
+
+  - path: the_set_up/THE_SET_UP
+    title: The Setup
+    artist: Favored Nations
+    album: The Great Unknown
+    pre: 0:08
+    post: 3:00
+
+  - path: truly_alive/TRULY_ALIVE
+    title: Truly Alive
+    artist: Mitzi
+    pre: 0:16
+    post: 4:00
+
+  - path: when_youre_out/WHEN_YOURE_OUT
+    title: "When You're Out"
+    artist: KAUF
+    album: As Much Again
+    pre: 0:08
+    post: 4:00
