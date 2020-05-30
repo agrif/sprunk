@@ -112,351 +112,329 @@ time-morning:
   - time/MORNING_06
 
 intro:
-  - path: intro/0x0A242E76
-    title: Moves Like Jagger
-    artist: Maroon 5
-
-  - path: intro/0x0A849B9A
-    title: Midnight City
-    artist: M83
-
-  - path: intro/0x0A221730
-    title: Promises, Promises
-    artist: Naked Eyes
-
-  - path: intro/0x0AC1810E
-    title: Lady (Hear Me Tonight)
-    artist: Modjo
-
-  - path: intro/0x0BECEC0C
-    title: Scandalous
-    artist: Mis-Teeq
-
-  - path: intro/0x0BEE766B
-    title: Gimme More
-    artist: Britney Spears
-
-  - path: intro/0x0C14E150
-    title: New Sensation
-    artist: INXS
-
-  - path: intro/0x0CA6BA3B
-    title: Living In A Box
-    artist: Living In A Box
-
-  - path: intro/0x0D5D7DF5
-    title: Feel Good Inc.
-    artist: Gorillaz
-
-  - path: intro/0x0D774C5E
-    title: The Time Is Now
-    artist: Moloko
-
-  - path: intro/0x0D503357
-    title: Only Girl (In The World)
-    artist: Rihanna
-
-  - path: intro/0x0DC1FFB9
-    title: With Every Heartbeat
-    artist: Kleerup & Robyn
-
-  - path: intro/0x0DCE021F
-    title: 6 Underground
-    artist: Sneaker Pimps
-
-  - path: intro/0x0DFB9B44
-    title: Something Got Me Started (Hurley's House Mix)
-    artist: Simply Red
-
-  - path: intro/0x0F6ED215
-    title: Let's Go All the Way
-    artist: Sly Fox
-
-  - path: intro/0x0FA856DC
-    title: Bad Girls
-    artist: M.I.A.
-
-  - path: intro/0x0FD58578
-    title: Tell It to My Heart
-    artist: Taylor Dayne
-
-  - path: intro/0x01B3B69E
-    title: Let's Go All the Way
-    artist: Sly Fox
-
-  - path: intro/0x01D23513
-    title: The Time Is Now
-    artist: Moloko
-
-  - path: intro/0x1A284883
-    title: Scandalous
-    artist: Mis-Teeq
-
-  - path: intro/0x1AAFBC22
-    title: Tennis Court
-    artist: Lorde
-
-  - path: intro/0x1ADAED40
-    title: Bad Girls
-    artist: M.I.A.
-
-  - path: intro/0x1B0C1B67
-    title: Music Sounds Better With You
-    artist: Stardust
-
-  - path: intro/0x1BEF3ACA
-    title: Promises, Promises
-    artist: Naked Eyes
-
-  - path: intro/0x1C6FB36F
+  - path: intro/ADULT_EDUCATION_01
     title: Adult Education
     artist: Daryl Hall & John Oates
 
-  - path: intro/0x1C483A1A
+  - path: intro/ADULT_EDUCATION_02
+    title: Adult Education
+    artist: Daryl Hall & John Oates
+
+  - path: intro/ANTHEM_01
+    title: Anthem
+    artist: N-Joi
+
+  - path: intro/ANTHEM_02
+    title: Anthem
+    artist: N-Joi
+
+  - path: intro/APPLAUSE_01
+    title: Applause
+    artist: Lady Gaga
+
+  - path: intro/APPLAUSE_02
+    title: Applause
+    artist: Lady Gaga
+
+  - path: intro/BAD_GIRLS_01
+    title: Bad Girls
+    artist: M.I.A.
+
+  - path: intro/BAD_GIRLS_02
+    title: Bad Girls
+    artist: M.I.A.
+
+  #- path: intro/CIRCLE_IN_THE_SAND_01
+  #  title: Circle in the Sand
+  #  artist: Belinda Carlisle
+
+  #- path: intro/CIRCLE_IN_THE_SAND_02
+  #  title: Circle in the Sand
+  #  artist: Belinda Carlisle
+
+  - path: intro/COOLER_THAN_ME_01
+    title: Cooler Than Me
+    artist: Mike Posner
+
+  - path: intro/COOLER_THAN_ME_02
+    title: Cooler Than Me
+    artist: Mike Posner
+
+  - path: intro/DAYS_GO_BY_01
+    title: Days Go By
+    artist: Dirty Vegas
+
+  - path: intro/DAYS_GO_BY_02
+    title: Days Go By
+    artist: Dirty Vegas
+
+  - path: intro/DONT_WANNA_FALL_IN_LOVE_01
+    title: Don't Wanna Fall in Love
+    artist: Jane Child
+
+  - path: intro/DONT_WANNA_FALL_IN_LOVE_02
+    title: Don't Wanna Fall in Love
+    artist: Jane Child
+
+  - path: intro/EVERYTHING_SHE_WANTS_01
+    title: Everything She Wants
+    artist: Wham!
+
+  - path: intro/EVERYTHING_SHE_WANTS_02
+    title: Everything She Wants
+    artist: Wham!
+
+  - path: intro/FEEL_GOOD_INC_01
+    title: Feel Good Inc.
+    artist: Gorillaz
+
+  - path: intro/FEEL_GOOD_INC_02
+    title: Feel Good Inc.
+    artist: Gorillaz
+
+  - path: intro/GIMME_MORE_01
+    title: Gimme More
+    artist: Britney Spears
+
+  - path: intro/GIMME_MORE_02
+    title: Gimme More
+    artist: Britney Spears
+
+  - path: intro/GLAMOROUS_01
+    title: Glamorous
+    artist: Fergie
+
+  - path: intro/GLAMOROUS_02
+    title: Glamorous
+    artist: Fergie
+
+  - path: intro/I_WANT_IT_THAT_WAY_01
+    title: I Want It That Way
+    artist: Backstreet Boys
+
+  - path: intro/I_WANT_IT_THAT_WAY_02
+    title: I Want It That Way
+    artist: Backstreet Boys
+
+  - path: intro/KIDS_01
     title: Kids
     artist: Robbie Williams & Kylie Minogue
 
-  - path: intro/0x1CA67602
-    title: Smalltown Boy
-    artist: Bronski Beat
+  - path: intro/KIDS_02
+    title: Kids
+    artist: Robbie Williams & Kylie Minogue
 
-  - path: intro/0x1D9D2107
-    title: Tell It to My Heart
-    artist: Taylor Dayne
+  - path: intro/LADY_HEAR_ME_TONIGHT_01
+    title: Lady (Hear Me Tonight)
+    artist: Modjo
 
-  - path: intro/0x1DA6209B
-    title: Music Sounds Better With You
-    artist: Stardust
+  - path: intro/LADY_HEAR_ME_TONIGHT_02
+    title: Lady (Hear Me Tonight)
+    artist: Modjo
 
-  - path: intro/0x1DBCD430
-    title: Only Girl (In The World)
-    artist: Rihanna
+  - path: intro/LETS_GO_ALL_THE_WAY_01
+    title: Let's Go All the Way
+    artist: Sly Fox
 
-  - path: intro/0x1DE515F8
-    title: Moves Like Jagger
-    artist: Maroon 5
+  - path: intro/LETS_GO_ALL_THE_WAY_02
+    title: Let's Go All the Way
+    artist: Sly Fox
 
-  - path: intro/0x1ECC1E86
+  - path: intro/LIVING_IN_A_BOX_01
     title: Living In A Box
     artist: Living In A Box
 
-  - path: intro/0x1F946939
+  - path: intro/LIVING_IN_A_BOX_02
+    title: Living In A Box
+    artist: Living In A Box
+
+  - path: intro/ME_AND_YOU_01
+    title: Me & U
+    artist: Cassie
+
+  - path: intro/ME_AND_YOU_02
+    title: Me & U
+    artist: Cassie
+
+  - path: intro/MEET_ME_HALFWAY_01
+    title: Meet Me Halfway
+    artist: The Black Eyed Peas
+
+  - path: intro/MEET_ME_HALFWAY_02
+    title: Meet Me Halfway
+    artist: The Black Eyed Peas
+
+  - path: intro/MIDNIGHT_CITY_01
+    title: Midnight City
+    artist: M83
+
+  - path: intro/MIDNIGHT_CITY_02
+    title: Midnight City
+    artist: M83
+
+  - path: intro/MOVES_LIKE_JAGGER_01
+    title: Moves Like Jagger
+    artist: Maroon 5
+
+  - path: intro/MOVES_LIKE_JAGGER_02
+    title: Moves Like Jagger
+    artist: Maroon 5
+
+  - path: intro/MUSIC_SOUNDS_BETTER_WITH_YOU_01
+    title: Music Sounds Better With You
+    artist: Stardust
+
+  - path: intro/MUSIC_SOUNDS_BETTER_WITH_YOU_02
+    title: Music Sounds Better With You
+    artist: Stardust
+
+  - path: intro/NEW_SENSATION_01
+    title: New Sensation
+    artist: INXS
+
+  - path: intro/NEW_SENSATION_02
+    title: New Sensation
+    artist: INXS
+
+  - path: intro/ON_OUR_OWN_01
+    title: On Our Own
+    artist: Bobby Brown
+
+  - path: intro/ON_OUR_OWN_02
+    title: On Our Own
+    artist: Bobby Brown
+
+  - path: intro/ONE_THING_01
+    title: 1 Thing
+    artist: Amerie
+
+  - path: intro/ONE_THING_02
+    title: 1 Thing
+    artist: Amerie
+
+  - path: intro/ONLY_GIRL_IN_THE_WORLD_01
+    title: Only Girl (In The World)
+    artist: Rihanna
+
+  - path: intro/ONLY_GIRL_IN_THE_WORLD_02
+    title: Only Girl (In The World)
+    artist: Rihanna
+
+  - path: intro/PROMISES_PROMISES_01
+    title: Promises, Promises
+    artist: Naked Eyes
+
+  - path: intro/PROMISES_PROMISES_02
+    title: Promises, Promises
+    artist: Naked Eyes
+
+  - path: intro/PURE_SHORES_01
+    title: Pure Shores
+    artist: All Saints
+
+  - path: intro/PURE_SHORES_02
+    title: Pure Shores
+    artist: All Saints
+
+  - path: intro/RYTHM_OF_THE_NIGHT_01
     title: The Rhythm of the Night
     artist: Corona
+
+  - path: intro/RYTHM_OF_THE_NIGHT_02
+    title: The Rhythm of the Night
+    artist: Corona
+
+  - path: intro/SCANDALOUS_01
+    title: Scandalous
+    artist: Mis-Teeq
+
+  - path: intro/SCANDALOUS_02
+    title: Scandalous
+    artist: Mis-Teeq
 
   - path: intro/0x1FA3937A
     title: Scandalous
     artist: Mis-Teeq
 
-  - path: intro/0x1FFE6431
-    title: With Every Heartbeat
-    artist: Kleerup & Robyn
+  - path: intro/SIX_UNDERGROUND_01
+    title: 6 Underground
+    artist: Sneaker Pimps
 
-  - path: intro/0x02ED0580
-    title: On Our Own
-    artist: Bobby Brown
+  - path: intro/SIX_UNDERGROUND_02
+    title: 6 Underground
+    artist: Sneaker Pimps
 
-  - path: intro/0x05FA52B6
-    title: Tennis Court
-    artist: Lorde
+  - path: intro/SMALLTOWN_BOY_01
+    title: Smalltown Boy
+    artist: Bronski Beat
 
-  - path: intro/0x06A21354
-    title: Days Go By
-    artist: Dirty Vegas
+  - path: intro/SMALLTOWN_BOY_02
+    title: Smalltown Boy
+    artist: Bronski Beat
 
-  - path: intro/0x06CAC712
-    title: Anthem
-    artist: N-Joi
+  - path: intro/SOMETHING_GOT_ME_STARTED_REMIX_01
+    title: Something Got Me Started (Hurley's House Mix)
+    artist: Simply Red
 
-  - path: intro/0x07C64290
-    title: Cooler Than Me
-    artist: Mike Posner
-
-  - path: intro/0x09C21C1A
-    title: Pure Shores
-    artist: All Saints
-
-    # path: intro/0x09FBFDF6
-    # artist: Belinda Carlisle
-
-    # path: intro/0x10AFCB5F
-    # title: Circle in the Sand
-    # artist: Belinda Carlisle
-
-  - path: intro/0x10B1501B
-    title: 1 Thing
-    artist: Amerie
-
-  - path: intro/0x10BBA11D
-    title: On Our Own
-    artist: Bobby Brown
+  - path: intro/SOMETHING_GOT_ME_STARTED_REMIX_02
+    title: Something Got Me Started (Hurley's House Mix)
+    artist: Simply Red
 
   - path: intro/0x12C8ED94
     title: Something Got Me Started (Hurley's House Mix)
     artist: Simply Red
 
-  - path: intro/0x15D9B87A
-    title: West End Girls
-    artist: Pet Shop Boys
+  - path: intro/0x00934929
+    title: Something Got Me Started (Hurley's House Mix)
+    artist: Simply Red
 
-  - path: intro/0x15FF42E3
-    title: Meet Me Halfway
-    artist: The Black Eyed Peas
-
-  - path: intro/0x16D22F2F
-    title: Kids
-    artist: Robbie Williams & Kylie Minogue
-
-  - path: intro/0x16F02A96
-    title: Smalltown Boy
-    artist: Bronski Beat
-
-  - path: intro/0x18B10EE6
+  - path: intro/TAPE_LOOP_01
     title: Tape Loop (Diabolical Brothers Remix)
     artist: Morcheeba
 
-  - path: intro/0x18B479FD
-    title: Pure Shores
-    artist: All Saints
-
-  - path: intro/0x18C1FAA8
-    title: New Sensation
-    artist: INXS
-
-  - path: intro/0x18D41845
-    title: 6 Underground
-    artist: Sneaker Pimps
-
-  - path: intro/0x18DC549E
-    title: Work (Freemasons Remix)
-    artist: Kelly Rowland
-
-  - path: intro/0x032E2998
-    title: Feel Good Inc.
-    artist: Gorillaz
-
-  - path: intro/0x053D7D7E
-    title: Cooler Than Me
-    artist: Mike Posner
-
-  - path: intro/0x069D2BC9
-    title: Gimme More
-    artist: Britney Spears
-
-  - path: intro/0x073C4216
-    title: Me & U
-    artist: Cassie
-
-  - path: intro/0x078A31F9
-    title: Work (Freemasons Remix)
-    artist: Kelly Rowland
-
-  - path: intro/0x091E3772
-    title: Applause
-    artist: Lady Gaga
-
-  - path: intro/0x115E694D
-    title: Midnight City
-    artist: M83
-
-  - path: intro/0x143B5287
-    title: The Rhythm of the Night
-    artist: Corona
-
-  - path: intro/0x153F540B
-    title: I Want It That Way
-    artist: Backstreet Boys
-
-  - path: intro/0x0168AE5C
-    title: Lady (Hear Me Tonight)
-    artist: Modjo
-
-  - path: intro/0x170DE1B9
-    title: Me & U
-    artist: Cassie
-
-  - path: intro/0x181C21A8
-    title: The Time Is Now
-    artist: Moloko
-
-  - path: intro/0x0529B90F
-    title: 1 Thing
-    artist: Amerie
-
-  - path: intro/0x0548A176
-    title: Meet Me Halfway
-    artist: The Black Eyed Peas
-
-  - path: intro/0x0666EA51
+  - path: intro/TAPE_LOOP_02
     title: Tape Loop (Diabolical Brothers Remix)
     artist: Morcheeba
-
-  - path: intro/0x0678B67E
-    title: I Want It That Way
-    artist: Backstreet Boys
 
   - path: intro/0x0891AEA7
     title: Tape Loop (Diabolical Brothers Remix)
     artist: Morcheeba
 
-  - path: intro/0x1104C5A2
-    title: Glamorous
-    artist: Fergie
-
-  - path: intro/0x1940B1CE
-    title: Something Got Me Started (Hurley's House Mix)
-    artist: Simply Red
-
-  - path: intro/0x004773FA
-    title: Don't Wanna Fall in Love
-    artist: Jane Child
-
-  - path: intro/0x06843DE0
-    title: Everything She Wants
-    artist: Wham!
-
-  - path: intro/0x08151CF1
-    title: West End Girls
-    artist: Pet Shop Boys
-
-  - path: intro/0x11465D1B
-    title: Adult Education
-    artist: Daryl Hall & John Oates
-
   - path: intro/0x132043CD
     title: Tape Loop (Diabolical Brothers Remix)
     artist: Morcheeba
 
-  - path: intro/0x0143661F
-    title: Glamorous
-    artist: Fergie
+  - path: intro/0x0FD58578
+    title: Tell It to My Heart
+    artist: Taylor Dayne
 
-  - path: intro/0x175493DF
-    title: Applause
-    artist: Lady Gaga
+  - path: intro/0x1D9D2107
+    title: Tell It to My Heart
+    artist: Taylor Dayne
 
-    # "You know I had to do this song"
-    # path: intro/0x0853017E
+  - path: intro/TENNIS_COURT_01
+    title: Tennis Court
+    artist: Lorde
 
-  - path: intro/0x00934929
-    title: Something Got Me Started (Hurley's House Mix)
-    artist: Simply Red
+  - path: intro/TENNIS_COURT_02
+    title: Tennis Court
+    artist: Lorde
 
-  - path: intro/0x1201976F
-    title: Don't Wanna Fall in Love
-    artist: Jane Child
+  - path: intro/THE_TIME_IS_NOW_01
+    title: The Time Is Now
+    artist: Moloko
 
-  - path: intro/0x1408618D
-    title: Anthem
-    artist: N-Joi
+  - path: intro/THE_TIME_IS_NOW_02
+    title: The Time Is Now
+    artist: Moloko
+
+  - path: intro/0x01D23513
+    title: The Time Is Now
+    artist: Moloko
 
   - path: intro/0x12809670
     title: The Time Is Now
     artist: Moloko
-
-  - path: intro/0x18047617
-    title: Days Go By
-    artist: Dirty Vegas
 
   - path: intro/WAIT_01
     title: Wait
@@ -465,3 +443,27 @@ intro:
   - path: intro/WAIT_02
     title: Wait
     artist: Dr. Robert & Kym Mazelle
+
+  - path: intro/WEST_END_GIRLS_01
+    title: West End Girls
+    artist: Pet Shop Boys
+
+  - path: intro/WEST_END_GIRLS_02
+    title: West End Girls
+    artist: Pet Shop Boys
+
+  - path: intro/WITH_EVERY_HEARTBEAT_01
+    title: With Every Heartbeat
+    artist: Kleerup & Robyn
+
+  - path: intro/WITH_EVERY_HEARTBEAT_02
+    title: With Every Heartbeat
+    artist: Kleerup & Robyn
+
+  - path: intro/WORK_01
+    title: Work (Freemasons Remix)
+    artist: Kelly Rowland
+
+  - path: intro/WORK_02
+    title: Work (Freemasons Remix)
+    artist: Kelly Rowland
