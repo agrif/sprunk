@@ -71,7 +71,255 @@ time-morning:
   - time/MORNING_03
   - time/MORNING_04
 
-# intro:
-#   - path: intro/XXX
-#     title: XXX
-#     artist: XXX
+intro:
+  - path: intro/ALWAYS_01
+    title: Always
+    artist: Panama
+
+  - path: intro/ALWAYS_02
+    title: Always
+    artist: Panama
+
+  - path: intro/BOOGIE_IN_ZERO_GRAVITY_01
+    title: Boogie in Zero Gravity
+    artist: Black Strobe
+
+  - path: intro/BOOGIE_IN_ZERO_GRAVITY_02
+    title: Boogie in Zero Gravity
+    artist: Black Strobe
+
+  - path: intro/CRYSTALFILM_01
+    title: Crystalfilm
+    artist: Little Dragon
+
+  - path: intro/CRYSTALFILM_02
+    title: Crystalfilm
+    artist: Little Dragon
+
+  - path: intro/DARK_MATTER_01
+    title: Dark Matter
+    artist: Feathers
+
+  - path: intro/DARK_MATTER_02
+    title: Dark Matter
+    artist: Feathers
+
+  - path: intro/DO_YOU_BELIEVE_01
+    title: Do You Believe
+    artist: Poolside
+
+  - path: intro/DO_YOU_BELIEVE_02
+    title: Do You Believe
+    artist: Poolside
+
+  - path: intro/DONT_COME_CLOSE_01
+    title: "Don't Come Close"
+    artist: Yeasayer
+
+  - path: intro/DONT_COME_CLOSE_02
+    title: "Don't Come Close"
+    artist: Yeasayer
+
+  - path: intro/DONT_COME_CLOSE_03
+    title: "Don't Come Close"
+    artist: Yeasayer
+
+  - path: intro/DONT_COME_CLOSE_04
+    title: "Don't Come Close"
+    artist: Yeasayer
+
+  - path: intro/FEEL_THE_SAME_01
+    title: Feel the Same
+    artist: Battle Tapes
+
+  - path: intro/FEEL_THE_SAME_02
+    title: Feel the Same
+    artist: Battle Tapes
+
+  - path: intro/FORGET_01
+    title: Forget
+    artist: Twin Shadow
+
+  - path: intro/FORGET_02
+    title: Forget
+    artist: Twin Shadow
+
+  - path: intro/FROM_NOWHERE_01
+    title: "From Nowhere (Baardsen Remix)"
+    artist: Dan Croll
+
+  - path: intro/FROM_NOWHERE_02
+    title: "From Nowhere (Baardsen Remix)"
+    artist: Dan Croll
+
+  - path: intro/HEART_IN_THE_PIPES_01
+    title: "Heart In The Pipes (KAUF Remix)"
+    artist: Tony Castles
+
+  - path: intro/HEART_IN_THE_PIPES_02
+    title: "Heart In The Pipes (KAUF Remix)"
+    artist: Tony Castles
+
+  - path: intro/HOLD_ON_HOLY_GHOST_01
+    title: Hold On
+    artist: "Holy Ghost!"
+
+  - path: intro/HOLD_ON_HOLY_GHOST_02
+    title: Hold On
+    artist: "Holy Ghost!"
+
+  - path: intro/IN_REAL_LIFE_01
+    title: In Real Life
+    artist: The Ruby Suns
+
+  - path: intro/IN_REAL_LIFE_02
+    title: In Real Life
+    artist: The Ruby Suns
+
+  - path: intro/JASMINE_01
+    title: "Jasmine (Demo Version)"
+    artist: Jai Paul
+
+  - path: intro/JASMINE_02
+    title: "Jasmine (Demo Version)"
+    artist: Jai Paul
+
+  - path: intro/LITTLE_WHITE_LIE_01
+    title: Little White Lie
+    artist: Living Days
+
+  - path: intro/LITTLE_WHITE_LIE_02
+    title: Little White Lie
+    artist: Living Days
+
+  - path: intro/LIVING_IN_AMERICA_01
+    title: Living In America
+    artist: DOM
+
+  - path: intro/LIVING_IN_AMERICA_02
+    title: Living In America
+    artist: DOM
+
+  - path: intro/LUCKY_BOY_01
+    title: "Lucky Boy (Outlines Remix)"
+    artist: DJ Mehdi
+
+  - path: intro/LUCKY_BOY_02
+    title: "Lucky Boy (Outlines Remix)"
+    artist: DJ Mehdi
+
+  - path: intro/NEW_BEAT_01
+    title: New Beat
+    artist: Toro y Moi
+
+  - path: intro/NEW_BEAT_02
+    title: New Beat
+    artist: Toro y Moi
+
+  - path: intro/NOWHERE_TO_GO_01
+    title: Nowhere To Go
+    artist: Nite Jewel
+
+  - path: intro/NOWHERE_TO_GO_02
+    title: Nowhere To Go
+    artist: Nite Jewel
+
+  - path: intro/OLD_LOVE_01
+    title: "Old Love / New Love (feat. D'Angelo Lacy)"
+    artist: Twin Shadow
+
+  - path: intro/ONE_GIRL_ONE_BOY_01
+    title: One Girl / One Boy
+    artist: "!!!"
+
+  - path: intro/ONE_GIRL_ONE_BOY_02
+    title: One Girl / One Boy
+    artist: "!!!"
+
+  - path: intro/PHARAOHS_01
+    title: Pharaohs (feat. Roses Gabor)
+    artist: SBTRKT
+
+  - path: intro/PHARAOHS_02
+    title: Pharaohs (feat. Roses Gabor)
+    artist: SBTRKT
+
+  - path: intro/POLISH_GIRL_01
+    title: Polish Girl
+    artist: Neon Indian
+
+  - path: intro/POLISH_GIRL_02
+    title: Polish Girl
+    artist: Neon Indian
+
+  - path: intro/PSYCHIC_CITY_01
+    title: "Psychic City (Classixx Remix)"
+    artist: Y.A.C.H.T
+
+  - path: intro/PSYCHIC_CITY_02
+    title: "Psychic City (Classixx Remix)"
+    artist: Y.A.C.H.T
+
+  - path: intro/SHINE_A_LIGHT_01
+    title: "Shine A Light (Flight Facilities Remix)"
+    artist: The C90s
+
+  - path: intro/SHINE_A_LIGHT_02
+    title: "Shine A Light (Flight Facilities Remix)"
+    artist: The C90s
+
+  - path: intro/SHOOTING_HOLES_01
+    title: Shooting Holes
+    artist: Twin Shadow
+
+  - path: intro/SHOOTING_HOLES_02
+    title: Shooting Holes
+    artist: Twin Shadow
+
+  - path: intro/SLEEPWALKING_01
+    title: Sleepwalking
+    artist: The Chain Gang of 1974
+
+  - path: intro/SLEEPWALKING_02
+    title: Sleepwalking
+    artist: The Chain Gang of 1974
+
+  - path: intro/SO_MANY_DETAILS_01
+    title: So Many Details
+    artist: Toro y Moi
+
+  - path: intro/SO_MANY_DETAILS_02
+    title: So Many Details
+    artist: Toro y Moi
+
+  - path: intro/SOMETIMES_01
+    title: Sometimes
+    artist: Miami Horror
+
+  - path: intro/SOMETIMES_02
+    title: Sometimes
+    artist: Miami Horror
+
+  - path: intro/THE_DRUMMER_01
+    title: The Drummer
+    artist: "Niki & The Dove"
+
+  - path: intro/THE_DRUMMER_02
+    title: The Drummer
+    artist: "Niki & The Dove"
+
+  - path: intro/TRULY_ALIVE_01
+    title: Truly Alive
+    artist: Mitzi
+
+  - path: intro/TRULY_ALIVE_02
+    title: Truly Alive
+    artist: Mitzi
+
+  - path: intro/WHEN_YOURE_OUT_01
+    title: "When You're Out"
+    artist: KAUF
+
+  - path: intro/WHEN_YOURE_OUT_02
+    title: "When You're Out"
+    artist: KAUF
