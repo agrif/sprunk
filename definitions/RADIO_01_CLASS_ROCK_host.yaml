@@ -105,3 +105,280 @@ time-morning:
   - time/MORNING_05
   - time/MORNING_06
   - time/MORNING_07
+
+intro:
+  - path: intro/ALL_THE_THINGS_SHE_SAID_01
+    title: All the Things She Said
+    artist: Simple Minds
+
+  - path: intro/ALL_THE_THINGS_SHE_SAID_02
+    title: All the Things She Said
+    artist: Simple Minds
+
+  - path: intro/BAKER_STREET_01
+    title: Baker Street
+    artist: Gerry Rafferty
+
+  - path: intro/BAKER_STREET_02
+    title: Baker Street
+    artist: Gerry Rafferty
+
+  - path: intro/BIG_LOG_01
+    title: Big Log
+    artist: Robert Plant
+
+  - path: intro/BIG_LOG_02
+    title: Big Log
+    artist: Robert Plant
+
+  - path: intro/BLACK_VELVET_01
+    title: Black Velvet
+    artist: Alannah Myles
+
+  - path: intro/BLACK_VELVET_02
+    title: Black Velvet
+    artist: Alannah Myles
+
+  - path: intro/BURNING_HEART_01
+    title: Burning Heart
+    artist: Survivor
+
+  - path: intro/BURNING_HEART_02
+    title: Burning Heart
+    artist: Survivor
+
+  - path: intro/CARRY_ON_MY_WAYWARD_SUN_01
+    title: Carry On Wayward Son
+    artist: Kansas
+
+  - path: intro/CARRY_ON_MY_WAYWARD_SUN_02
+    title: Carry On Wayward Son
+    artist: Kansas
+
+  - path: intro/0x19C83C17
+    title: Carry On Wayward Son
+    artist: Kansas
+
+  - path: intro/0x0809989A
+    title: Carry On Wayward Son
+    artist: Kansas
+
+  - path: intro/CATS_IN_THE_CRADLE_01
+    title: Cat's In the Cradle
+    artist: Harry Chapin
+
+  - path: intro/COMING_ON_STRONG_01
+    title: Comin' On Strong
+    artist: Broken English
+
+  - path: intro/COMING_ON_STRONG_02
+    title: Comin' On Strong
+    artist: Broken English
+
+  - path: intro/DIRTY_WHITE_BOY_01
+    title: Dirty White Boy
+    artist: Foreigner
+
+  - path: intro/DIRTY_WHITE_BOY_02
+    title: Dirty White Boy
+    artist: Foreigner
+
+  - path: intro/FORTUNATE_SON_01
+    title: Fortunate Son
+    artist: Creedence Clearwater Revival
+
+  - path: intro/FORTUNATE_SON_02
+    title: Fortunate Son
+    artist: Creedence Clearwater Revival
+
+  - path: intro/GIMME_ALL_YOUR_LOVIN_01
+    title: Gimme All Your Lovin'
+    artist: ZZ Top
+
+  - path: intro/GIMME_ALL_YOUR_LOVIN_02
+    title: Gimme All Your Lovin'
+    artist: ZZ Top
+
+  - path: intro/HEARTBEAT_01
+    title: Heartbeat
+    artist: Don Johnson
+
+  - path: intro/HEARTBEAT_02
+    title: Heartbeat
+    artist: Don Johnson
+
+  - path: intro/HIGHER_LOVE_01
+    title: Higher Love
+    artist: Steve Winwood
+
+  - path: intro/HIGHER_LOVE_02
+    title: Higher Love
+    artist: Steve Winwood
+
+  - path: intro/HOLLYWOOD_NIGHTS_01
+    title: Hollywood Nights
+    artist: Bob Seger & The Silver Bullet Band
+
+  - path: intro/HOLLYWOOD_NIGHTS_02
+    title: Hollywood Nights
+    artist: Bob Seger & The Silver Bullet Band
+
+  - path: intro/I_CANT_WAIT_01
+    title: I Can't Wait
+    artist: Stevie Nicks
+
+  - path: intro/I_CANT_WAIT_02
+    title: I Can't Wait
+    artist: Stevie Nicks
+
+  - path: intro/I_WOULDNT_WANT_TO_BE_01
+    title: I Wouldn't Want To Be Like You
+    artist: The Alan Parsons Project
+
+  - path: intro/I_WOULDNT_WANT_TO_BE_02
+    title: I Wouldn't Want To Be Like You
+    artist: The Alan Parsons Project
+
+  - path: intro/IF_YOU_LEAVE_ME_NOW_01
+    title: If You Leave Me Now
+    artist: Chicago
+
+  - path: intro/IF_YOU_LEAVE_ME_NOW_02
+    title: If You Leave Me Now
+    artist: Chicago
+
+  - path: intro/IM_FREE_01
+    title: I'm Free (Heaven Helps the Man)
+    artist: Kenny Loggins
+
+  - path: intro/IM_FREE_02
+    title: I'm Free (Heaven Helps the Man)
+    artist: Kenny Loggins
+
+  - path: intro/LONELY_IS_THE_NIGHT_01
+    title: Lonely Is the Night
+    artist: Billy Squier
+
+  - path: intro/LONELY_IS_THE_NIGHT_02
+    title: Lonely Is the Night
+    artist: Billy Squier
+
+  - path: intro/MISSISSIPPI_QUEEN_01
+    title: Mississippi Queen
+    artist: Mountain
+
+  - path: intro/MISSISSIPPI_QUEEN_02
+    title: Mississippi Queen
+    artist: Mountain
+
+  - path: intro/NIGHT_MOVES_01
+    title: Night Moves
+    artist: Bob Seger & The Silver Bullet Band
+
+  - path: intro/NIGHT_MOVES_02
+    title: Night Moves
+    artist: Bob Seger & The Silver Bullet Band
+
+  - path: intro/OGDENS_NUT_GONE_FLAKE_01
+    title: Ogdens' Nut Gone Flake
+    artist: The Small Faces
+
+  - path: intro/OGDENS_NUT_GONE_FLAKE_02
+    title: Ogdens' Nut Gone Flake
+    artist: The Small Faces
+
+  - path: intro/PEACE_OF_MIND_01
+    title: Peace Of Mind
+    artist: Boston
+
+  - path: intro/PEACE_OF_MIND_02
+    title: Peace Of Mind
+    artist: Boston
+
+  - path: intro/PHOTOGRAPH_01
+    title: Photograph
+    artist: Def Leppard
+
+  - path: intro/PHOTOGRAPH_02
+    title: Photograph
+    artist: Def Leppard
+
+  - path: intro/RADIO_GA_GA_01
+    title: Radio Ga Ga
+    artist: Queen
+
+  - path: intro/RAIN_01
+    title: Rain
+    artist: The Cult
+
+  - path: intro/RAIN_02
+    title: Rain
+    artist: The Cult
+
+  - path: intro/ROUNDABOUT_01
+    title: Roundabout
+    artist: Yes
+
+  - path: intro/ROUNDABOUT_02
+    title: Roundabout
+    artist: Yes
+
+  - path: intro/SATURDAY_NIGHTS_ALRIGHT_01
+    title: Saturday Night's Alright for Fighting
+    artist: Elton John
+
+  - path: intro/SATURDAY_NIGHTS_ALRIGHT_02
+    title: Saturday Night's Alright for Fighting
+    artist: Elton John
+
+  - path: intro/SHADOWS_OF_THE_NIGHT_01
+    title: Shadows of the Night
+    artist: Pat Benatar
+
+  - path: intro/SHADOWS_OF_THE_NIGHT_02
+    title: Shadows of the Night
+    artist: Pat Benatar
+
+  - path: intro/SHADOWS_OF_THE_NIGHT_03
+    title: Shadows of the Night
+    artist: Pat Benatar
+
+  - path: intro/THE_BREAKUP_SONG_01
+    title: "The Breakup Song (They Don't Write 'Em)"
+    artist: The Greg Kihn Band
+
+  - path: intro/THE_BREAKUP_SONG_02
+    title: "The Breakup Song (They Don't Write 'Em)"
+    artist: The Greg Kihn Band
+
+  - path: intro/THIRTY_DAYS_IN_THE_HOLE_01
+    title: 30 Days In the Hole
+    artist: Humble Pie
+
+  - path: intro/THIRTY_DAYS_IN_THE_HOLE_02
+    title: 30 Days In the Hole
+    artist: Humble Pie
+
+  - path: intro/TOO_LATE_FOR_GOODBYES_01
+    title: Too Late for Goodbyes
+    artist: Julian Lennon
+
+  - path: intro/TOO_LATE_FOR_GOODBYES_02
+    title: Too Late for Goodbyes
+    artist: Julian Lennon
+
+  - path: intro/WE_BUILT_THIS_CITY_01
+    title: We Built This City
+    artist: Starship
+
+  - path: intro/WE_BUILT_THIS_CITY_02
+    title: We Built This City
+    artist: Starship
+
+  - path: intro/WHAT_A_FOOL_BELIEVES_01
+    title: What a Fool Believes
+    artist: The Doobie Brothers
+
+  - path: intro/WHAT_A_FOOL_BELIEVES_02
+    title: What a Fool Believes
+    artist: The Doobie Brothers
