@@ -1,0 +1,169 @@
+prefix: ../RADIO_17_FUNK
+
+solo:
+  - mono_solo_01/MONO_SOLO_01
+  - mono_solo_02/MONO_SOLO_02
+  - mono_solo_03/MONO_SOLO_03
+  - mono_solo_04/MONO_SOLO_04
+  - mono_solo_05/MONO_SOLO_05
+  - mono_solo_06/MONO_SOLO_06
+  - mono_solo_07/MONO_SOLO_07
+  - mono_solo_08/MONO_SOLO_08
+  - mono_solo_09/MONO_SOLO_09
+  - mono_solo_10/MONO_SOLO_10
+  - mono_solo_11/MONO_SOLO_11
+  - mono_solo_12/MONO_SOLO_12
+  - mono_solo_13/MONO_SOLO_13
+
+general:
+  - general/GENERAL_01
+  - general/GENERAL_02
+  - general/GENERAL_03
+  - general/GENERAL_04
+  - general/GENERAL_05
+  - general/GENERAL_06
+  - general/GENERAL_07
+  - general/GENERAL_08
+  - general/GENERAL_09
+  - general/GENERAL_10
+  - general/GENERAL_11
+  - general/GENERAL_12
+  - general/GENERAL_13
+  - general/GENERAL_14
+  - general/GENERAL_15
+  - general/GENERAL_16
+  - general/GENERAL_17
+  - general/GENERAL_18
+  - general/GENERAL_19
+  - general/GENERAL_20
+  - general/GENERAL_21
+  - general/GENERAL_22
+  - general/GENERAL_23
+  - general/GENERAL_24
+  - general/GENERAL_25
+  - general/GENERAL_26
+  - general/GENERAL_27
+
+to-ad:
+  - to/TO_AD_01
+  - to/TO_AD_02
+  - to/TO_AD_03
+  - to/TO_AD_04
+  - to/TO_AD_05
+
+to-news:
+  - to/TO_NEWS_01
+  - to/TO_NEWS_02
+  - to/TO_NEWS_03
+  - to/TO_NEWS_04
+  - to/TO_NEWS_05
+
+time-evening:
+  - time/EVENING_01
+  - time/EVENING_02
+  - time/EVENING_03
+  - time/EVENING_04
+
+time-morning:
+  - time/MORNING_01
+  - time/MORNING_02
+  - time/MORNING_03
+  - time/MORNING_04
+
+intro:
+  - path: intro/BACK_AND_FORTH_01
+    title: BACK_AND_FORTH
+    artist: ??
+
+  - path: intro/BACK_AND_FORTH_02
+    title: BACK_AND_FORTH
+    artist: ??
+
+  - path: intro/0x02556070
+    title: CANT_HOLD_BACK
+    artist: ??
+
+  - path: intro/0x147284AB
+    title: CANT_HOLD_BACK
+    artist: ??
+
+  - path: intro/CUTIE_PIE_01
+    title: CUTIE_PIE
+    artist: ??
+
+  - path: intro/CUTIE_PIE_02
+    title: CUTIE_PIE
+    artist: ??
+
+  - path: intro/DO_IT_ROGER_01
+    title: DO_IT_ROGER
+    artist: ??
+
+  - path: intro/DO_IT_ROGER_02
+    title: DO_IT_ROGER
+    artist: ??
+
+  - path: intro/GIVE_IT_TO_ME_BABY_01
+    title: GIVE_IT_TO_ME_BABY
+    artist: ??
+
+  - path: intro/GIVE_IT_TO_ME_BABY_02
+    title: GIVE_IT_TO_ME_BABY
+    artist: ??
+
+  - path: intro/GOTTA_GET_MY_HANDS_ON_SOME_MONEY_01
+    title: GOTTA_GET_MY_HANDS_ON_SOME_MONEY
+    artist: ??
+
+  - path: intro/GOTTA_GET_MY_HANDS_ON_SOME_MONEY_02
+    title: GOTTA_GET_MY_HANDS_ON_SOME_MONEY
+    artist: ??
+
+  - path: intro/HEARTBEAT_01
+    title: HEART_BEAT
+    artist: ??
+
+  - path: intro/HEARTBEAT_02
+    title: HEART_BEAT
+    artist: ??
+
+  - path: intro/ID_RATHER_BE_WITH_YOU_01
+    title: ID_RATHER_BE_WITH_YOU
+    artist: ??
+
+  - path: intro/ID_RATHER_BE_WITH_YOU_02
+    title: ID_RATHER_BE_WITH_YOU
+    artist: ??
+
+  - path: intro/IM_IN_LOVE_01
+    title: IM_IN_LOVE
+    artist: ??
+
+  - path: intro/IM_IN_LOVE_02
+    title: IM_IN_LOVE
+    artist: ??
+
+  - path: intro/JOYSTICK_01
+    title: JOYSTICK
+    artist: ??
+
+  - path: intro/JOYSTICK_02
+    title: JOYSTICK
+    artist: ??
+
+  - path: intro/SKELETONS_01
+    title: SKELETONS
+    artist: ??
+
+  - path: intro/SKELETONS_02
+    title: SKELETONS
+    artist: ??
+
+  - path: intro/YOURE_THE_ONE_FOR_ME_01
+    title: YOURE_THE_ONE_FOR_ME
+    artist: ??
+
+  - path: intro/YOURE_THE_ONE_FOR_ME_02
+    title: YOURE_THE_ONE_FOR_ME
+    artist: ??
+

@@ -1,0 +1,157 @@
+prefix: ../RADIO_17_FUNK
+
+music:
+  - path: back_and_forth/BACK_AND_FORTH
+    title: BACK_AND_FORTH
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: cant_hold_back/CANT_HOLD_BACK
+    title: CANT_HOLD_BACK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: cutie_pie/CUTIE_PIE
+    title: CUTIE_PIE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: do_it_roger/DO_IT_ROGER
+    title: DO_IT_ROGER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: flashback/FLASHBACK
+    title: FLASHBACK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: flashlight/FLASHLIGHT
+    title: FLASHLIGHT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: funkasize_you/FUNKASIZE_YOU
+    title: FUNKASIZE_YOU
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: give_it_to_me_baby/GIVE_IT_TO_ME_BABY
+    title: GIVE_IT_TO_ME_BABY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: gotta_get_my_hands_on_some_money/GOTTA_GET_MY_HANDS_ON_SOME_MONEY
+    title: GOTTA_GET_MY_HANDS_ON_SOME_MONEY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: haboglabotribin/HABOGLABOTRIBIN
+    title: HABOGLABOTRIBIN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: heart_beat/HEART_BEAT
+    title: HEART_BEAT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: heartbreaker/HEARTBREAKER
+    title: HEARTBREAKER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: id_rather_be_with_you/ID_RATHER_BE_WITH_YOU
+    title: ID_RATHER_BE_WITH_YOU
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: im_in_love/IM_IN_LOVE
+    title: IM_IN_LOVE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: joystick/JOYSTICK
+    title: JOYSTICK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: mothership_connection/MOTHERSHIP_CONNECTION
+    title: MOTHERSHIP_CONNECTION
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: nights_feel_like/NIGHTS_FEEL_LIKE
+    title: NIGHTS_FEEL_LIKE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: party_all_the_time/PARTY_ALL_THE_TIME
+    title: PARTY_ALL_THE_TIME
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: skeletons/SKELETONS
+    title: SKELETONS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: tonight/TONIGHT
+    title: TONIGHT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: walking_into_sunshine/WALKING_INTO_SUNSHINE
+    title: WALKING_INTO_SUNSHINE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: youre_the_one_for_me/YOURE_THE_ONE_FOR_ME
+    title: YOURE_THE_ONE_FOR_ME
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+

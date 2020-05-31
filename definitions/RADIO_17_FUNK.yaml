@@ -1,0 +1,8 @@
+name: Space 103.2
+
+include:
+  - RADIO_17_FUNK_id.yaml
+  - RADIO_17_FUNK_host.yaml
+  - RADIO_17_FUNK_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml
