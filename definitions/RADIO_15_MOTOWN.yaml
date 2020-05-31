@@ -1,0 +1,8 @@
+name: The Lowdown 91.1
+
+include:
+  - RADIO_15_MOTOWN_id.yaml
+  - RADIO_15_MOTOWN_host.yaml
+  - RADIO_15_MOTOWN_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

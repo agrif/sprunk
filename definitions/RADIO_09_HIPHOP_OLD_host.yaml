@@ -1,0 +1,343 @@
+prefix: ../RADIO_09_HIPHOP_OLD
+
+solo:
+  - mono_solo_01/MONO_SOLO_01
+  - mono_solo_02/MONO_SOLO_02
+  - mono_solo_03/MONO_SOLO_03
+  - mono_solo_04/MONO_SOLO_04
+  - mono_solo_05/MONO_SOLO_05
+  - mono_solo_06/MONO_SOLO_06
+  - mono_solo_07/MONO_SOLO_07
+  - mono_solo_08/MONO_SOLO_08
+  - mono_solo_09/MONO_SOLO_09
+  - mono_solo_10/MONO_SOLO_10
+  - mono_solo_11/MONO_SOLO_11
+  - mono_solo_12/MONO_SOLO_12
+  - mono_solo_13/MONO_SOLO_13
+  - mono_solo_14/MONO_SOLO_14
+  - mono_solo_15/MONO_SOLO_15
+  - mono_solo_16/MONO_SOLO_16
+  - mono_solo_17/MONO_SOLO_17
+  - mono_solo_18/MONO_SOLO_18
+  - mono_solo_19/MONO_SOLO_19
+  - mono_solo_20/MONO_SOLO_20
+  - mono_solo_21/MONO_SOLO_21
+  - mono_solo_22/MONO_SOLO_22
+  - mono_solo_23/MONO_SOLO_23
+  - mono_solo_24/MONO_SOLO_24
+  - mono_solo_25/MONO_SOLO_25
+  - mono_solo_26/MONO_SOLO_26
+  - mono_solo_27/MONO_SOLO_27
+  - mono_solo_28/MONO_SOLO_28
+  - mono_solo_29/MONO_SOLO_29
+  - mono_solo_30/MONO_SOLO_30
+
+general:
+  - general/GENERAL_01
+  - general/GENERAL_02
+  - general/GENERAL_03
+  - general/GENERAL_04
+  - general/GENERAL_05
+  - general/GENERAL_06
+  - general/GENERAL_07
+  - general/GENERAL_08
+  - general/GENERAL_09
+  - general/GENERAL_10
+  - general/GENERAL_11
+  - general/GENERAL_12
+  - general/GENERAL_13
+  - general/GENERAL_14
+  - general/GENERAL_15
+  - general/GENERAL_16
+  - general/GENERAL_17
+  - general/GENERAL_18
+  - general/GENERAL_19
+  - general/GENERAL_20
+  - general/GENERAL_21
+  - general/GENERAL_22
+  - general/GENERAL_23
+  - general/GENERAL_24
+  - general/GENERAL_25
+  - general/GENERAL_26
+  - general/GENERAL_27
+  - general/GENERAL_28
+  - general/GENERAL_29
+  - general/GENERAL_30
+  - general/GENERAL_31
+  - general/GENERAL_32
+  - general/GENERAL_33
+  - general/GENERAL_34
+  - general/GENERAL_35
+  - general/GENERAL_36
+  - general/GENERAL_37
+  - general/GENERAL_38
+  - general/GENERAL_39
+  - general/GENERAL_40
+  - general/GENERAL_41
+  - general/GENERAL_42
+  - general/GENERAL_43
+  - general/GENERAL_44
+  - general/GENERAL_45
+  - general/GENERAL_46
+  - general/GENERAL_47
+  - general/GENERAL_48
+  - general/GENERAL_49
+  - general/GENERAL_50
+
+to-ad:
+  - to/TO_AD_01
+  - to/TO_AD_02
+  - to/TO_AD_03
+  - to/TO_AD_04
+  - to/TO_AD_05
+  - to/TO_AD_06
+  - to/TO_AD_07
+
+to-news:
+  - to/TO_NEWS_01
+  - to/TO_NEWS_02
+  - to/TO_NEWS_03
+  - to/TO_NEWS_04
+  - to/TO_NEWS_05
+  - to/TO_NEWS_06
+
+time-evening:
+  - time/EVENING_01
+  - time/EVENING_02
+  - time/EVENING_03
+  - time/EVENING_04
+  - time/EVENING_05
+  - time/EVENING_06
+  - time/EVENING_07
+
+time-morning:
+  - time/MORNING_01
+  - time/MORNING_02
+  - time/MORNING_03
+  - time/MORNING_04
+  - time/MORNING_05
+  - time/MORNING_06
+  - time/MORNING_07
+  - time/MORNING_08
+
+intro:
+  - path: intro/AFRO_PUFFS_01
+    title: AFRO_PUFFS
+    artist: ??
+
+  - path: intro/AFRO_PUFFS_02
+    title: AFRO_PUFFS
+    artist: ??
+
+  - path: intro/AMBITIONZ_AZ_A_RIDAH_01
+    title: AMBITIONZ_AZ_A_RIDAH
+    artist: ??
+
+  - path: intro/AMBITIONZ_AZ_A_RIDAH_02
+    title: AMBITIONZ_AZ_A_RIDAH
+    artist: ??
+
+  - path: intro/APPETITE_FOR_DESTRUCTION_01
+    title: APPETITE_FOR_DESTRUCTION
+    artist: ??
+
+  - path: intro/APPETITE_FOR_DESTRUCTION_02
+    title: APPETITE_FOR_DESTRUCTION
+    artist: ??
+
+  - path: intro/BALLAD_OF_A_MENACE_01
+    title: BALLAD_OF_A_MENACE
+    artist: ??
+
+  - path: intro/BALLAD_OF_A_MENACE_02
+    title: BALLAD_OF_A_MENACE
+    artist: ??
+
+  - path: intro/BALLAD_OF_A_MENACE_03
+    title: BALLAD_OF_A_MENACE
+    artist: ??
+
+  - path: intro/BOW_DOWN_01
+    title: BOW_DOWN
+    artist: ??
+
+  - path: intro/BOW_DOWN_02
+    title: BOW_DOWN
+    artist: ??
+
+  - path: intro/CAPTAIN_SAVE_A_HOE_01
+    title: CAPTAIN_SAVE_A_HOE
+    artist: ??
+
+  - path: intro/CAPTAIN_SAVE_A_HOE_02
+    title: CAPTAIN_SAVE_A_HOE
+    artist: ??
+
+  - path: intro/C_WALK_01
+    title: C_WALK
+    artist: ??
+
+  - path: intro/C_WALK_02
+    title: C_WALK
+    artist: ??
+
+  - path: intro/FIRST_OF_THE_MONTH_01
+    title: FIRST_OF_THE_MONTH
+    artist: ??
+
+  - path: intro/FIRST_OF_THE_MONTH_02
+    title: FIRST_OF_THE_MONTH
+    artist: ??
+
+  - path: intro/GANGSTA_GANGSTA_01
+    title: GANGSTA_GANGSTA
+    artist: ??
+
+  - path: intro/GANGSTA_GANGSTA_02
+    title: GANGSTA_GANGSTA
+    artist: ??
+
+  - path: intro/GIN_AND_JUICE_01
+    title: GIN_AND_JUICE
+    artist: ??
+
+  - path: intro/GIN_AND_JUICE_02
+    title: GIN_AND_JUICE
+    artist: ??
+
+  - path: intro/LATE_NIGHT_HYPE_01
+    title: LATE_NIGHT_HYPE
+    artist: ??
+
+  - path: intro/LATE_NIGHT_HYPE_02
+    title: LATE_NIGHT_HYPE
+    artist: ??
+
+  - path: intro/MIND_PLAYING_TRICKS_01
+    title: MIND_PLAYING_TRICKS
+    artist: ??
+
+  - path: intro/MIND_PLAYING_TRICKS_02
+    title: MIND_PLAYING_TRICKS
+    artist: ??
+
+  - path: intro/NOTHIN_BUT_THE_CAVI_HIT_01
+    title: NOTHIN_BUT_THE_CAVI_HIT
+    artist: ??
+
+  - path: intro/NOTHIN_BUT_THE_CAVI_HIT_02
+    title: NOTHIN_BUT_THE_CAVI_HIT
+    artist: ??
+
+  - path: intro/NO_MORE_QUESTIONS_01
+    title: NO_MORE_QUESTIONS
+    artist: ??
+
+  - path: intro/NO_MORE_QUESTIONS_02
+    title: NO_MORE_QUESTIONS
+    artist: ??
+
+  - path: intro/SERVIN_EM_HEAT_01
+    title: SERVIN_EM_HEAT
+    artist: ??
+
+  - path: intro/SERVIN_EM_HEAT_02
+    title: SERVIN_EM_HEAT
+    artist: ??
+
+  - path: intro/SHERM_STICK_01
+    title: SHERM_STICK
+    artist: ??
+
+  - path: intro/SHERM_STICK_02
+    title: SHERM_STICK
+    artist: ??
+
+  - path: intro/SO_YOU_WANT_TO_BE_A_GANGSTER_01
+    title: SO_YOU_WANT_TO_BE_A_GANGSTER
+    artist: ??
+
+  - path: intro/SO_YOU_WANT_TO_BE_A_GANGSTER_02
+    title: SO_YOU_WANT_TO_BE_A_GANGSTER
+    artist: ??
+
+  - path: intro/STILL_D_R_E_01
+    title: STILL_D_R_E
+    artist: ??
+
+  - path: intro/STILL_D_R_E_02
+    title: STILL_D_R_E
+    artist: ??
+
+  - path: intro/STRAIGHT_UP_MENACE_01
+    title: STRAIGHT_UP_MENACE
+    artist: ??
+
+  - path: intro/STRAIGHT_UP_MENACE_02
+    title: STRAIGHT_UP_MENACE
+    artist: ??
+
+  - path: intro/THE_MURDA_SHOW_01
+    title: THE_MURDA_SHOW
+    artist: ??
+
+  - path: intro/THE_MURDA_SHOW_02
+    title: THE_MURDA_SHOW
+    artist: ??
+
+  - path: intro/THE_MURDA_SHOW_03
+    title: THE_MURDA_SHOW
+    artist: ??
+
+  - path: intro/THE_MURDA_SHOW_04
+    title: THE_MURDA_SHOW
+    artist: ??
+
+  - path: intro/THE_NEXT_EPISODE_01
+    title: THE_NEXT_EPISODE
+    artist: ??
+
+  - path: intro/THE_NEXT_EPISODE_02
+    title: THE_NEXT_EPISODE
+    artist: ??
+
+  - path: intro/THIS_DJ_01
+    title: THIS_DJ
+    artist: ??
+
+  - path: intro/THIS_DJ_02
+    title: THIS_DJ
+    artist: ??
+
+  - path: intro/WE_ROLL_DEEP_01
+    title: WE_ROLL_DEEP
+    artist: ??
+
+  - path: intro/WE_ROLL_DEEP_02
+    title: WE_ROLL_DEEP
+    artist: ??
+
+  - path: intro/WHAT_WOULD_YOU_DO_01
+    title: WHAT_WOULD_YOU_DO
+    artist: ??
+
+  - path: intro/WHAT_WOULD_YOU_DO_02
+    title: WHAT_WOULD_YOU_DO
+    artist: ??
+
+  - path: intro/WHAT_YOU_WANNA_DO_01
+    title: WHAT_YOU_WANNA_DO
+    artist: ??
+
+  - path: intro/WHAT_YOU_WANNA_DO_02
+    title: WHAT_YOU_WANNA_DO
+    artist: ??
+
+  - path: intro/YOU_KNOW_HOW_WE_DO_01
+    title: YOU_KNOW_HOW_WE_DO
+    artist: ??
+
+  - path: intro/YOU_KNOW_HOW_WE_DO_02
+    title: YOU_KNOW_HOW_WE_DO
+    artist: ??
+

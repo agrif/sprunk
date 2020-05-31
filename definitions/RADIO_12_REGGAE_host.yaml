@@ -1,0 +1,169 @@
+prefix: ../RADIO_12_REGGAE
+
+solo:
+  - mono_solo_01/MONO_SOLO_01
+  - mono_solo_02/MONO_SOLO_02
+  - mono_solo_03/MONO_SOLO_03
+  - mono_solo_04/MONO_SOLO_04
+  - mono_solo_05/MONO_SOLO_05
+  - mono_solo_06/MONO_SOLO_06
+  - mono_solo_07/MONO_SOLO_07
+  - mono_solo_08/MONO_SOLO_08
+  - mono_solo_09/MONO_SOLO_09
+  - mono_solo_10/MONO_SOLO_10
+  - mono_solo_11/MONO_SOLO_11
+  - mono_solo_12/MONO_SOLO_12
+  - mono_solo_13/MONO_SOLO_13
+
+general:
+  - general/GENERAL_01
+  - general/GENERAL_02
+  - general/GENERAL_03
+  - general/GENERAL_04
+  - general/GENERAL_05
+  - general/GENERAL_06
+  - general/GENERAL_07
+  - general/GENERAL_08
+  - general/GENERAL_09
+  - general/GENERAL_10
+  - general/GENERAL_11
+  - general/GENERAL_12
+  - general/GENERAL_13
+  - general/GENERAL_14
+  - general/GENERAL_15
+  - general/GENERAL_16
+  - general/GENERAL_17
+  - general/GENERAL_18
+  - general/GENERAL_19
+  - general/GENERAL_20
+  - general/GENERAL_21
+  - general/GENERAL_22
+  - general/GENERAL_23
+  - general/GENERAL_24
+  - general/GENERAL_25
+  - general/GENERAL_26
+  - general/GENERAL_27
+  - general/GENERAL_28
+  - general/GENERAL_29
+  - general/GENERAL_30
+  - general/GENERAL_31
+  - general/GENERAL_32
+  - general/GENERAL_33
+  - general/GENERAL_34
+  - general/GENERAL_35
+  - general/GENERAL_36
+
+to-ad:
+  - to/TO_AD_01
+  - to/TO_AD_02
+  - to/TO_AD_03
+  - to/TO_AD_04
+  - to/TO_AD_05
+
+to-news:
+  - to/TO_NEWS_01
+  - to/TO_NEWS_02
+  - to/TO_NEWS_03
+  - to/TO_NEWS_04
+
+time-evening:
+  - time/EVENING_01
+  - time/EVENING_02
+  - time/EVENING_03
+
+time-morning:
+  - time/MORNING_01
+  - time/MORNING_02
+  - time/MORNING_03
+  - time/MORNING_04
+  - time/MORNING_05
+
+intro:
+  - path: intro/CHAPTER3_01
+    title: CHAPTER3
+    artist: ??
+
+  - path: intro/CHAPTER3_02
+    title: CHAPTER3
+    artist: ??
+
+  - path: intro/CRAZY_GIRL_01
+    title: CRAZY_GIRL
+    artist: ??
+
+  - path: intro/CRAZY_GIRL_02
+    title: CRAZY_GIRL
+    artist: ??
+
+  - path: intro/DISCO_DEVIL_01
+    title: DISCO_DEVIL
+    artist: ??
+
+  - path: intro/DISCO_DEVIL_02
+    title: DISCO_DEVIL
+    artist: ??
+
+  - path: intro/GRUMBLIN_DUB_01
+    title: GRUMBLIN_DUB
+    artist: ??
+
+  - path: intro/GRUMBLIN_DUB_02
+    title: GRUMBLIN_DUB
+    artist: ??
+
+  - path: intro/I_AM_A_MADMAN_01
+    title: I_AM_A_MADMAN
+    artist: ??
+
+  - path: intro/I_AM_A_MADMAN_02
+    title: I_AM_A_MADMAN
+    artist: ??
+
+  - path: intro/KINGSTON_TOWN_01
+    title: KINGSTON_TOWN
+    artist: ??
+
+  - path: intro/KINGSTON_TOWN_02
+    title: KINGSTON_TOWN
+    artist: ??
+
+  - path: intro/MONEY_COME_MONEY_GO_01
+    title: MONEY_COME_MONEY_GO
+    artist: ??
+
+  - path: intro/MONEY_COME_MONEY_GO_02
+    title: MONEY_COME_MONEY_GO
+    artist: ??
+
+  - path: intro/MR_MONEY_MAN_01
+    title: MR_MONEY_MAN
+    artist: ??
+
+  - path: intro/MR_MONEY_MAN_02
+    title: MR_MONEY_MAN
+    artist: ??
+
+  - path: intro/NIGHT_NURSE_01
+    title: NIGHT_NURSE
+    artist: ??
+
+  - path: intro/NIGHT_NURSE_02
+    title: NIGHT_NURSE
+    artist: ??
+
+  - path: intro/NOBODY_MOVE_GET_HURT_01
+    title: NOBODY_MOVE_GET_HURT
+    artist: ??
+
+  - path: intro/NOBODY_MOVE_GET_HURT_02
+    title: NOBODY_MOVE_GET_HURT
+    artist: ??
+
+  - path: intro/SONS_OF_SLAVES_01
+    title: SONS_OF_SLAVES
+    artist: ??
+
+  - path: intro/SONS_OF_SLAVES_02
+    title: SONS_OF_SLAVES
+    artist: ??
+

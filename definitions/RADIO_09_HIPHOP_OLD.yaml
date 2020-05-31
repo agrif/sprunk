@@ -1,0 +1,8 @@
+name: West Coast Classics
+
+include:
+  - RADIO_09_HIPHOP_OLD_id.yaml
+  - RADIO_09_HIPHOP_OLD_host.yaml
+  - RADIO_09_HIPHOP_OLD_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

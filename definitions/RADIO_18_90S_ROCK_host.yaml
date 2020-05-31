@@ -1,0 +1,245 @@
+prefix: ../RADIO_18_90S_ROCK
+
+solo:
+  - mono_solo_01/MONO_SOLO_01
+  - mono_solo_02/MONO_SOLO_02
+  - mono_solo_03/MONO_SOLO_03
+  - mono_solo_04/MONO_SOLO_04
+  - mono_solo_05/MONO_SOLO_05
+  - mono_solo_06/MONO_SOLO_06
+  - mono_solo_07/MONO_SOLO_07
+  - mono_solo_08/MONO_SOLO_08
+  - mono_solo_09/MONO_SOLO_09
+  - mono_solo_10/MONO_SOLO_10
+  - mono_solo_11/MONO_SOLO_11
+  - mono_solo_12/MONO_SOLO_12
+  - mono_solo_13/MONO_SOLO_13
+  - mono_solo_14/MONO_SOLO_14
+  - mono_solo_15/MONO_SOLO_15
+  - mono_solo_16/MONO_SOLO_16
+
+general:
+  - general/GENERAL_01
+  - general/GENERAL_02
+  - general/GENERAL_03
+  - general/GENERAL_04
+  - general/GENERAL_05
+  - general/GENERAL_06
+  - general/GENERAL_07
+  - general/GENERAL_08
+  - general/GENERAL_09
+  - general/GENERAL_10
+  - general/GENERAL_11
+  - general/GENERAL_12
+  - general/GENERAL_13
+  - general/GENERAL_14
+  - general/GENERAL_15
+  - general/GENERAL_16
+  - general/GENERAL_17
+  - general/GENERAL_18
+  - general/GENERAL_19
+  - general/GENERAL_20
+  - general/GENERAL_21
+  - general/GENERAL_22
+  - general/GENERAL_23
+  - general/GENERAL_24
+  - general/GENERAL_25
+  - general/GENERAL_26
+  - general/GENERAL_27
+  - general/GENERAL_28
+  - general/GENERAL_29
+  - general/GENERAL_30
+  - general/GENERAL_31
+  - general/GENERAL_32
+  - general/GENERAL_33
+  - general/GENERAL_34
+  - general/GENERAL_35
+  - general/GENERAL_36
+  - general/GENERAL_37
+  - general/GENERAL_38
+  - general/GENERAL_39
+  - general/GENERAL_40
+  - general/GENERAL_41
+  - general/GENERAL_42
+  - general/GENERAL_43
+  - general/GENERAL_44
+  - general/GENERAL_45
+  - general/GENERAL_46
+  - general/GENERAL_47
+  - general/GENERAL_48
+
+to-ad:
+  - to/TO_AD_01
+  - to/TO_AD_02
+  - to/TO_AD_03
+  - to/TO_AD_04
+  - to/TO_AD_05
+
+to-news:
+  - to/TO_NEWS_01
+  - to/TO_NEWS_02
+  - to/TO_NEWS_03
+
+time-evening:
+  - time/EVENING_01
+  - time/EVENING_02
+  - time/EVENING_03
+  - time/EVENING_04
+  - time/EVENING_05
+
+time-morning:
+  - time/MORNING_01
+  - time/MORNING_02
+  - time/MORNING_03
+  - time/MORNING_04
+  - time/MORNING_05
+
+intro:
+  - path: intro/ANSWER_TO_YOURSELF_01
+    title: ANSWER_TO_YOURSELF
+    artist: ??
+
+  - path: intro/ANSWER_TO_YOURSELF_02
+    title: ANSWER_TO_YOURSELF
+    artist: ??
+
+  - path: intro/BLACK_GREASE_01
+    title: BLACK_GREASE
+    artist: ??
+
+  - path: intro/BLACK_GREASE_02
+    title: BLACK_GREASE
+    artist: ??
+
+  - path: intro/CALIFORNIA_GIRLS_01
+    title: CALIFORNIA_GIRLS
+    artist: ??
+
+  - path: intro/CALIFORNIA_GIRLS_02
+    title: CALIFORNIA_GIRLS
+    artist: ??
+
+  - path: intro/COCAINE_01
+    title: COCAINE
+    artist: ??
+
+  - path: intro/COCAINE_02
+    title: COCAINE
+    artist: ??
+
+  - path: intro/CRAWLING_AFTER_YOU_01
+    title: CRAWLING_AFTER_YOU
+    artist: ??
+
+  - path: intro/CRAWLING_AFTER_YOU_02
+    title: CRAWLING_AFTER_YOU
+    artist: ??
+
+  - path: intro/FALL_IN_LINE_01
+    title: FALL_IN_LINE
+    artist: ??
+
+  - path: intro/FALL_IN_LINE_02
+    title: FALL_IN_LINE
+    artist: ??
+
+  - path: intro/FIRE_DOESNT_BURN_ITSELF_01
+    title: FIRE_DOESNT_BURN_ITSELF
+    artist: ??
+
+  - path: intro/FIRE_DOESNT_BURN_ITSELF_02
+    title: FIRE_DOESNT_BURN_ITSELF
+    artist: ??
+
+  - path: intro/GONE_FOR_GOOD_01
+    title: GONE_FOR_GOOD
+    artist: ??
+
+  - path: intro/GONE_FOR_GOOD_02
+    title: GONE_FOR_GOOD
+    artist: ??
+
+  - path: intro/NEXT_STOP_01
+    title: NEXT_STOP
+    artist: ??
+
+  - path: intro/NEXT_STOP_02
+    title: NEXT_STOP
+    artist: ??
+
+  - path: intro/NINE_IS_GOD_01
+    title: NINE_IS_GOD
+    artist: ??
+
+  - path: intro/NINE_IS_GOD_02
+    title: NINE_IS_GOD
+    artist: ??
+
+  - path: intro/SIXPACK_01
+    title: SIXPACK
+    artist: ??
+
+  - path: intro/SIXPACK_02
+    title: SIXPACK
+    artist: ??
+
+  - path: intro/SLEEPWALKER_01
+    title: SLEEPWALKER
+    artist: ??
+
+  - path: intro/SLEEPWALKER_02
+    title: SLEEPWALKER
+    artist: ??
+
+  - path: intro/THIS_MYSTIC_DECADE_01
+    title: THIS_MYSTIC_DECADE
+    artist: ??
+
+  - path: intro/THIS_MYSTIC_DECADE_02
+    title: THIS_MYSTIC_DECADE
+    artist: ??
+
+  - path: intro/TURN_IT_AROUND_01
+    title: TURN_IT_AROUND
+    artist: ??
+
+  - path: intro/TURN_IT_AROUND_02
+    title: TURN_IT_AROUND
+    artist: ??
+
+  - path: intro/TURN_IT_AROUND_03
+    title: TURN_IT_AROUND
+    artist: ??
+
+  - path: intro/USED_BLOOD_01
+    title: USED_BLOOD
+    artist: ??
+
+  - path: intro/USED_BLOOD_02
+    title: USED_BLOOD
+    artist: ??
+
+  - path: intro/WET_BLANKET_01
+    title: WET_BLANKET
+    artist: ??
+
+  - path: intro/WET_BLANKET_02
+    title: WET_BLANKET
+    artist: ??
+
+  - path: intro/WET_BLANKET_03
+    title: WET_BLANKET
+    artist: ??
+
+  - path: intro/WET_BLANKET_04
+    title: WET_BLANKET
+    artist: ??
+
+  - path: intro/WHO_NEEDS_YOU_01
+    title: WHO_NEEDS_YOU
+    artist: ??
+
+  - path: intro/WHO_NEEDS_YOU_02
+    title: WHO_NEEDS_YOU
+    artist: ??
+

@@ -1,0 +1,8 @@
+name: Channel X
+
+include:
+  - RADIO_04_PUNK_id.yaml
+  - RADIO_04_PUNK_host.yaml
+  - RADIO_04_PUNK_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

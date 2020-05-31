@@ -1,0 +1,8 @@
+name: Radio Los Santos
+
+include:
+  - RADIO_03_HIPHOP_NEW_id.yaml
+  - RADIO_03_HIPHOP_NEW_host.yaml
+  - RADIO_03_HIPHOP_NEW_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

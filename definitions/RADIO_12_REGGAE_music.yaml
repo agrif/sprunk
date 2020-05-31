@@ -1,0 +1,150 @@
+prefix: ../RADIO_12_REGGAE
+
+music:
+  - path: addi_truth/ADDI_TRUTH
+    title: ADDI_TRUTH
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: chapter3/CHAPTER3
+    title: CHAPTER3
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: crazy_girl/CRAZY_GIRL
+    title: CRAZY_GIRL
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: disco_devil/DISCO_DEVIL
+    title: DISCO_DEVIL
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: grumblin_dub/GRUMBLIN_DUB
+    title: GRUMBLIN_DUB
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: gun_shot_a_fire/GUN_SHOT_A_FIRE
+    title: GUN_SHOT_A_FIRE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: i_am_a_madman/I_AM_A_MADMAN
+    title: I_AM_A_MADMAN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: kingston_be_wise/KINGSTON_BE_WISE
+    title: KINGSTON_BE_WISE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: kingston_town/KINGSTON_TOWN
+    title: KINGSTON_TOWN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: loyals/LOYALS
+    title: LOYALS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: money_come_money_go/MONEY_COME_MONEY_GO
+    title: MONEY_COME_MONEY_GO
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: money_in_my_pocket/MONEY_IN_MY_POCKET
+    title: MONEY_IN_MY_POCKET
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: mr_money_man/MR_MONEY_MAN
+    title: MR_MONEY_MAN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: night_nurse/NIGHT_NURSE
+    title: NIGHT_NURSE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: nobody_move_get_hurt/NOBODY_MOVE_GET_HURT
+    title: NOBODY_MOVE_GET_HURT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: odd_ras/ODD_RAS
+    title: ODD_RAS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: psycho/PSYCHO
+    title: PSYCHO
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: roast_fish_and_cornbread/ROAST_FISH_AND_CORNBREAD
+    title: ROAST_FISH_AND_CORNBREAD
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: sons_of_slaves/SONS_OF_SLAVES
+    title: SONS_OF_SLAVES
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: topic_of_the_day/TOPIC_OF_THE_DAY
+    title: TOPIC_OF_THE_DAY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: we_never_fear_dem/WE_NEVER_FEAR_DEM
+    title: WE_NEVER_FEAR_DEM
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+

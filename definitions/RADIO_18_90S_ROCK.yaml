@@ -1,0 +1,8 @@
+name: Vinewood Boulevard Radio
+
+include:
+  - RADIO_18_90S_ROCK_id.yaml
+  - RADIO_18_90S_ROCK_host.yaml
+  - RADIO_18_90S_ROCK_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

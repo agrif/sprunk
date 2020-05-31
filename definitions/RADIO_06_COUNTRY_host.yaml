@@ -1,0 +1,163 @@
+prefix: ../RADIO_06_COUNTRY
+
+solo:
+  - mono_solo_01/MONO_SOLO_01
+  - mono_solo_02/MONO_SOLO_02
+  - mono_solo_03/MONO_SOLO_03
+  - mono_solo_04/MONO_SOLO_04
+  - mono_solo_05/MONO_SOLO_05
+  - mono_solo_06/MONO_SOLO_06
+  - mono_solo_07/MONO_SOLO_07
+  - mono_solo_08/MONO_SOLO_08
+  - mono_solo_09/MONO_SOLO_09
+  - mono_solo_10/MONO_SOLO_10
+  - mono_solo_11/MONO_SOLO_11
+  - mono_solo_12/MONO_SOLO_12
+  - mono_solo_13/MONO_SOLO_13
+  - mono_solo_14/MONO_SOLO_14
+  - mono_solo_15/MONO_SOLO_15
+  - mono_solo_16/MONO_SOLO_16
+  - mono_solo_17/MONO_SOLO_17
+  - mono_solo_18/MONO_SOLO_18
+  - mono_solo_19/MONO_SOLO_19
+  - mono_solo_20/MONO_SOLO_20
+  - mono_solo_21/MONO_SOLO_21
+
+general:
+  - general/GENERAL_01
+  - general/GENERAL_02
+  - general/GENERAL_03
+  - general/GENERAL_04
+  - general/GENERAL_05
+  - general/GENERAL_06
+  - general/GENERAL_07
+  - general/GENERAL_08
+  - general/GENERAL_09
+  - general/GENERAL_10
+  - general/GENERAL_11
+  - general/GENERAL_12
+  - general/GENERAL_13
+  - general/GENERAL_14
+  - general/GENERAL_15
+  - general/GENERAL_16
+  - general/GENERAL_17
+  - general/GENERAL_18
+  - general/GENERAL_19
+  - general/GENERAL_20
+  - general/GENERAL_21
+  - general/GENERAL_22
+  - general/GENERAL_23
+
+to-ad:
+  - to/TO_AD_01
+  - to/TO_AD_02
+  - to/TO_AD_03
+  - to/TO_AD_04
+
+to-news:
+  - to/TO_NEWS_01
+  - to/TO_NEWS_02
+  - to/TO_NEWS_03
+  - to/TO_NEWS_04
+
+time-evening:
+  - time/EVENING_01
+  - time/EVENING_02
+  - time/EVENING_03
+  - time/EVENING_04
+
+time-morning:
+  - time/MORNING_01
+  - time/MORNING_02
+  - time/MORNING_03
+  - time/MORNING_04
+
+intro:
+  - path: intro/ARE_YOU_SURE_HANK_01
+    title: ARE_YOU_SURE_HANK
+    artist: ??
+
+  - path: intro/CANT_HARDLY_STAND_01
+    title: CANT_HARDLY_STAND
+    artist: ??
+
+  - path: intro/CANT_HARDLY_STAND_02
+    title: CANT_HARDLY_STAND
+    artist: ??
+
+  - path: intro/CONVOY_01
+    title: CONVOY
+    artist: ??
+
+  - path: intro/CONVOY_02
+    title: CONVOY
+    artist: ??
+
+  - path: intro/0x06B85ABC
+    title: CONVOY
+    artist: ??
+
+  - path: intro/GET_OUTTA_MY_CAR_01
+    title: GET_OUTTA_MY_CAR
+    artist: ??
+
+  - path: intro/GET_OUTTA_MY_CAR_02
+    title: GET_OUTTA_MY_CAR
+    artist: ??
+
+  - path: intro/GET_OUTTA_MY_CAR_03
+    title: GET_OUTTA_MY_CAR
+    artist: ??
+
+  - path: intro/IF_WANT_TO_GET_HEAVEN_01
+    title: IF_WANT_TO_GET_HEAVEN
+    artist: ??
+
+  - path: intro/IF_WANT_TO_GET_HEAVEN_02
+    title: IF_WANT_TO_GET_HEAVEN
+    artist: ??
+
+  - path: intro/IT_DONT_HURT_ANYMORE_01
+    title: IT_DONT_HURT_ANYMORE
+    artist: ??
+
+  - path: intro/IT_DONT_HURT_ANYMORE_02
+    title: IT_DONT_HURT_ANYMORE
+    artist: ??
+
+  - path: intro/IT_WONT_BE_LONG_HATING_YOU_01
+    title: IT_WONT_BE_LONG_HATING_YOU
+    artist: ??
+
+  - path: intro/IT_WONT_BE_LONG_HATING_YOU_02
+    title: IT_WONT_BE_LONG_HATING_YOU
+    artist: ??
+
+  - path: intro/I_AINT_LIVING_LONG_LIKE_THIS_01
+    title: I_AINT_LIVING_LONG_LIKE_THIS
+    artist: ??
+
+  - path: intro/THE_GENERAL_LEE_01
+    title: THE_GENERAL_LEE
+    artist: ??
+
+  - path: intro/THE_GENERAL_LEE_02
+    title: THE_GENERAL_LEE
+    artist: ??
+
+  - path: intro/WHISKEY_RIVER_01
+    title: WHISKEY_RIVER
+    artist: ??
+
+  - path: intro/WHISKEY_RIVER_02
+    title: WHISKEY_RIVER
+    artist: ??
+
+  - path: intro/YOU_TOOK_ALL_THE_RAMBLIN_OUT_01
+    title: YOU_TOOK_ALL_THE_RAMBLIN_OUT
+    artist: ??
+
+  - path: intro/YOU_TOOK_ALL_THE_RAMBLIN_OUT_02
+    title: YOU_TOOK_ALL_THE_RAMBLIN_OUT
+    artist: ??
+

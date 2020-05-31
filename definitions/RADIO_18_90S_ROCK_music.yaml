@@ -1,0 +1,143 @@
+prefix: ../RADIO_18_90S_ROCK
+
+music:
+  - path: answer_to_yourself/ANSWER_TO_YOURSELF
+    title: ANSWER_TO_YOURSELF
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: black_grease/BLACK_GREASE
+    title: BLACK_GREASE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: california_girls/CALIFORNIA_GIRLS
+    title: CALIFORNIA_GIRLS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: cocaine/COCAINE
+    title: COCAINE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: crawling_after_you/CRAWLING_AFTER_YOU
+    title: CRAWLING_AFTER_YOU
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: diddy_wah_diddy/DIDDY_WAH_DIDDY
+    title: DIDDY_WAH_DIDDY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: fall_in_line/FALL_IN_LINE
+    title: FALL_IN_LINE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: fire_doesnt_burn_itself/FIRE_DOESNT_BURN_ITSELF
+    title: FIRE_DOESNT_BURN_ITSELF
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: gone_for_good/GONE_FOR_GOOD
+    title: GONE_FOR_GOOD
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: hysteria/HYSTERIA
+    title: HYSTERIA
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: next_stop/NEXT_STOP
+    title: NEXT_STOP
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: nine_is_god/NINE_IS_GOD
+    title: NINE_IS_GOD
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: sixpack/SIXPACK
+    title: SIXPACK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: sleepwalker/SLEEPWALKER
+    title: SLEEPWALKER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: the_dream/THE_DREAM
+    title: THE_DREAM
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: this_mystic_decade/THIS_MYSTIC_DECADE
+    title: THIS_MYSTIC_DECADE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: turn_it_around/TURN_IT_AROUND
+    title: TURN_IT_AROUND
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: used_blood/USED_BLOOD
+    title: USED_BLOOD
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: wet_blanket/WET_BLANKET
+    title: WET_BLANKET
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: who_needs_you/WHO_NEEDS_YOU
+    title: WHO_NEEDS_YOU
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+

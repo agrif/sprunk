@@ -1,0 +1,122 @@
+prefix: ../RADIO_06_COUNTRY
+
+music:
+  - path: are_you_sure_hank/ARE_YOU_SURE_HANK
+    title: ARE_YOU_SURE_HANK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: cant_hardly_stand/CANT_HARDLY_STAND
+    title: CANT_HARDLY_STAND
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: convoy/CONVOY
+    title: CONVOY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: crazy_arms/CRAZY_ARMS
+    title: CRAZY_ARMS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: dippin_snuff/DIPPIN_SNUFF
+    title: DIPPIN_SNUFF
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: divorce/DIVORCE
+    title: DIVORCE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: get_outta_my_car/GET_OUTTA_MY_CAR
+    title: GET_OUTTA_MY_CAR
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: get_with_it/GET_WITH_IT
+    title: GET_WITH_IT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: highway_man/HIGHWAY_MAN
+    title: HIGHWAY_MAN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: i_aint_living_long_like_this/I_AINT_LIVING_LONG_LIKE_THIS
+    title: I_AINT_LIVING_LONG_LIKE_THIS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: if_want_to_get_heaven/IF_WANT_TO_GET_HEAVEN
+    title: IF_WANT_TO_GET_HEAVEN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: it_dont_hurt_anymore/IT_DONT_HURT_ANYMORE
+    title: IT_DONT_HURT_ANYMORE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: it_wont_be_long_hating_you/IT_WONT_BE_LONG_HATING_YOU
+    title: IT_WONT_BE_LONG_HATING_YOU
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: she_made_toothpicks_out_of_me/SHE_MADE_TOOTHPICKS_OUT_OF_ME
+    title: SHE_MADE_TOOTHPICKS_OUT_OF_ME
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: the_general_lee/THE_GENERAL_LEE
+    title: THE_GENERAL_LEE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: whiskey_river/WHISKEY_RIVER
+    title: WHISKEY_RIVER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: you_took_all_the_ramblin_out/YOU_TOOK_ALL_THE_RAMBLIN_OUT
+    title: YOU_TOOK_ALL_THE_RAMBLIN_OUT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+

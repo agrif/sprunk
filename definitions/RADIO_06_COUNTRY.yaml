@@ -1,0 +1,8 @@
+name: Rebel Radio
+
+include:
+  - RADIO_06_COUNTRY_id.yaml
+  - RADIO_06_COUNTRY_host.yaml
+  - RADIO_06_COUNTRY_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

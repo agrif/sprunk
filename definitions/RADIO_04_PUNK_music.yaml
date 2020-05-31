@@ -1,0 +1,129 @@
+prefix: ../RADIO_04_PUNK
+
+music:
+  - path: amoeba/AMOEBA
+    title: AMOEBA
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: blown_away/BLOWN_AWAY
+    title: BLOWN_AWAY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: bored_of_you/BORED_OF_YOU
+    title: BORED_OF_YOU
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: dont_need_society/DONT_NEED_SOCIETY
+    title: DONT_NEED_SOCIETY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: dont_push_me_around/DONT_PUSH_ME_AROUND
+    title: DONT_PUSH_ME_AROUND
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: john_wayne/JOHN_WAYNE
+    title: JOHN_WAYNE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: lexicon_devil/LEXICON_DEVIL
+    title: LEXICON_DEVIL
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: life_of_crime/LIFE_OF_CRIME
+    title: LIFE_OF_CRIME
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: linda_blair/LINDA_BLAIR
+    title: LINDA_BLAIR
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: los_angeles/LOS_ANGELES
+    title: LOS_ANGELES
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: my_war/MY_WAR
+    title: MY_WAR
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: pervert/PERVERT
+    title: PERVERT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: rock_house/ROCK_HOUSE
+    title: ROCK_HOUSE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: silent_majority/SILENT_MAJORITY
+    title: SILENT_MAJORITY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: subliminal/SUBLIMINAL
+    title: SUBLIMINAL
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: the_enemy/THE_ENEMY
+    title: THE_ENEMY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: the_mouth_dont_stop/THE_MOUTH_DONT_STOP
+    title: THE_MOUTH_DONT_STOP
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: whats_next/WHATS_NEXT
+    title: WHATS_NEXT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+

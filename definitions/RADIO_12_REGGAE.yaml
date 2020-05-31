@@ -1,0 +1,8 @@
+name: Blue Ark
+
+include:
+  - RADIO_12_REGGAE_id.yaml
+  - RADIO_12_REGGAE_host.yaml
+  - RADIO_12_REGGAE_music.yaml
+  - RADIO_ADVERTS.yaml
+  - RADIO_NEWS.yaml

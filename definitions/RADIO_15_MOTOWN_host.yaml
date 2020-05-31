@@ -1,0 +1,215 @@
+prefix: ../RADIO_15_MOTOWN
+
+solo:
+  - mono_solo_01/MONO_SOLO_01
+  - mono_solo_02/MONO_SOLO_02
+  - mono_solo_03/MONO_SOLO_03
+  - mono_solo_04/MONO_SOLO_04
+  - mono_solo_05/MONO_SOLO_05
+  - mono_solo_06/MONO_SOLO_06
+  - mono_solo_07/MONO_SOLO_07
+  - mono_solo_08/MONO_SOLO_08
+  - mono_solo_09/MONO_SOLO_09
+  - mono_solo_10/MONO_SOLO_10
+  - mono_solo_11/MONO_SOLO_11
+  - mono_solo_12/MONO_SOLO_12
+
+general:
+  - general/GENERAL_01
+  - general/GENERAL_02
+  - general/GENERAL_03
+  - general/GENERAL_04
+  - general/GENERAL_05
+  - general/GENERAL_06
+  - general/GENERAL_07
+  - general/GENERAL_08
+  - general/GENERAL_09
+  - general/GENERAL_10
+  - general/GENERAL_11
+  - general/GENERAL_12
+  - general/GENERAL_13
+  - general/GENERAL_14
+  - general/GENERAL_15
+  - general/GENERAL_16
+  - general/GENERAL_17
+  - general/GENERAL_18
+  - general/GENERAL_19
+  - general/GENERAL_20
+  - general/GENERAL_21
+  - general/GENERAL_22
+  - general/GENERAL_23
+  - general/GENERAL_24
+  - general/GENERAL_25
+  - general/GENERAL_26
+  - general/GENERAL_27
+  - general/GENERAL_28
+  - general/GENERAL_29
+  - general/GENERAL_30
+  - general/GENERAL_31
+  - general/GENERAL_32
+  - general/GENERAL_33
+  - general/GENERAL_34
+  - general/GENERAL_35
+  - general/GENERAL_36
+
+to-ad:
+  - to/TO_AD_01
+  - to/TO_AD_02
+  - to/TO_AD_03
+  - to/TO_AD_04
+  - to/TO_AD_05
+
+to-news:
+
+time-evening:
+  - time/EVENING_01
+  - time/EVENING_02
+  - time/EVENING_03
+  - time/EVENING_04
+  - time/EVENING_05
+
+time-morning:
+  - time/MORNING_01
+  - time/MORNING_02
+  - time/MORNING_03
+  - time/MORNING_04
+  - time/MORNING_05
+  - time/MORNING_06
+
+intro:
+  - path: intro/ASHLEYS_ROACHCLIP_01
+    title: ASHLEYS_ROACHCLIP
+    artist: ??
+
+  - path: intro/ASHLEYS_ROACHCLIP_02
+    title: ASHLEYS_ROACHCLIP
+    artist: ??
+
+  - path: intro/CALIFORNIA_SOUL_01
+    title: CALIFORNIA_SOUL
+    artist: ??
+
+  - path: intro/CALIFORNIA_SOUL_02
+    title: CALIFORNIA_SOUL
+    artist: ??
+
+  - path: intro/CLIMAX_01
+    title: CLIMAX
+    artist: ??
+
+  - path: intro/CLIMAX_02
+    title: CLIMAX
+    artist: ??
+
+  - path: intro/CRUISIN_01
+    title: CRUISIN
+    artist: ??
+
+  - path: intro/CRUISIN_02
+    title: CRUISIN
+    artist: ??
+
+  - path: intro/DO_IT_TIL_YOURE_SATISFIED_01
+    title: DO_IT_TIL_YOURE_SATISFIED
+    artist: ??
+
+  - path: intro/DO_IT_TIL_YOURE_SATISFIED_02
+    title: DO_IT_TIL_YOURE_SATISFIED
+    artist: ??
+
+  - path: intro/FUNNY_FEELING_01
+    title: FUNNY_FEELING
+    artist: ??
+
+  - path: intro/HERCULES_01
+    title: HERCULES
+    artist: ??
+
+  - path: intro/HERCULES_02
+    title: HERCULES
+    artist: ??
+
+  - path: intro/I_BELIEVE_IN_MIRACLES_01
+    title: I_BELIEVE_IN_MIRACLES
+    artist: ??
+
+  - path: intro/I_BELIEVE_IN_MIRACLES_02
+    title: I_BELIEVE_IN_MIRACLES
+    artist: ??
+
+  - path: intro/I_GET_LIFTED_01
+    title: I_GET_LIFTED
+    artist: ??
+
+  - path: intro/I_GET_LIFTED_02
+    title: I_GET_LIFTED
+    artist: ??
+
+  - path: intro/MAGIC_MOUNTAIN_01
+    title: MAGIC_MOUNTAIN
+    artist: ??
+
+  - path: intro/MAGIC_MOUNTAIN_02
+    title: MAGIC_MOUNTAIN
+    artist: ??
+
+  - path: intro/O_O_H_CHILD_01
+    title: O_O_H_CHILD
+    artist: ??
+
+  - path: intro/O_O_H_CHILD_02
+    title: O_O_H_CHILD
+    artist: ??
+
+  - path: intro/READY_OR_NOT_01
+    title: READY_OR_NOT
+    artist: ??
+
+  - path: intro/READY_OR_NOT_02
+    title: READY_OR_NOT
+    artist: ??
+
+  - path: intro/RUBBER_BAND_01
+    title: RUBBER_BAND
+    artist: ??
+
+  - path: intro/RUBBER_BAND_02
+    title: RUBBER_BAND
+    artist: ??
+
+  - path: intro/SMILING_FACES_01
+    title: SMILING_FACES
+    artist: ??
+
+  - path: intro/SMILING_FACES_02
+    title: SMILING_FACES
+    artist: ??
+
+  - path: intro/SUPERMAN_LOVER_01
+    title: SUPERMAN_LOVER
+    artist: ??
+
+  - path: intro/SUPERMAN_LOVER_02
+    title: SUPERMAN_LOVER
+    artist: ??
+
+  - path: intro/THE_CISCO_KID_01
+    title: THE_CISCO_KID
+    artist: ??
+
+  - path: intro/THE_CISCO_KID_02
+    title: THE_CISCO_KID
+    artist: ??
+
+  - path: intro/THE_CISCO_KID_03
+    title: THE_CISCO_KID
+    artist: ??
+
+  - path: intro/VIVA_TIRADO_01
+    title: VIVA_TIRADO
+    artist: ??
+
+  - path: intro/VIVA_TIRADO_02
+    title: VIVA_TIRADO
+    artist: ??
+

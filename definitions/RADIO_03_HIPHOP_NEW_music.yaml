@@ -1,0 +1,220 @@
+prefix: ../RADIO_03_HIPHOP_NEW
+
+music:
+  - path: adhd/ADHD
+    title: ADHD
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: ali_bomaye/ALI_BOMAYE
+    title: ALI_BOMAYE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: bad_news/BAD_NEWS
+    title: BAD_NEWS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: bassheads/BASSHEADS
+    title: BASSHEADS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: bugatti/BUGATTI
+    title: BUGATTI
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: collard_greens/COLLARD_GREENS
+    title: COLLARD_GREENS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: do_it_big/DO_IT_BIG
+    title: DO_IT_BIG
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: easily/EASILY
+    title: EASILY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: everyday/EVERYDAY
+    title: EVERYDAY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: hold_up/HOLD_UP
+    title: HOLD_UP
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: hood_gone_love_it/HOOD_GONE_LOVE_IT
+    title: HOOD_GONE_LOVE_IT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: how_it_was/HOW_IT_WAS
+    title: HOW_IT_WAS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: hunnid_stax/HUNNID_STAX
+    title: HUNNID_STAX
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: i_cant_wait_scooter/I_CANT_WAIT_SCOOTER
+    title: I_CANT_WAIT_SCOOTER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: illuminate/ILLUMINATE
+    title: ILLUMINATE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: im_a_real_one/IM_A_REAL_ONE
+    title: IM_A_REAL_ONE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: kush_coma/KUSH_COMA
+    title: KUSH_COMA
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: life_of_a_mack/LIFE_OF_A_MACK
+    title: LIFE_OF_A_MACK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: millions/MILLIONS
+    title: MILLIONS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: r_cali/R_CALI
+    title: R_CALI
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: relaxin/RELAXIN
+    title: RELAXIN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: say_that_then/SAY_THAT_THEN
+    title: SAY_THAT_THEN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: sellin_dope/SELLIN_DOPE
+    title: SELLIN_DOPE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: slow_down/SLOW_DOWN
+    title: SLOW_DOWN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: smokin_and_ridin/SMOKIN_AND_RIDIN
+    title: SMOKIN_AND_RIDIN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: still_livin/STILL_LIVIN
+    title: STILL_LIVIN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: swimming_pools/SWIMMING_POOLS
+    title: SWIMMING_POOLS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: too_hood/TOO_HOOD
+    title: TOO_HOOD
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: upper_echelon/UPPER_ECHELON
+    title: UPPER_ECHELON
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: work_ferg/WORK_FERG
+    title: WORK_FERG
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: work_young_scooter/WORK_YOUNG_SCOOTER
+    title: WORK_YOUNG_SCOOTER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+

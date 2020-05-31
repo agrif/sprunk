@@ -1,0 +1,143 @@
+prefix: ../RADIO_15_MOTOWN
+
+music:
+  - path: ashleys_roachclip/ASHLEYS_ROACHCLIP
+    title: ASHLEYS_ROACHCLIP
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: bouncy_lady/BOUNCY_LADY
+    title: BOUNCY_LADY
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: california_soul/CALIFORNIA_SOUL
+    title: CALIFORNIA_SOUL
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: changin/CHANGIN
+    title: CHANGIN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: climax/CLIMAX
+    title: CLIMAX
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: cruisin/CRUISIN
+    title: CRUISIN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: do_it_til_youre_satisfied/DO_IT_TIL_YOURE_SATISFIED
+    title: DO_IT_TIL_YOURE_SATISFIED
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: funny_feeling/FUNNY_FEELING
+    title: FUNNY_FEELING
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: hercules/HERCULES
+    title: HERCULES
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: i_believe_in_miracles/I_BELIEVE_IN_MIRACLES
+    title: I_BELIEVE_IN_MIRACLES
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: i_get_lifted/I_GET_LIFTED
+    title: I_GET_LIFTED
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: magic_mountain/MAGIC_MOUNTAIN
+    title: MAGIC_MOUNTAIN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: o_o_h_child/O_O_H_CHILD
+    title: O_O_H_CHILD
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: ready_or_not/READY_OR_NOT
+    title: READY_OR_NOT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: rubber_band/RUBBER_BAND
+    title: RUBBER_BAND
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: smiling_faces/SMILING_FACES
+    title: SMILING_FACES
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: stories/STORIES
+    title: STORIES
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: superman_lover/SUPERMAN_LOVER
+    title: SUPERMAN_LOVER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: the_cisco_kid/THE_CISCO_KID
+    title: THE_CISCO_KID
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: viva_tirado/VIVA_TIRADO
+    title: VIVA_TIRADO
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+

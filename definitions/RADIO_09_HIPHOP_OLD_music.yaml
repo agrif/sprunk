@@ -1,0 +1,206 @@
+prefix: ../RADIO_09_HIPHOP_OLD
+
+music:
+  - path: afro_puffs/AFRO_PUFFS
+    title: AFRO_PUFFS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: ambitionz_az_a_ridah/AMBITIONZ_AZ_A_RIDAH
+    title: AMBITIONZ_AZ_A_RIDAH
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: appetite_for_destruction/APPETITE_FOR_DESTRUCTION
+    title: APPETITE_FOR_DESTRUCTION
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: ballad_of_a_menace/BALLAD_OF_A_MENACE
+    title: BALLAD_OF_A_MENACE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: bow_down/BOW_DOWN
+    title: BOW_DOWN
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: c_walk/C_WALK
+    title: C_WALK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: captain_save_a_hoe/CAPTAIN_SAVE_A_HOE
+    title: CAPTAIN_SAVE_A_HOE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: dollaz_and_sense/DOLLAZ_AND_SENSE
+    title: DOLLAZ_AND_SENSE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: first_of_the_month/FIRST_OF_THE_MONTH
+    title: FIRST_OF_THE_MONTH
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: gangsta_gangsta/GANGSTA_GANGSTA
+    title: GANGSTA_GANGSTA
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: gin_and_juice/GIN_AND_JUICE
+    title: GIN_AND_JUICE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: i_got_five_on_it/I_GOT_FIVE_ON_IT
+    title: I_GOT_FIVE_ON_IT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: late_night_hype/LATE_NIGHT_HYPE
+    title: LATE_NIGHT_HYPE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: like_a_piano/LIKE_A_PIANO
+    title: LIKE_A_PIANO
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: mind_playing_tricks/MIND_PLAYING_TRICKS
+    title: MIND_PLAYING_TRICKS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: no_more_questions/NO_MORE_QUESTIONS
+    title: NO_MORE_QUESTIONS
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: nothin_but_the_cavi_hit/NOTHIN_BUT_THE_CAVI_HIT
+    title: NOTHIN_BUT_THE_CAVI_HIT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: servin_em_heat/SERVIN_EM_HEAT
+    title: SERVIN_EM_HEAT
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: sherm_stick/SHERM_STICK
+    title: SHERM_STICK
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: so_you_want_to_be_a_gangster/SO_YOU_WANT_TO_BE_A_GANGSTER
+    title: SO_YOU_WANT_TO_BE_A_GANGSTER
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: still_d_r_e/STILL_D_R_E
+    title: STILL_D_R_E
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: straight_up_menace/STRAIGHT_UP_MENACE
+    title: STRAIGHT_UP_MENACE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: the_murda_show/THE_MURDA_SHOW
+    title: THE_MURDA_SHOW
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: the_next_episode/THE_NEXT_EPISODE
+    title: THE_NEXT_EPISODE
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: this_dj/THIS_DJ
+    title: THIS_DJ
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: we_roll_deep/WE_ROLL_DEEP
+    title: WE_ROLL_DEEP
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: what_would_you_do/WHAT_WOULD_YOU_DO
+    title: WHAT_WOULD_YOU_DO
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: what_you_wanna_do/WHAT_YOU_WANNA_DO
+    title: WHAT_YOU_WANNA_DO
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
+  - path: you_know_how_we_do/YOU_KNOW_HOW_WE_DO
+    title: YOU_KNOW_HOW_WE_DO
+    artist: ??
+    album: optional
+    pre: 0:00
+    post: 0:00
+
