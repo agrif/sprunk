@@ -1,0 +1,13 @@
+[package]
+name = "sprunk"
+version = "0.1.0"
+authors = ["Aaron Griffith <aargri@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1.0"
+cpal = "0.12"
+rb = "0.3"
+rodio = "0.12"
+libc = "0.2"
+libsamplerate-sys = "0.1.8" # cmake changes in 0.1.8 needed
