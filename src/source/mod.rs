@@ -16,6 +16,19 @@ pub trait Source {
     fn fill(&mut self, buffer: &mut [f32]) -> usize;
     fn seek(&mut self, frame: u64) -> anyhow::Result<()>;
 
+    fn force_fill(&mut self, mut buffer: &mut [f32]) -> usize {
+        let mut filled = 0;
+        while buffer.len() > 0 {
+            let f = self.fill(buffer);
+            if f == 0 {
+                break;
+            }
+            buffer = &mut buffer[f..];
+            filled += f;
+        }
+        filled
+    }
+
     fn resample(self, samplerate: f32) -> Resample<Self>
     where
         Self: Sized,

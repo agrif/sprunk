@@ -1,6 +1,8 @@
 pub mod samplerate;
-pub mod source;
+mod scheduler;
 pub mod sink;
+pub mod source;
 
-pub use source::Source;
+pub use scheduler::Scheduler;
 pub use sink::Sink;
+pub use source::Source;
