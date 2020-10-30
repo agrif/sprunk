@@ -52,13 +52,15 @@ impl Scheduler {
         sched
     }
 
-    pub fn add<S>(&mut self, start: u64, src: S)
+    pub fn add<S>(&mut self, start: u64, src: S) -> Option<u64>
     where
         S: Source + 'static,
     {
         let src = src.reformat(self.samplerate, self.channels);
+        let len = src.len();
         let mut data = self.data.borrow_mut();
         data.scheduled.push((start, Box::new(src)));
+        len
     }
 
     fn add_ramp_point(&mut self, start: u64, volume: f32) {
