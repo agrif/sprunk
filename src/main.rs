@@ -9,6 +9,8 @@ fn main() -> anyhow::Result<()> {
         let source = sprunk::source::Media::new(file)?;
         let mut subsched = sched.subscheduler();
         subsched.add(48000 * i as u64, source);
+        subsched.set_volume(0, 0.0, None);
+        subsched.set_volume(24000 * i as u64, 1.0, Some(24000));
     }
 
     let mut sink = sprunk::sink::System::new(1024)?;
