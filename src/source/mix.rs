@@ -1,6 +1,7 @@
 pub struct Mix<S> {
     source: S,
     mix: Vec<Vec<f32>>,
+    inchannels: u16,
     buffer: Vec<f32>,
 }
 
@@ -9,8 +10,9 @@ where
     S: super::Source,
 {
     pub fn new(source: S, mix: Vec<Vec<f32>>) -> Self {
+        let inchannels = source.channels();
         for col in mix.iter() {
-            if col.len() != source.channels() as usize {
+            if col.len() != inchannels as usize {
                 panic!(
                     "bad matrix shape for mix: {:?} x {:?}",
                     mix.len(),
@@ -21,6 +23,7 @@ where
         Self {
             source,
             mix,
+            inchannels,
             buffer: vec![],
         }
     }
@@ -49,7 +52,7 @@ where
 
     fn fill(&mut self, buffer: &mut [f32]) -> usize {
         let outchannels = self.mix.len();
-        let inchannels = self.source.channels() as usize;
+        let inchannels = self.inchannels as usize;
         self.buffer
             .resize(buffer.len() * inchannels / outchannels, 0.0);
         let samples = self.source.fill(&mut self.buffer);

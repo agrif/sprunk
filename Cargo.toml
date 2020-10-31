@@ -8,6 +8,6 @@ edition = "2018"
 anyhow = "1.0"
 cpal = "0.12"
 rb = "0.3"
-rodio = "0.12"
+sndfile-sys = "0.2"
 libc = "0.2"
 libsamplerate-sys = "0.1.8" # cmake changes in 0.1.8 needed

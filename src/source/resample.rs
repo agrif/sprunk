@@ -3,6 +3,7 @@ use crate::samplerate::{ConverterType, SampleRate};
 pub struct Resample<S> {
     source: S,
     samplerate: f32,
+    inrate: f32,
     converter: SampleRate,
     buffer: Vec<f32>,
     bufferstart: usize,
@@ -16,6 +17,7 @@ where
         Self {
             converter: SampleRate::new(ConverterType::SincMediumQuality, source.channels())
                 .unwrap(),
+            inrate: source.samplerate(),
             buffer: vec![],
             bufferstart: 0,
             source,
@@ -43,7 +45,7 @@ where
     }
 
     fn fill(&mut self, buffer: &mut [f32]) -> usize {
-        let ratio = self.samplerate / self.source.samplerate();
+        let ratio = self.samplerate / self.inrate;
         let mut innerlen = buffer.len() as f32 / ratio;
         innerlen += self.source.channels() as f32 * 2.0;
         if innerlen > self.bufferstart as f32 {
