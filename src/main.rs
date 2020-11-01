@@ -1,6 +1,6 @@
 fn main() -> anyhow::Result<()> {
     let args: Vec<String> = std::env::args().collect();
-    let sink = sprunk::sink::System::new(1024)?;
+    /*let sink = sprunk::sink::System::new(1024)?;
     let mut sched = sprunk::Manager::new(sink, 1024);
 
     for (i, arg) in args[1..].iter().enumerate() {
@@ -15,7 +15,13 @@ fn main() -> anyhow::Result<()> {
         }
     }
 
-    sched.advance_to_end()?;
+    sched.advance_to_end()?;*/
+
+    for arg in args[1..].iter() {
+        let def = sprunk::Definitions::open(arg)?;
+        def.verify()?;
+        println!("{:?}", def);
+    }
 
     Ok(())
 }
