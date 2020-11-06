@@ -1,0 +1,22 @@
+# link to vcpkg libsndfile
+# https://github.com/evpobr/sndfile-sys
+
+# what even is this? force rust to link to the C runtime statically on windows
+# https://github.com/rust-lang/rfcs/blob/master/text/1721-crt-static.md
+# because the libsndfile we use is a vcpkg x64-windows-static lib, and
+# the vcpkg crate will only find it, and we will only link successfully,
+# with a static CRT.
+
+# the following *should* work, except it never sets RUSTFLAGS on build.rs
+# https://github.com/rust-lang/cargo/issues/4423
+# we really want a host.* entry, or for the CARGO_CFG_* env vars in build.rs
+# to be for the actual target, not the host. frustrating...
+#[target.'cfg(all(windows, target_env="msvc"))']
+#rustflags = ["-Ctarget-feature=+crt-static"]
+
+# instead, just use a static CRT everywhere. Not ideal, but it works.
+[build]
+rustflags = ["-Ctarget-feature=+crt-static"]
+
+# this took 2 hours to figure out, and I am about as angry about it as
+# you can imagine.
