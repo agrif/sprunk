@@ -1,7 +1,8 @@
 use std::path::{Path, PathBuf};
 
-use npath::NormPathExt;
 use strict_yaml_rust::{StrictYaml, StrictYamlLoader};
+
+use crate::normalize::normalize;
 
 #[derive(Debug)]
 pub struct Definitions {
@@ -100,7 +101,7 @@ impl Definitions {
             ],
         )?;
 
-        let prefix = base.concat(Self::get_str(data, "prefix")?.unwrap_or("."));
+        let prefix = base.join(Self::get_str(data, "prefix")?.unwrap_or("."));
 
         // read and merge includes first
         if let Some(includes) = Self::get_vec(data, "include")? {
@@ -108,7 +109,7 @@ impl Definitions {
                 let inc = inc
                     .as_str()
                     .ok_or_else(|| anyhow::anyhow!("includes must be strings"))?;
-                let inc = prefix.concat(inc);
+                let inc = normalize(&prefix.join(inc));
                 new.merge(Definitions::open(inc)?);
             }
         }
@@ -141,7 +142,7 @@ impl Definitions {
                 Self::check_keys(intro, &["path", "title", "artist", "album"])?;
                 let path = Self::get_str(intro, "path")?
                     .ok_or_else(|| anyhow::anyhow!("song requires path"))?;
-                let path = Self::verify_media(&prefix.concat(path))?;
+                let path = Self::verify_media(&prefix.join(path))?;
                 let title = Self::get_str(intro, "title")?
                     .ok_or_else(|| anyhow::anyhow!("song requires title"))?
                     .to_owned();
@@ -167,7 +168,7 @@ impl Definitions {
                 Self::check_keys(song, &["path", "title", "artist", "album", "pre", "post"])?;
                 let path = Self::get_str(song, "path")?
                     .ok_or_else(|| anyhow::anyhow!("song requires path"))?;
-                let path = Self::verify_media(&prefix.concat(path))?;
+                let path = Self::verify_media(&prefix.join(path))?;
                 let title = Self::get_str(song, "title")?
                     .ok_or_else(|| anyhow::anyhow!("song requires title"))?
                     .to_owned();
@@ -261,7 +262,7 @@ impl Definitions {
                 let p = p
                     .as_str()
                     .ok_or_else(|| anyhow::anyhow!("bad path in {:?}, expected string", k))?;
-                ret.push(Self::verify_media(&prefix.concat(Path::new(p)))?);
+                ret.push(Self::verify_media(&prefix.join(Path::new(p)))?);
             }
             Ok(ret)
         } else {
@@ -270,7 +271,7 @@ impl Definitions {
     }
 
     fn verify_media(path: &Path) -> anyhow::Result<PathBuf> {
-        let mut mutpath = path.normalize();
+        let mut mutpath = normalize(path);
         let exts = &["flac", "wav", "ogg"];
         for ext in exts {
             mutpath.set_extension(ext);

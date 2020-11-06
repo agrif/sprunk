@@ -1,5 +1,6 @@
 mod definitions;
 mod manager;
+mod normalize;
 pub mod samplerate;
 mod scheduler;
 pub mod sink;
