@@ -1,4 +1,5 @@
 import sys
+import time
 import os
 import subprocess
 
@@ -48,7 +49,7 @@ def read_radio_choices(path):
         data = strictyaml.load(f.read()).data
     data = data.get('stations', {})
     return data.keys()
-    
+
 def read_radio_definitions(path, mount):
     if mount.startswith('/'):
         mount = mount[1:]
@@ -143,7 +144,7 @@ def start_inner(output, definition, mount, detach):
 
     # go!
     if detach:
-        subprocess.check_call(args, env=env)
+        subprocess.check_call(args, env=env, stdout=subprocess.DEVNULL)
     else:
         os.execvpe(args[0], args, env)
 
@@ -165,9 +166,15 @@ def stop_inner(definition, mount):
     defs = read_radio_definitions(definition, mount)
 
     # does this screen session exist?
-    if subprocess.call(['screen', '-S', defs['key'], '-X', 'select', '.'], stdout=subprocess.DEVNULL) == 0:
+    counter = 0
+    while subprocess.call(['screen', '-S', defs['key'], '-X', 'select', '.'], stdout=subprocess.DEVNULL) == 0:
         # session exists, remove it
-        subprocess.check_call(['screen', '-S', defs['key'], '-p', '0', '-X', 'stuff', '\x03'])
+        if counter > 0:
+            time.sleep(0.1)
+        subprocess.call(['screen', '-S', defs['key'], '-p', '0', '-X', 'stuff', '\x03'], stdout=subprocess.DEVNULL)
+        counter += 1
+        if counter > 10:
+            raise RuntimeError('failed to kill screen session')
 
 @cli.command()
 @click.argument('DEFINITION')
