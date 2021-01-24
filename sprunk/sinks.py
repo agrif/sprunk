@@ -63,7 +63,7 @@ def open_sink(value=None):
     if isinstance(value, Sink):
         return value
     if value:
-        types = ['file', 'stdout', 'ffmpeg', 'ffmpegre']
+        types = ['file', 'stdout', 'ffmpeg', 'ffmpegre', 'play']
         typ = 'file'
         if value == '-':
             typ = 'stdout'
@@ -87,6 +87,8 @@ def open_sink(value=None):
         elif typ == 'ffmpegre':
             args = shlex.split(value)
             return FFmpegSink(48000, 2, True, args)
+        elif typ == 'play':
+            return PyAudioSink(48000, 2)
         else:
             raise TypeError('unhandled output type')
     return PyAudioSink(48000, 2)

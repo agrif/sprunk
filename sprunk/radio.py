@@ -55,7 +55,11 @@ class Radio:
             query['song'] = song
             parts[4] = urllib.parse.urlencode(query)
             our_meta_url = urllib.parse.urlunparse(parts)
-            requests.get(our_meta_url)
+            try:
+                requests.get(our_meta_url)
+            except Exception:
+                print('### (failed to set metadata via url)')
+                pass
 
     def choice(self, key):
         def key_of(m):

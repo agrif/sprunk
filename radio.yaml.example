@@ -1,0 +1,69 @@
+icecast:
+  host: localhost:8000
+  schema: http # optional
+  user: source # optional
+  password: hackme
+
+stations:
+  jetsetradio:
+    files:
+      - definitions/JSR.yaml
+
+  lossantosrockradio:
+    files:
+      - definitions/RADIO_01_CLASS_ROCK.yaml
+  
+  nonstoppop:
+    files:
+      - definitions/RADIO_02_POP.yaml
+
+  radiolossantos:
+    files:
+      - definitions/RADIO_03_HIPHOP_NEW.yaml
+
+  channelx:
+    files:
+      - definitions/RADIO_04_PUNK.yaml
+
+  rebelradio:
+    files:
+      - definitions/RADIO_06_COUNTRY.yaml
+
+  westcoastclassics:
+    files:
+      - definitions/RADIO_09_HIPHOP_OLD.yaml
+
+  blueark:
+    files:
+      - definitions/RADIO_12_REGGAE.yaml
+
+  thelowdown91.1:
+    files:
+      - definitions/RADIO_15_MOTOWN.yaml
+
+  radiomirrorpark:
+    files:
+      - definitions/RADIO_16_SILVERLAKE.yaml
+
+  space103.2:
+    files:
+        - definitions/RADIO_17_FUNK.yaml
+
+  vinewoodboulevard:
+    files:
+      - definitions/RADIO_18_90S_ROCK.yaml
+
+  mysterymeat:
+    files:
+      - definitions/JSR.yaml
+      - definitions/RADIO_01_CLASS_ROCK.yaml
+      - definitions/RADIO_02_POP.yaml
+      - definitions/RADIO_03_HIPHOP_NEW.yaml
+      - definitions/RADIO_04_PUNK.yaml
+      - definitions/RADIO_06_COUNTRY.yaml
+      - definitions/RADIO_09_HIPHOP_OLD.yaml
+      - definitions/RADIO_12_REGGAE.yaml
+      - definitions/RADIO_15_MOTOWN.yaml
+      - definitions/RADIO_16_SILVERLAKE.yaml
+      - definitions/RADIO_17_FUNK.yaml
+      - definitions/RADIO_18_90S_ROCK.yaml
