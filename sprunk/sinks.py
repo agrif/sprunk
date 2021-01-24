@@ -1,4 +1,6 @@
 import subprocess
+import shlex
+import sys
 
 import soundfile
 try:
@@ -12,6 +14,7 @@ __all__ = [
     'PyAudioSink',
     'FileSink',
     'FFmpegSink',
+    'open_sink',
 ]
 
 class Sink:
@@ -55,3 +58,35 @@ class FFmpegSink(Sink):
     
     def write(self, buf):
         self.data.write(buf)
+
+def open_sink(value=None):
+    if isinstance(value, Sink):
+        return value
+    if value:
+        types = ['file', 'stdout', 'ffmpeg', 'ffmpegre']
+        typ = 'file'
+        if value == '-':
+            typ = 'stdout'
+            value = ''
+        if ':' in value:
+            testtyp, testvalue = value.split(':', 1)
+            if testtyp in types:
+                typ = testtyp
+                value = testvalue
+
+        if typ == 'file':
+            return FileSink(value, 48000, 2)
+        elif typ == 'stdout':
+            # do some munging
+            inputfile = sys.stdout.buffer
+            sys.stdout = sys.stderr
+            return FileSink(inputfile, 48000, 2, format='RAW', subtype='PCM_16', endian='LITTLE')
+        elif typ == 'ffmpeg':
+            args = shlex.split(value)
+            return FFmpegSink(48000, 2, False, args)
+        elif typ == 'ffmpegre':
+            args = shlex.split(value)
+            return FFmpegSink(48000, 2, True, args)
+        else:
+            raise TypeError('unhandled output type')
+    return PyAudioSink(48000, 2)

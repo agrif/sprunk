@@ -1,17 +1,18 @@
-#!/usr/bin/env python3
-
-import os.path
 import sys
 import random
-import shlex
 import urllib.parse
 import collections
 import traceback
 import datetime
 
-import click
 import requests
-import sprunk
+import sprunk.scheduler
+import sprunk.sources
+import sprunk.definitions
+
+__all__ = [
+    'Radio',
+]
 
 class Radio:
     def __init__(self, definitions, extensions=None, meta_url=None, loudness=-14.0):
@@ -30,11 +31,11 @@ class Radio:
 
     def reload(self):
         if self.defs is None:
-            self.defs = sprunk.load_definitions(self.definition_files, self.extensions)
+            self.defs = sprunk.definitions.load_definitions(self.definition_files, self.extensions)
         else:
             # we already have definitions, don't fail if this fails
             try:
-                self.defs = sprunk.load_definitions(self.definition_files, self.extensions)
+                self.defs = sprunk.definitions.load_definitions(self.definition_files, self.extensions)
             except Exception as e:
                 print('Error while reloading definitions:', file=sys.stderr)
                 traceback.print_exc(file=sys.stderr)
@@ -82,9 +83,9 @@ class Radio:
     def go_soft(self, soft_time, mainpath, overpath, meta, pre=0, post=None, force=False):
         if mainpath is None:
             return soft_time
-        main = sprunk.FileSource(mainpath).reformat_like(self.music).normalize(self.loudness)
+        main = sprunk.sources.FileSource(mainpath).reformat_like(self.music).normalize(self.loudness)
         if overpath:
-            over = sprunk.FileSource(overpath).reformat_like(self.talk).normalize(self.loudness)
+            over = sprunk.sources.FileSource(overpath).reformat_like(self.talk).normalize(self.loudness)
         else:
             over = None
 
@@ -192,7 +193,7 @@ class Radio:
 
         return self.go_soft(soft_time, m['path'], p, m, pre=m['pre'], post=m['post'],)
 
-    @sprunk.coroutine_method
+    @sprunk.scheduler.coroutine_method
     def go(self, sched):
         self.music = sched.subscheduler()
         self.talk = sched.subscheduler()
@@ -209,114 +210,3 @@ class Radio:
                 yield self.padding
                 soft_time = yield from self.go_solo(sched, soft_time)
                 yield self.padding
-
-def run(src, sink, buffer_size=0.5):
-    src = src.reformat_like(sink)
-    src.allocate(int(src.samplerate * buffer_size))
-    filled = src.buffer
-    while len(filled) > 0:
-        filled = src.fill()
-        sink.write(filled)
-
-def output_option(f):
-    def open_sink(ctx, param, value):
-        if value:
-            types = ['file', 'stdout', 'ffmpeg', 'ffmpegre']
-            typ = 'file'
-            if value == '-':
-                typ = 'stdout'
-                value = ''
-            if ':' in value:
-                testtyp, testvalue = value.split(':', 1)
-                if testtyp in types:
-                    typ = testtyp
-                    value = testvalue
-
-            if typ == 'file':
-                return sprunk.FileSink(value, 48000, 2)
-            elif typ == 'stdout':
-                # do some munging
-                inputfile = sys.stdout.buffer
-                sys.stdout = sys.stderr
-                return sprunk.FileSink(inputfile, 48000, 2, format='RAW', subtype='PCM_16', endian='LITTLE')
-            elif typ == 'ffmpeg':
-                args = shlex.split(value)
-                return sprunk.FFmpegSink(48000, 2, False, args)
-            elif typ == 'ffmpegre':
-                args = shlex.split(value)
-                return sprunk.FFmpegSink(48000, 2, True, args)
-            else:
-                raise RuntimeError('unhandled output type')
-        return sprunk.PyAudioSink(48000, 2)
-    return click.option('-o', '--output', type=str, callback=open_sink)(f)
-
-def input_argument(*args, **kwargs):
-    def open_file(ctx, param, value):
-        return sprunk.FileSource(value)
-    return click.argument(*args, **kwargs, callback=open_file)
-
-@click.group()
-def cli():
-    pass
-
-@cli.command()
-@output_option
-@click.option('-s', '--buffer-size', default=0.5, type=float)
-@input_argument('SRC')
-def play(output, src, buffer_size):
-    run(src.reformat_like(output).normalize(), output, buffer_size=buffer_size)
-
-@sprunk.coroutine
-def over_coroutine(sched, song, over):
-    padding = 1
-    start_over = 3
-    oversched = sched.subscheduler()
-    songsched = sched.subscheduler()
-
-    songsched.add_source(0, song)
-    over_length = oversched.add_source(start_over, over)
-    yield start_over - padding
-    full_volume = songsched.get_volume(0)
-    songsched.set_volume(0, 0.5, duration=padding)
-    yield padding + over_length
-    songsched.set_volume(0, full_volume, duration=padding)
-
-@cli.command()
-@output_option
-@input_argument('SONG')
-@input_argument('OVER')
-@click.option('-s', '--buffer-size', default=0.5, type=float)
-def over(output, song, over, buffer_size):
-    sched = sprunk.Scheduler(output.samplerate, output.channels)
-    over_coroutine(sched, song, over)
-    run(sched, output, buffer_size=buffer_size)
-
-@cli.command()
-@click.argument('DEFINITIONS', nargs=-1)
-@click.option('-e', '--extensions', default=None)
-def lint(definitions, extensions):
-    if extensions:
-        extensions = extensions.split(',')
-    else:
-        extensions = None
-    defs = sprunk.load_definitions(definitions, extensions)
-    return sprunk.definitions.lint(defs)
-
-@cli.command()
-@output_option
-@click.argument('DEFINITIONS', nargs=-1)
-@click.option('-e', '--extensions', default=None)
-@click.option('-m', '--meta-url')
-@click.option('-s', '--buffer-size', default=0.5, type=float)
-def radio(output, definitions, extensions, meta_url, buffer_size):
-    if extensions:
-        extensions = extensions.split(',')
-    else:
-        extensions = None
-    r = Radio(definitions, extensions, meta_url)
-    sched = sprunk.Scheduler(output.samplerate, output.channels)
-    r.go(sched)
-    run(sched, output, buffer_size)
-
-if __name__ == '__main__':
-    cli()

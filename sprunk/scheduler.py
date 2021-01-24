@@ -26,6 +26,14 @@ class Scheduler(sprunk.sources.Source):
         # [startframe, endframe, m, startvol, endvol]
         self.volume_ramp = [0, 1, 0, 1.0, 1.0]
 
+    def run(self, sink, buffer_size=0.5):
+        src = self.reformat_like(sink)
+        src.allocate(int(src.samplerate * buffer_size))
+        filled = src.buffer
+        while len(filled) > 0:
+            filled = src.fill()
+            sink.write(filled)
+
     def subscheduler(self):
         s = Scheduler(self.samplerate, self.channels)
         self.active.append(s)
