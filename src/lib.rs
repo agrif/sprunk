@@ -8,6 +8,6 @@ pub mod source;
 
 pub use definitions::{Definitions, Intro, Metadata, Song};
 pub use manager::Manager;
-pub use scheduler::{Scheduler, SchedulerSource};
+pub use scheduler::{Time, Scheduler, SchedulerSource};
 pub use sink::Sink;
 pub use source::Source;

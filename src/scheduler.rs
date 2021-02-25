@@ -6,6 +6,12 @@ use smol::{LocalExecutor, Task};
 
 use crate::Source;
 
+#[derive(Clone, Copy, Debug)]
+pub struct Time {
+    frames: u64,
+    seconds: f32,
+}
+
 pub struct Scheduler {
     data: Rc<RefCell<SchedulerData>>,
     executor: Rc<RefCell<LocalExecutor<'static>>>,
@@ -28,6 +34,77 @@ struct SchedulerData {
     active: Vec<Box<dyn Source>>,
     volume: f32,
     ramps: Vec<(u64, f32)>,
+}
+
+impl Time {
+    pub fn frames(frames: u64) -> Self {
+        Self {
+            frames,
+            seconds: 0.0,
+        }
+    }
+
+    pub fn seconds(seconds: f32) -> Self {
+        Self { frames: 0, seconds }
+    }
+
+    pub fn to_frames(&self, samplerate: f32) -> u64 {
+        if self.seconds >= 0.0 {
+            self.frames + (self.seconds * samplerate).round() as u64
+        } else {
+            self.frames - (-self.seconds * samplerate).round() as u64
+        }
+    }
+
+    pub fn to_seconds(&self, samplerate: f32) -> f32 {
+        self.seconds + self.frames as f32 / samplerate
+    }
+}
+
+impl std::ops::Add<Time> for Time {
+    type Output = Time;
+    fn add(self, rhs: Time) -> Time {
+        Time {
+            seconds: self.seconds + rhs.seconds,
+            frames: self.frames + rhs.frames,
+        }
+    }
+}
+
+impl std::ops::Sub<Time> for Time {
+    type Output = Time;
+    fn sub(self, rhs: Time) -> Time {
+        Time {
+            seconds: self.seconds - rhs.seconds,
+            frames: self.frames - rhs.frames,
+        }
+    }
+}
+
+impl std::ops::Add<f32> for Time {
+    type Output = Time;
+    fn add(self, rhs: f32) -> Time {
+        Time {
+            seconds: self.seconds + rhs,
+            frames: self.frames,
+        }
+    }
+}
+
+impl std::ops::Sub<f32> for Time {
+    type Output = Time;
+    fn sub(self, rhs: f32) -> Time {
+        Time {
+            seconds: self.seconds - rhs,
+            frames: self.frames,
+        }
+    }
+}
+
+impl From<f32> for Time {
+    fn from(seconds: f32) -> Self {
+        Self::seconds(seconds)
+    }
 }
 
 impl Scheduler {
@@ -67,12 +144,14 @@ impl Scheduler {
         sched
     }
 
-    pub fn add<S>(&mut self, start: u64, src: S) -> Option<u64>
+    pub fn add<T, S>(&mut self, start: T, src: S) -> Option<Time>
     where
+        T: Into<Time>,
         S: Source + 'static,
     {
+        let start = start.into().to_frames(self.samplerate);
         let src = src.reformat(self.samplerate, self.channels);
-        let end = src.len().map(|l| l + start);
+        let end = src.len().map(|l| Time::frames(l + start));
         let mut data = self.data.borrow_mut();
         data.scheduled.push((start, Box::new(src)));
         end
@@ -89,10 +168,14 @@ impl Scheduler {
         exec.spawn(f(self))
     }
 
-    pub async fn wait(&mut self, time: u64) -> anyhow::Result<()> {
+    pub async fn wait<T>(&mut self, time: T) -> anyhow::Result<()>
+    where
+        T: Into<Time>,
+    {
         let mut data = self.data.borrow_mut();
         let (send, recv) = oneshot();
-        data.timers.push((time, send));
+        data.timers
+            .push((time.into().to_frames(self.samplerate), send));
         drop(data);
         if let Err(_) = recv.await {
             anyhow::bail!("scheduler source dropped");
@@ -100,7 +183,8 @@ impl Scheduler {
         Ok(())
     }
 
-    fn add_ramp_point(&mut self, start: u64, volume: f32) {
+    fn add_ramp_point(&mut self, start: Time, volume: f32) {
+        let start = start.to_frames(self.samplerate);
         let mut data = self.data.borrow_mut();
         let idx = data
             .ramps
@@ -109,7 +193,8 @@ impl Scheduler {
         data.ramps.insert(idx, (start, volume));
     }
 
-    fn get_volume(&mut self, time: u64) -> f32 {
+    fn get_volume(&mut self, time: Time) -> f32 {
+        let time = time.to_frames(self.samplerate);
         let data = self.data.borrow();
         let mut lastvol = data.volume;
         let mut lasttime = 0;
@@ -124,8 +209,16 @@ impl Scheduler {
         lastvol
     }
 
-    pub fn set_volume(&mut self, start: u64, volume: f32, duration: Option<u64>) -> u64 {
-        let duration = duration.unwrap_or_else(|| (0.005 * self.samplerate).ceil() as u64);
+    pub fn set_volume<T, U>(&mut self, start: T, volume: f32, duration: U) -> Time
+    where
+        T: Into<Time>,
+        U: Into<Time>,
+    {
+        let start = start.into();
+        let mut duration = duration.into();
+        if duration.to_seconds(self.samplerate) < 0.005 {
+            duration = Time::seconds(0.005);
+        }
         let orig = self.get_volume(start);
         self.add_ramp_point(start, orig);
         self.add_ramp_point(start + duration, volume);
@@ -150,7 +243,7 @@ impl Source for SchedulerSource {
         self.buffer.resize(buffer.len(), 0.0);
         buffer.iter_mut().for_each(|m| *m = 0.0);
 
-        let mut data = self.data.borrow_mut();
+        let data = self.data.borrow();
         let offset = data.offset;
         let end = offset + buffer.len() as u64 / self.channels as u64;
         drop(data); // so we can borrow it in try_tick()
