@@ -12,3 +12,5 @@ sndfile-sys = "0.2"
 strict-yaml-rust = "0.1"
 libc = "0.2"
 libsamplerate-sys = "0.1.8" # cmake changes in 0.1.8 needed
+async-oneshot = "0.4"
+smol = "1.2"

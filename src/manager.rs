@@ -1,27 +1,32 @@
 use crate::{Scheduler, SchedulerSource, Sink, Source};
 
-pub struct Manager<S> {
+pub struct Manager<S, T> {
     sink: S,
     buffer: Vec<f32>,
     buffersize: u64,
     offset: u64,
-    scheduler: Scheduler,
     source: SchedulerSource,
+    task: smol::Task<anyhow::Result<T>>,
 }
 
-impl<S> Manager<S>
+impl<S, T> Manager<S, T>
 where
     S: Sink,
+    T: 'static,
 {
-    pub fn new(sink: S, buffersize: usize) -> Self {
+    pub fn new<F, Fut>(sink: S, buffersize: usize, f: F) -> Self
+    where
+        F: FnOnce(Scheduler) -> Fut,
+        Fut: std::future::Future<Output = anyhow::Result<T>> + 'static,
+    {
         let (scheduler, source) = Scheduler::new(sink.samplerate(), sink.channels());
         Self {
             buffer: vec![0.0; buffersize * sink.channels() as usize],
             buffersize: buffersize as u64,
             offset: 0,
             sink,
-            scheduler,
             source,
+            task: scheduler.run(f),
         }
     }
 
@@ -38,26 +43,13 @@ where
         Ok(())
     }
 
-    pub fn advance_to_end(&mut self) -> anyhow::Result<()> {
+    pub fn advance_to_end(mut self) -> anyhow::Result<T> {
         loop {
             let avail = self.source.fill(&mut self.buffer);
             if avail == 0 {
-                break Ok(());
+                return smol::block_on(self.task);
             }
             self.sink.write(&self.buffer[..avail])?;
         }
-    }
-}
-
-impl<S> std::ops::Deref for Manager<S> {
-    type Target = Scheduler;
-    fn deref(&self) -> &Self::Target {
-        &self.scheduler
-    }
-}
-
-impl<S> std::ops::DerefMut for Manager<S> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.scheduler
     }
 }
