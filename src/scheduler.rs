@@ -2,7 +2,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use async_oneshot::{oneshot, Sender};
-use smol::{LocalExecutor, Task};
+use async_executor::{LocalExecutor, Task};
 
 use crate::Source;
 

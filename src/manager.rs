@@ -6,7 +6,7 @@ pub struct Manager<S, T> {
     buffersize: u64,
     offset: u64,
     source: SchedulerSource,
-    task: smol::Task<anyhow::Result<T>>,
+    task: async_executor::Task<anyhow::Result<T>>,
 }
 
 impl<S, T> Manager<S, T>
@@ -47,7 +47,7 @@ where
         loop {
             let avail = self.source.fill(&mut self.buffer);
             if avail == 0 {
-                return smol::block_on(self.task);
+                return futures_lite::future::block_on(self.task);
             }
             self.sink.write(&self.buffer[..avail])?;
         }
