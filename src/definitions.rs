@@ -4,7 +4,7 @@ use strict_yaml_rust::{StrictYaml, StrictYamlLoader};
 
 use crate::normalize::normalize;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Definitions {
     pub path: PathBuf,
     pub name: String,
@@ -21,20 +21,20 @@ pub struct Definitions {
     pub music: Vec<Song>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Metadata {
     pub title: String,
     pub artist: String,
     pub album: Option<String>,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Intro {
     pub path: PathBuf,
     pub metadata: Metadata,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Song {
     pub path: PathBuf,
     pub metadata: Metadata,

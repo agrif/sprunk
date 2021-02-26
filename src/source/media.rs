@@ -17,7 +17,7 @@ where
             get_filelen: Self::vio_get_filelen,
             seek: Self::vio_seek,
             read: Self::vio_read,
-            write: unsafe { std::mem::transmute(std::ptr::null::<libc::c_void>()) },
+            write: Self::vio_write,
             tell: Self::vio_tell,
         };
         let mut info = sf::SF_INFO {
@@ -83,6 +83,14 @@ where
             let buf = std::slice::from_raw_parts_mut(ptr as *mut u8, count as usize);
             user.read(buf).unwrap_or(0) as sf::sf_count_t
         }
+    }
+
+    extern "C" fn vio_write(
+        ptr: *const libc::c_void,
+        count: sf::sf_count_t,
+        user_data: *mut libc::c_void,
+    ) -> sf::sf_count_t {
+        panic!("libsndfile vio write");
     }
 
     extern "C" fn vio_tell(user: *mut libc::c_void) -> sf::sf_count_t {

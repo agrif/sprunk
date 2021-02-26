@@ -168,19 +168,20 @@ impl Scheduler {
         exec.spawn(f(self))
     }
 
-    pub async fn wait<T>(&mut self, time: T) -> anyhow::Result<()>
+    pub async fn wait<T>(&mut self, time: T) -> anyhow::Result<Time>
     where
         T: Into<Time>,
     {
+        let time = time.into();
         let mut data = self.data.borrow_mut();
         let (send, recv) = oneshot();
         data.timers
-            .push((time.into().to_frames(self.samplerate), send));
+            .push((time.to_frames(self.samplerate), send));
         drop(data);
         if let Err(_) = recv.await {
             anyhow::bail!("scheduler source dropped");
         }
-        Ok(())
+        Ok(time)
     }
 
     fn add_ramp_point(&mut self, start: Time, volume: f32) {
