@@ -1,8 +1,8 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use async_oneshot::{oneshot, Sender};
 use async_executor::{LocalExecutor, Task};
+use async_oneshot::{oneshot, Sender};
 
 use crate::Source;
 
@@ -134,6 +134,14 @@ impl Scheduler {
         (scheduler, source)
     }
 
+    pub fn samplerate(&self) -> f32 {
+        self.samplerate
+    }
+
+    pub fn channels(&self) -> u16 {
+        self.channels
+    }
+
     pub fn subscheduler(&mut self) -> Scheduler {
         let (sched, src) = Scheduler::new(self.samplerate, self.channels);
         let mut subdata = sched.data.borrow_mut();
@@ -175,8 +183,7 @@ impl Scheduler {
         let time = time.into();
         let mut data = self.data.borrow_mut();
         let (send, recv) = oneshot();
-        data.timers
-            .push((time.to_frames(self.samplerate), send));
+        data.timers.push((time.to_frames(self.samplerate), send));
         drop(data);
         if let Err(_) = recv.await {
             anyhow::bail!("scheduler source dropped");
@@ -279,7 +286,16 @@ impl Source for SchedulerSource {
 
         // do we have anything to do, even?
         if data.active.len() == 0 && data.scheduled.len() == 0 && data.timers.len() == 0 {
-            return 0;
+            // we don't. but we might not be done!
+            if Rc::strong_count(&self.data) > 1 {
+                // the scheduler side of this still exists
+                // so we might get more scheduled things later
+                data.offset = end;
+                return buffer.len();
+            } else {
+                // the scheduler side has been dropped. we're done.
+                return 0;
+            }
         }
 
         // render our active sources
@@ -301,8 +317,8 @@ impl Source for SchedulerSource {
         while i != data.scheduled.len() {
             let (ref mut start, ref mut src) = data.scheduled[i];
             if *start < offset {
-                data.scheduled.remove(i);
-                continue;
+                // do the best we can
+                *start = offset;
             }
 
             if *start < end as u64 {
