@@ -1,37 +1,23 @@
-use crate::{source, Definitions, Metadata, Scheduler, SoftScheduler, Source, Time};
+use crate::{Definitions, Scheduler, SoftScheduler};
 
 use rand::seq::SliceRandom;
 
 pub struct Radio {
-    definition_paths: Vec<std::path::PathBuf>,
     definitions: Definitions,
     scheduler: SoftScheduler,
 }
 
 impl Radio {
-    pub fn new<P>(mut scheduler: Scheduler, paths: Vec<P>) -> anyhow::Result<Self>
+    pub fn new<PI, P>(mut scheduler: Scheduler, paths: PI) -> anyhow::Result<Self>
     where
+        PI: Iterator<Item = P>,
         P: AsRef<std::path::Path>,
     {
-        if paths.len() == 0 {
-            anyhow::bail!("no definitions to load");
-        }
         let scheduler = SoftScheduler::new(&mut scheduler, 0.5, 0.5);
-        let mut radio = Self {
-            definition_paths: paths.iter().map(|p| p.as_ref().to_owned()).collect(),
-            definitions: Definitions::empty(&paths[0]),
+        Ok(Self {
+            definitions: Definitions::open(paths)?,
             scheduler,
-        };
-        radio.reload()?;
-        Ok(radio)
-    }
-
-    pub fn reload(&mut self) -> anyhow::Result<()> {
-        self.definitions = Definitions::empty(&self.definition_paths[0]);
-        for path in self.definition_paths.iter() {
-            self.definitions.merge(Definitions::open(path)?);
-        }
-        Ok(())
+        })
     }
 
     pub async fn play_music(&mut self) -> anyhow::Result<()> {

@@ -6,7 +6,7 @@ use crate::normalize::normalize;
 
 #[derive(Debug, Clone)]
 pub struct Definitions {
-    pub path: PathBuf,
+    pub paths: Vec<PathBuf>,
     pub name: String,
     pub solo: Vec<PathBuf>,
     pub general: Vec<PathBuf>,
@@ -43,21 +43,20 @@ pub struct Song {
 }
 
 impl Definitions {
-    pub fn open<P>(path: P) -> anyhow::Result<Self>
+    pub fn open<PI, P>(paths: PI) -> anyhow::Result<Self>
     where
+        PI: Iterator<Item = P>,
         P: AsRef<Path>,
     {
-        let mut defs = Definitions::empty(path);
+        let mut defs = Definitions::empty();
+        defs.paths = paths.map(|p| p.as_ref().to_owned()).collect();
         defs.reload()?;
         Ok(defs)
     }
 
-    pub fn empty<P>(path: P) -> Self
-    where
-        P: AsRef<Path>,
-    {
+    pub fn empty() -> Self {
         Definitions {
-            path: path.as_ref().to_owned(),
+            paths: vec![],
             name: "Sprunk Radio".to_owned(),
             solo: vec![],
             general: vec![],
@@ -74,9 +73,19 @@ impl Definitions {
     }
 
     pub fn reload(&mut self) -> anyhow::Result<()> {
-        let mut new = Definitions::empty(self.path.clone());
-        let base = self.path.parent().unwrap_or(Path::new("."));
-        let contents = std::fs::read_to_string(&self.path)?;
+        let mut new = Definitions::empty();
+        for path in self.paths.iter() {
+            new.merge(Definitions::load_one(path)?);
+        }
+        std::mem::swap(&mut new.paths, &mut self.paths);
+        *self = new;
+        Ok(())
+    }
+
+    fn load_one(path: &PathBuf) -> anyhow::Result<Self> {
+        let mut new = Definitions::empty();
+        let base = path.parent().unwrap_or(Path::new("."));
+        let contents = std::fs::read_to_string(&path)?;
         let datawhole = StrictYamlLoader::load_from_str(&contents)?;
         let data = datawhole
             .get(0)
@@ -110,7 +119,7 @@ impl Definitions {
                     .as_str()
                     .ok_or_else(|| anyhow::anyhow!("includes must be strings"))?;
                 let inc = normalize(&prefix.join(inc));
-                new.merge(Definitions::open(inc)?);
+                new.merge(Definitions::load_one(&inc)?);
             }
         }
 
@@ -193,9 +202,7 @@ impl Definitions {
             }
         }
 
-        // finalize and return
-        *self = new;
-        Ok(())
+        Ok(new)
     }
 
     pub fn merge(&mut self, other: Definitions) {

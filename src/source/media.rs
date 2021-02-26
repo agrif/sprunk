@@ -86,9 +86,9 @@ where
     }
 
     extern "C" fn vio_write(
-        ptr: *const libc::c_void,
-        count: sf::sf_count_t,
-        user_data: *mut libc::c_void,
+        _ptr: *const libc::c_void,
+        _count: sf::sf_count_t,
+        _user_data: *mut libc::c_void,
     ) -> sf::sf_count_t {
         panic!("libsndfile vio write");
     }
