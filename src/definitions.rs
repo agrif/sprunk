@@ -244,6 +244,12 @@ impl Definitions {
         a.artist == b.artist && a.title == b.title
     }
 
+    pub fn get_intros<'a>(&'a self, meta: &'a Metadata) -> impl Iterator<Item = &'a Intro> {
+        self.intro
+            .iter()
+            .filter(move |i| Self::meta_match(&i.metadata, meta))
+    }
+
     fn get_str<'a>(data: &'a StrictYaml, k: &str) -> anyhow::Result<Option<&'a str>> {
         let v = if data[k].is_badvalue() {
             Some(None)
