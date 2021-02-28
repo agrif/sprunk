@@ -15,7 +15,7 @@ where
 {
     pub fn new(source: S, samplerate: f32) -> Self {
         Self {
-            converter: SampleRate::new(ConverterType::SincMediumQuality, source.channels())
+            converter: SampleRate::new(ConverterType::SincFastest, source.channels())
                 .unwrap(),
             inrate: source.samplerate(),
             buffer: vec![],
