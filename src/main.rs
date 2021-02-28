@@ -1,12 +1,16 @@
-fn main() -> anyhow::Result<()> {
-    let paths = std::env::args().skip(1);
-    let sink = sprunk::sink::System::new(24000)?;
-    let manager = sprunk::Manager::new(sink, 24000, move |sched| async move {
-        let mut radio = sprunk::Radio::new(sched, paths)?;
-        radio.run().await
-    });
+use clap::clap_app;
 
-    manager.advance_to_end()?;
+fn main() -> anyhow::Result<()> {
+    let matches = clap_app!(sprunk =>
+                            (@arg RADIOYAML: +required "radio definitions list")
+                            (@arg MOUNT: +required "radio mount point")
+    )
+    .get_matches();
+
+    let radioyaml = matches.value_of("RADIOYAML").unwrap();
+    let mount = matches.value_of("MOUNT").unwrap();
+    let index = sprunk::RadioIndex::open(&radioyaml)?;
+    index.play(mount)?;
 
     Ok(())
 }

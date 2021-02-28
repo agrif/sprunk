@@ -65,7 +65,7 @@ impl SoftScheduler {
         let end = self
             .main
             .add(start, main)
-            .ok_or(anyhow::anyhow!("unknown sound file length"))?;
+            .ok_or_else(|| anyhow::anyhow!("unknown sound file length"))?;
 
         // wait until the start
         self.main.wait(start).await?;

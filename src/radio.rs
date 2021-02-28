@@ -58,7 +58,7 @@ impl Radio {
         let song = self
             .r_music
             .choose(self.definitions.music.iter(), |s| &s.path)
-            .ok_or(anyhow::anyhow!("no songs to play"))?;
+            .ok_or_else(|| anyhow::anyhow!("no songs to play"))?;
 
         let mut rng = rand::thread_rng();
         let mut over = None;
