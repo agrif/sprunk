@@ -110,7 +110,9 @@ impl Radio {
             .await?;
         println!(
             "{} - {} - {}",
-            self.definitions.name, song.metadata.artist, song.metadata.title
+            self.definitions.name.as_deref().unwrap_or("Sprunk"),
+            song.metadata.artist,
+            song.metadata.title
         );
         Ok(())
     }
@@ -119,7 +121,10 @@ impl Radio {
         if let Some(ad) = self.r_ad.choose(self.definitions.ad.iter(), |p| p) {
             let over = self.r_to_ad.choose(self.definitions.to_ad.iter(), |p| p);
             self.scheduler.add(&ad, over, 0.0, None, true).await?;
-            println!("{} - Advertisement", self.definitions.name);
+            println!(
+                "{} - Advertisement",
+                self.definitions.name.as_deref().unwrap_or("Sprunk")
+            );
         }
         Ok(())
     }
@@ -130,7 +135,10 @@ impl Radio {
                 .r_to_news
                 .choose(self.definitions.to_news.iter(), |p| p);
             self.scheduler.add(&news, over, 0.0, None, true).await?;
-            println!("{} - News", self.definitions.name);
+            println!(
+                "{} - News",
+                self.definitions.name.as_deref().unwrap_or("Sprunk")
+            );
         }
         Ok(())
     }
@@ -138,7 +146,10 @@ impl Radio {
     pub async fn play_id(&mut self) -> anyhow::Result<()> {
         if let Some(id) = self.r_id.choose(self.definitions.id.iter(), |p| p) {
             self.scheduler.add(&id, None, 0.0, None, false).await?;
-            println!("{} - Identification", self.definitions.name);
+            println!(
+                "{} - Identification",
+                self.definitions.name.as_deref().unwrap_or("Sprunk")
+            );
         }
         Ok(())
     }
@@ -146,7 +157,10 @@ impl Radio {
     pub async fn play_mono(&mut self) -> anyhow::Result<()> {
         if let Some(solo) = self.r_solo.choose(self.definitions.solo.iter(), |p| p) {
             self.scheduler.add(&solo, None, 0.0, None, false).await?;
-            println!("{} - Monologue", self.definitions.name);
+            println!(
+                "{} - Monologue",
+                self.definitions.name.as_deref().unwrap_or("Sprunk")
+            );
         }
         Ok(())
     }

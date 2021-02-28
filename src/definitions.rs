@@ -7,7 +7,7 @@ use crate::normalize::normalize;
 #[derive(Debug, Clone)]
 pub struct Definitions {
     pub paths: Vec<PathBuf>,
-    pub name: String,
+    pub name: Option<String>,
     pub solo: Vec<PathBuf>,
     pub general: Vec<PathBuf>,
     pub to_ad: Vec<PathBuf>,
@@ -57,7 +57,7 @@ impl Definitions {
     pub fn empty() -> Self {
         Definitions {
             paths: vec![],
-            name: "Sprunk Radio".to_owned(),
+            name: None,
             solo: vec![],
             general: vec![],
             to_ad: vec![],
@@ -125,7 +125,7 @@ impl Definitions {
 
         // read the radio name
         if let Some(name) = Self::get_str(data, "name")? {
-            new.name = name.to_owned();
+            new.name = Some(name.to_owned());
         }
 
         // read in simple path lists
@@ -206,7 +206,9 @@ impl Definitions {
     }
 
     pub fn merge(&mut self, other: Definitions) {
-        self.name = other.name;
+        if other.name.is_some() {
+            self.name = other.name;
+        }
         self.solo.extend(other.solo);
         self.general.extend(other.general);
         self.to_ad.extend(other.to_ad);
