@@ -20,9 +20,9 @@ impl System {
         let device = host
             .default_output_device()
             .ok_or_else(|| anyhow::anyhow!("could not find default output device"))?;
-        let mut supported = device.supported_output_configs()?;
+        let supported = device.supported_output_configs()?;
         let config = supported
-            .next()
+            .max_by_key(|c| c.max_sample_rate())
             .ok_or_else(|| anyhow::anyhow!("no supported audio configurations"))?
             .with_max_sample_rate();
         let err_fn = |err| eprintln!("audio stream error: {}", err);
