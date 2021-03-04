@@ -15,8 +15,10 @@
 #rustflags = ["-Ctarget-feature=+crt-static"]
 
 # instead, just use a static CRT everywhere. Not ideal, but it works.
-[build]
-rustflags = ["-Ctarget-feature=+crt-static"]
+# except it FAILS to compile anything that uses procmacro on linux
+# EXCELLENT
+#[build]
+#rustflags = ["-Ctarget-feature=+crt-static"]
 
 # this took 2 hours to figure out, and I am about as angry about it as
 # you can imagine.
