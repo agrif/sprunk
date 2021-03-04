@@ -20,6 +20,7 @@ pub enum Output {
     System,
     File(PathBuf),
     Icecast {
+        mount: String,
         host: String,
         schema: String,
         user: String,
@@ -58,8 +59,8 @@ impl RadioIndex {
                 let whole = normalize(&base.join(leaf));
                 station.files.push(whole);
             }
-            station.update(data)?;
-            station.update(k.1)?;
+            station.update(&mount, data)?;
+            station.update(&mount, k.1)?;
             info.insert(mount, station);
         }
         Ok(Self { info: info })
@@ -96,8 +97,8 @@ impl RadioInfo {
         }
     }
 
-    fn update(&mut self, data: &StrictYaml) -> anyhow::Result<()> {
-        self.output.update_icecast(&data["icecast"])?;
+    fn update(&mut self, mount: &String, data: &StrictYaml) -> anyhow::Result<()> {
+        self.output.update_icecast(mount, &data["icecast"])?;
         self.output.update(&data["output"])?;
         Ok(())
     }
@@ -137,16 +138,20 @@ impl Output {
         Ok(())
     }
 
-    fn update_icecast(&mut self, data: &StrictYaml) -> anyhow::Result<()> {
+    fn update_icecast(&mut self, mount: &String, data: &StrictYaml) -> anyhow::Result<()> {
         if data.is_badvalue() {
             return Ok(());
         }
+
+        let mut fullmount = "/".to_owned();
+        fullmount += mount;
 
         let host = data["host"].as_str().unwrap_or("localhost:8000").to_owned();
         let schema = data["schema"].as_str().unwrap_or("http").to_owned();
         let user = data["user"].as_str().unwrap_or("source").to_owned();
         let password = data["password"].as_str().map(|s| s.to_owned());
         *self = Output::Icecast {
+            mount: fullmount,
             host,
             schema,
             user,
@@ -156,15 +161,40 @@ impl Output {
     }
 
     fn to_sink(&self, bufsize: usize) -> anyhow::Result<Box<dyn crate::Sink>> {
-        Ok(match *self {
-            Output::System => Box::new(crate::sink::System::new(bufsize)?),
+        match *self {
+            Output::System => Ok(Box::new(crate::sink::System::new(bufsize)?)),
             Output::File(ref fname) => {
                 // all files are mp3 I guess
                 let encoder = crate::encoder::Mp3::new(48000, None, None)?;
                 let file = std::fs::File::create(fname)?;
-                Box::new(crate::sink::Stream::new(file, encoder))
+                Ok(Box::new(crate::sink::Stream::new(file, encoder)))
             }
-            Output::Icecast { .. } => anyhow::bail!("icecast not implemented"),
-        })
+            Output::Icecast {
+                ref mount,
+                ref host,
+                ref user,
+                ref password,
+                // schema unused. maybe we should use it eventually...
+                ..
+            } => {
+                use std::net::ToSocketAddrs;
+                for addr in host.to_socket_addrs()? {
+                    let ip = format!("{}", addr.ip());
+                    let port = addr.port();
+                    let encoder = crate::encoder::Mp3::new(48000, None, None)?;
+                    if let Ok(sink) = crate::sink::Shout::new(
+                        encoder,
+                        &ip,
+                        port,
+                        &mount,
+                        &user,
+                        password.as_ref().map(|t| t.as_str()),
+                    ) {
+                        return Ok(Box::new(sink));
+                    }
+                }
+                anyhow::bail!("bad hostname for icecast");
+            }
+        }
     }
 }

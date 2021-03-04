@@ -1,8 +1,10 @@
 mod realtime;
+mod shout;
 mod stream;
 mod system;
 
 pub use realtime::Realtime;
+pub use self::shout::Shout;
 pub use stream::Stream;
 pub use system::System;
 

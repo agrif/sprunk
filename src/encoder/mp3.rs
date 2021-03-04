@@ -40,6 +40,10 @@ impl super::Encoder for Mp3 {
         2
     }
 
+    fn format(&self) -> super::Format {
+        super::Format::Mp3
+    }
+
     fn encode(&mut self, buffer: &[f32]) -> anyhow::Result<&[u8]> {
         let samples = (buffer.len() + 1) / 2;
         self.left.resize(samples, 0);
