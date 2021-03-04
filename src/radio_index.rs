@@ -16,8 +16,9 @@ struct RadioInfo {
 }
 
 #[derive(Debug, Clone)]
-enum Output {
+pub enum Output {
     System,
+    File(PathBuf),
     Icecast {
         host: String,
         schema: String,
@@ -64,7 +65,7 @@ impl RadioIndex {
         Ok(Self { info: info })
     }
 
-    pub fn play<S>(&self, station: S) -> anyhow::Result<()>
+    pub fn play<S>(&self, station: S, output: Option<Output>) -> anyhow::Result<()>
     where
         S: AsRef<str>,
     {
@@ -72,9 +73,11 @@ impl RadioIndex {
             .info
             .get(station.as_ref())
             .ok_or_else(|| anyhow::anyhow!("could not find station"))?;
-        // FIXME bufsize
         let bufsize = 24000;
-        let sink = stationdef.output.to_sink(bufsize)?;
+        let sink = output
+            .as_ref()
+            .unwrap_or(&stationdef.output)
+            .to_sink(bufsize)?;
         let files = stationdef.files.clone();
         let manager = crate::Manager::new(sink, bufsize, move |sched| async move {
             let mut radio = crate::Radio::new(sched, files.iter())?;
@@ -101,6 +104,27 @@ impl RadioInfo {
 }
 
 impl Output {
+    pub fn from_str(spec: &str) -> anyhow::Result<Self> {
+        if let Some(pos) = spec.find(":") {
+            let (p1, p2) = spec.split_at(pos);
+            Self::from_type_arg(p1, Some(&p2[1..]))
+        } else {
+            Self::from_type_arg(spec, None).or_else(|_| Self::from_type_arg("file", Some(spec)))
+        }
+    }
+
+    fn from_type_arg(typ: &str, arg: Option<&str>) -> anyhow::Result<Self> {
+        Ok(match typ {
+            "play" => Output::System,
+            "system" => Output::System,
+            "file" => {
+                let fname = arg.ok_or_else(|| anyhow::anyhow!("file output expects value"))?;
+                Output::File(fname.into())
+            }
+            _ => anyhow::bail!("bad output value"),
+        })
+    }
+
     fn update(&mut self, data: &StrictYaml) -> anyhow::Result<()> {
         if data.is_badvalue() {
             return Ok(());
@@ -108,11 +132,8 @@ impl Output {
         let val = data
             .as_str()
             .ok_or_else(|| anyhow::anyhow!("output should be a string"))?;
-        if val == "system" {
-            *self = Output::System;
-        } else {
-            anyhow::bail!("bad output value");
-        }
+
+        *self = Self::from_str(val)?;
         Ok(())
     }
 
@@ -135,7 +156,14 @@ impl Output {
     }
 
     fn to_sink(&self, bufsize: usize) -> anyhow::Result<Box<dyn crate::Sink>> {
-        // FIXME
-        Ok(Box::new(crate::sink::System::new(bufsize)?))
+        Ok(match *self {
+            Output::System => Box::new(crate::sink::System::new(bufsize)?),
+            Output::File(ref fname) => {
+                // all files are mp3 I guess
+                let file = std::fs::File::create(fname)?;
+                Box::new(crate::sink::Lame::new(file, 48000, None, None)?)
+            }
+            Output::Icecast { .. } => anyhow::bail!("icecast not implemented"),
+        })
     }
 }

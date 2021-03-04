@@ -13,7 +13,7 @@ pub mod source;
 pub use definitions::{Definitions, Intro, Metadata, Song};
 pub use manager::Manager;
 pub use radio::Radio;
-pub use radio_index::RadioIndex;
+pub use radio_index::{Output, RadioIndex};
 pub use random_mixer::RandomMixer;
 pub use scheduler::{Scheduler, SchedulerSource, Time};
 pub use sink::Sink;
