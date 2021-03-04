@@ -1,44 +1,29 @@
-pub struct Lame<F> {
-    sample_rate: u32,
-    inner: F,
-    encoder: lame::Lame,
+pub struct Mp3 {
+    samplerate: u32,
+    lame: lame::Lame,
     left: Vec<i16>,
     right: Vec<i16>,
     out: Vec<u8>,
 }
 
-impl<F> Lame<F>
-where
-    F: std::io::Write,
-{
-    pub fn new(
-        inner: F,
-        sample_rate: u32,
-        kbitrate: Option<i32>,
-        quality: Option<u8>,
-    ) -> anyhow::Result<Lame<F>> {
-        let mut encoder =
+impl Mp3 {
+    pub fn new(samplerate: u32, kbitrate: Option<i32>, quality: Option<u8>) -> anyhow::Result<Mp3> {
+        let mut lame =
             lame::Lame::new().ok_or_else(|| anyhow::anyhow!("out of memory in mp3 encoder"))?;
-        encoder
-            .set_sample_rate(sample_rate)
+        lame.set_sample_rate(samplerate)
             .map_err(|_| anyhow::anyhow!("could not create mp3 encoder"))?;
-        encoder
-            .set_channels(2)
+        lame.set_channels(2)
             .map_err(|_| anyhow::anyhow!("could not create mp3 encoder"))?;
-        encoder
-            .set_quality(quality.unwrap_or(5))
+        lame.set_quality(quality.unwrap_or(5))
             .map_err(|_| anyhow::anyhow!("could not create mp3 encoder"))?;
-        encoder
-            .set_kilobitrate(kbitrate.unwrap_or(300))
+        lame.set_kilobitrate(kbitrate.unwrap_or(300))
             .map_err(|_| anyhow::anyhow!("could not create mp3 encoder"))?;
-        encoder
-            .init_params()
+        lame.init_params()
             .map_err(|_| anyhow::anyhow!("could not create mp3 encoder"))?;
 
-        Ok(Lame {
-            sample_rate,
-            inner,
-            encoder,
+        Ok(Mp3 {
+            samplerate,
+            lame,
             left: Vec::new(),
             right: Vec::new(),
             out: Vec::new(),
@@ -46,19 +31,16 @@ where
     }
 }
 
-impl<F> super::Sink for Lame<F>
-where
-    F: std::io::Write,
-{
+impl super::Encoder for Mp3 {
     fn samplerate(&self) -> f32 {
-        self.sample_rate as f32
+        self.samplerate as f32
     }
 
     fn channels(&self) -> u16 {
         2
     }
 
-    fn write(&mut self, buffer: &[f32]) -> anyhow::Result<()> {
+    fn encode(&mut self, buffer: &[f32]) -> anyhow::Result<&[u8]> {
         let samples = (buffer.len() + 1) / 2;
         self.left.resize(samples, 0);
         self.right.resize(samples, 0);
@@ -76,10 +58,9 @@ where
         }
 
         let amt = self
-            .encoder
+            .lame
             .encode(&self.left, &self.right, &mut self.out)
             .map_err(|_| anyhow::anyhow!("mp3 encoding error"))?;
-        self.inner.write_all(&self.out[..amt])?;
-        Ok(())
+        Ok(&self.out[..amt])
     }
 }

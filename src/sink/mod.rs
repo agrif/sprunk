@@ -1,7 +1,7 @@
-mod lame;
+mod stream;
 mod system;
 
-pub use self::lame::Lame;
+pub use stream::Stream;
 pub use system::System;
 
 pub trait Sink {

@@ -160,8 +160,9 @@ impl Output {
             Output::System => Box::new(crate::sink::System::new(bufsize)?),
             Output::File(ref fname) => {
                 // all files are mp3 I guess
+                let encoder = crate::encoder::Mp3::new(48000, None, None)?;
                 let file = std::fs::File::create(fname)?;
-                Box::new(crate::sink::Lame::new(file, 48000, None, None)?)
+                Box::new(crate::sink::Stream::new(file, encoder))
             }
             Output::Icecast { .. } => anyhow::bail!("icecast not implemented"),
         })

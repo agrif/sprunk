@@ -1,4 +1,5 @@
 mod definitions;
+pub mod encoder;
 mod manager;
 mod normalize;
 mod radio;
@@ -11,6 +12,7 @@ mod soft_scheduler;
 pub mod source;
 
 pub use definitions::{Definitions, Intro, Metadata, Song};
+pub use encoder::Encoder;
 pub use manager::Manager;
 pub use radio::Radio;
 pub use radio_index::{Output, RadioIndex};
