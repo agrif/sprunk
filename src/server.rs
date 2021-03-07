@@ -34,8 +34,8 @@ impl ServerState {
             return false;
         }
         let mut path = req.uri().path();
-        if path.len() >= 1 {
-            path = &path[1..];
+        if let Some(idx) = path.rfind("/") {
+            path = &path[idx + 1..];
         }
         if !self.index.contains_key(path) {
             return false;
@@ -48,8 +48,8 @@ impl ServerState {
         req: hyper::Request<hyper::Body>,
     ) -> anyhow::Result<hyper::Response<hyper::Body>> {
         let mut path = req.uri().path();
-        if path.len() >= 1 {
-            path = &path[1..];
+        if let Some(idx) = path.rfind("/") {
+            path = &path[idx + 1..];
         }
         let path = path.to_owned();
 
