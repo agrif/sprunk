@@ -100,8 +100,8 @@ impl ServerState {
                 // FIXME json escaping
                 if !first {
                     body += ", ";
-                    first = true;
                 }
+                first = false;
                 body += "{\"listenurl\": \"./";
                 body += station;
                 body += "\", \"title\": \"";
