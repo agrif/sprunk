@@ -286,10 +286,14 @@ impl Definitions {
     }
 
     fn verify_media(path: &Path) -> anyhow::Result<PathBuf> {
-        let mut mutpath = normalize(path);
-        let exts = &["flac", "wav", "ogg"];
+        let path = normalize(path);
+        let name = path.file_name().ok_or_else(|| anyhow::anyhow!("bad filename"))?;
+        let exts = &[".flac", ".wav", ".ogg"];
         for ext in exts {
-            mutpath.set_extension(ext);
+            let mut mutpath = path.clone();
+            let mut name = name.to_owned();
+            name.push(ext);
+            mutpath.set_file_name(name);
             if mutpath.exists() {
                 return Ok(mutpath);
             }
