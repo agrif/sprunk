@@ -166,12 +166,12 @@ where
                 async move {
                     if state.can_handle(&req) {
                         state.serve(req)
-                    } else if (req.method(), req.uri().path())
-                        == (&hyper::Method::GET, "/status-json.xsl")
+                    } else if req.method() == &hyper::Method::GET
+                        && req.uri().path().ends_with("/status-json.xsl")
                     {
                         state.status_json(true)
-                    } else if (req.method(), req.uri().path())
-                        == (&hyper::Method::GET, "/status.json")
+                    } else if req.method() == &hyper::Method::GET
+                        && req.uri().path().ends_with("/status.json")
                     {
                         state.status_json(false)
                     } else {
