@@ -16,7 +16,7 @@ pub use definitions::{Definitions, Intro, Metadata, Song};
 pub use encoder::Encoder;
 pub use manager::Manager;
 pub use radio::Radio;
-pub use radio_index::{Output, RadioIndex};
+pub use radio_index::{Output, RadioIndex, RadioInfo};
 pub use random_mixer::RandomMixer;
 pub use scheduler::{Scheduler, SchedulerSource, Time};
 pub use server::server_run;

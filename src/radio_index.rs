@@ -10,7 +10,7 @@ pub struct RadioIndex {
 }
 
 #[derive(Debug, Clone)]
-struct RadioInfo {
+pub struct RadioInfo {
     files: Vec<PathBuf>,
     output: Output,
 }
@@ -66,11 +66,26 @@ impl RadioIndex {
         Ok(Self { info: info })
     }
 
-    pub fn exists<S>(&self, station: S) -> bool
+    pub fn contains_key<S>(&self, station: S) -> bool
     where
         S: AsRef<str>,
     {
         self.info.get(station.as_ref()).is_some()
+    }
+
+    pub fn keys(&self) -> std::collections::hash_map::Keys<'_, String, RadioInfo> {
+        self.info.keys()
+    }
+
+    pub fn load<S>(&self, station: S) -> anyhow::Result<crate::Definitions>
+    where
+        S: AsRef<str>,
+    {
+        let stationdef = self
+            .info
+            .get(station.as_ref())
+            .ok_or_else(|| anyhow::anyhow!("could not find station"))?;
+        crate::Definitions::open(stationdef.files.iter())
     }
 
     pub fn play<S>(&self, station: S, output: Option<Box<dyn crate::Sink>>) -> anyhow::Result<()>

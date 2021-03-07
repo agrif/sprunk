@@ -19,6 +19,7 @@ async fn run() -> anyhow::Result<()> {
             (@subcommand serve =>
              (@arg BIND: -b --bind +takes_value "set server bind")
              (@arg RADIOYAML: +required "radio definitions list")
+             (@arg STATICFILES: +required "static files to serve also")
             )
     )
     .get_matches();
@@ -38,6 +39,7 @@ async fn run() -> anyhow::Result<()> {
 
     if let Some(matches) = matches.subcommand_matches("serve") {
         let radioyaml = matches.value_of("RADIOYAML").unwrap();
+        let staticfiles = matches.value_of("STATICFILES").unwrap();
         let index = sprunk::RadioIndex::open(&radioyaml)?;
         let addr = if let Some(b) = matches.value_of("BIND") {
             b.parse()?
@@ -45,7 +47,7 @@ async fn run() -> anyhow::Result<()> {
             ([127, 0, 0, 1], 8000).into()
         };
         println!("now serving radio at http://{}/", addr);
-        sprunk::server_run(&addr, index).await?;
+        sprunk::server_run(&addr, index, staticfiles).await?;
     }
 
     Ok(())
