@@ -1,0 +1,26 @@
+[package]
+name = "sprunk"
+version = "0.1.0"
+authors = ["Aaron Griffith <aargri@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+anyhow = "1.0"
+cpal = "0.12"
+rb = "0.3"
+sndfile-sys = "0.2"
+strict-yaml-rust = "0.1"
+libc = "0.2"
+libsamplerate-sys = "0.1.8" # cmake changes in 0.1.8 needed
+async-oneshot = "0.4"
+async-executor = "1.4"
+futures-lite = "1.11"
+rand = "0.8"
+chrono = "0.4"
+clap = "2.33"
+lame = "0.1"
+shout = "0.2"
+hyper = { version = "0.14", features = ["http1", "server", "tcp", "stream"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync"] }
+tokio-stream = {version = "0.1", features = ["sync"] }
+weak-table = "0.3"
