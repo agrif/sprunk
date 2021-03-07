@@ -58,7 +58,11 @@ impl ServerState {
         let body = tokio_stream::wrappers::BroadcastStream::new(rx)
             .take_while(|r| r.is_ok())
             .map(|r| r.map_err(|_| anyhow::anyhow!("end of stream")));
-        Ok(hyper::Response::new(hyper::Body::wrap_stream(body)))
+        let mut response = hyper::Response::new(hyper::Body::wrap_stream(body));
+        response
+            .headers_mut()
+            .insert(hyper::header::CONTENT_TYPE, "audio/mpeg".parse()?);
+        Ok(response)
     }
 }
 
