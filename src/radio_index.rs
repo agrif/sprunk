@@ -66,7 +66,14 @@ impl RadioIndex {
         Ok(Self { info: info })
     }
 
-    pub fn play<S>(&self, station: S, output: Option<Output>) -> anyhow::Result<()>
+    pub fn exists<S>(&self, station: S) -> bool
+    where
+        S: AsRef<str>,
+    {
+        self.info.get(station.as_ref()).is_some()
+    }
+
+    pub fn play<S>(&self, station: S, output: Option<Box<dyn crate::Sink>>) -> anyhow::Result<()>
     where
         S: AsRef<str>,
     {
@@ -76,9 +83,8 @@ impl RadioIndex {
             .ok_or_else(|| anyhow::anyhow!("could not find station"))?;
         let bufsize = 24000;
         let sink = output
-            .as_ref()
-            .unwrap_or(&stationdef.output)
-            .to_sink(bufsize)?;
+            .map(Ok)
+            .unwrap_or_else(|| stationdef.output.to_sink(bufsize))?;
         let files = stationdef.files.clone();
         let manager = crate::Manager::new(sink, bufsize, move |sched| async move {
             let mut radio = crate::Radio::new(sched, files.iter())?;
@@ -160,7 +166,7 @@ impl Output {
         Ok(())
     }
 
-    fn to_sink(&self, bufsize: usize) -> anyhow::Result<Box<dyn crate::Sink>> {
+    pub fn to_sink(&self, bufsize: usize) -> anyhow::Result<Box<dyn crate::Sink>> {
         match *self {
             Output::System => Ok(Box::new(crate::sink::System::new(bufsize)?)),
             Output::File(ref fname) => {

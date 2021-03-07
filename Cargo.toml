@@ -20,3 +20,7 @@ chrono = "0.4"
 clap = "2.33"
 lame = "0.1"
 shout = "0.2"
+hyper = { version = "0.14", features = ["http1", "server", "tcp", "stream"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync"] }
+tokio-stream = {version = "0.1", features = ["sync"] }
+weak-table = "0.3"
