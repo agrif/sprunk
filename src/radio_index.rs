@@ -4,6 +4,9 @@ use strict_yaml_rust::{StrictYaml, StrictYamlLoader};
 
 use crate::normalize::normalize;
 
+// in seconds
+const HOTSTART_WINDOW: f32 = 60.0 * 2.0;
+
 #[derive(Debug, Clone)]
 pub struct RadioIndex {
     info: std::collections::HashMap<String, RadioInfo>,
@@ -88,7 +91,7 @@ impl RadioIndex {
         crate::Definitions::open(stationdef.files.iter())
     }
 
-    pub fn play<S>(&self, station: S, output: Option<Box<dyn crate::Sink>>) -> anyhow::Result<()>
+    pub fn play<S>(&self, station: S, output: Option<Box<dyn crate::Sink>>, hotstart: bool) -> anyhow::Result<()>
     where
         S: AsRef<str>,
     {
@@ -101,10 +104,17 @@ impl RadioIndex {
             .map(Ok)
             .unwrap_or_else(|| stationdef.output.to_sink(bufsize))?;
         let files = stationdef.files.clone();
-        let manager = crate::Manager::new(sink, bufsize, move |sched| async move {
+        let mut manager = crate::Manager::new(sink, bufsize, move |sched| async move {
             let mut radio = crate::Radio::new(sched, files.iter())?;
             radio.run().await
         });
+
+        if hotstart {
+            use rand::Rng;
+            // advance a random amount
+            let amt = HOTSTART_WINDOW * rand::thread_rng().gen::<f32>();
+            manager.skip(amt);
+        }
 
         manager.advance_to_end()
     }

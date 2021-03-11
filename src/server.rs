@@ -1,8 +1,11 @@
 use crate::Sink;
 
 use std::sync::{Arc, Mutex, Weak};
+use std::time::{Duration, Instant};
 
 use tokio_stream::StreamExt;
+
+const RADIO_TIMEOUT: Duration = Duration::from_secs(60 * 5);
 
 struct ServerState {
     index: Arc<crate::RadioIndex>,
@@ -64,14 +67,17 @@ impl ServerState {
                 let index = self.index.clone();
                 let (tx, rx) = tokio::sync::broadcast::channel(32);
                 let tx = Arc::new(tx);
-                let output = ServerOutputStream { sender: tx.clone() };
+                let output = ServerOutputStream {
+                    sender: tx.clone(),
+                    timeout: None,
+                };
                 running.insert(path.clone(), tx);
                 // this must be an honest-to-god thread, because it never yields
                 // this could be fixed in the future, but for now...
                 std::thread::spawn(move || {
                     if let Ok(enc) = crate::encoder::Mp3::new(48000, None, None) {
                         let sink = crate::sink::Stream::new(output, enc).realtime();
-                        let _ = index.play(path, Some(Box::new(sink)));
+                        let _ = index.play(path, Some(Box::new(sink)), true);
                     }
                 });
                 rx
@@ -130,13 +136,28 @@ impl ServerState {
 
 struct ServerOutputStream {
     sender: Arc<tokio::sync::broadcast::Sender<hyper::body::Bytes>>,
+    timeout: Option<Instant>,
 }
 
 impl std::io::Write for ServerOutputStream {
     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
-        self.sender
-            .send(hyper::body::Bytes::copy_from_slice(buf))
-            .map_err(|e| std::io::Error::new(std::io::ErrorKind::BrokenPipe, e))?;
+        if let Some(timeout) = self.timeout {
+            if Instant::now() > timeout {
+                return Err(std::io::Error::new(
+                    std::io::ErrorKind::BrokenPipe,
+                    "radio timed out",
+                ));
+            }
+        }
+
+        if let Err(_) = self.sender.send(hyper::body::Bytes::copy_from_slice(buf)) {
+            if let None = self.timeout {
+                self.timeout = Some(Instant::now() + RADIO_TIMEOUT);
+            }
+        } else {
+            self.timeout = None;
+        }
+
         Ok(buf.len())
     }
 

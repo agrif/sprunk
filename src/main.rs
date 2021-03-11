@@ -34,7 +34,7 @@ async fn run() -> anyhow::Result<()> {
             .map(|s| s.to_sink(24000))
             .transpose()?;
         let index = sprunk::RadioIndex::open(&radioyaml)?;
-        index.play(mount, output)?;
+        index.play(mount, output, false)?;
     }
 
     if let Some(matches) = matches.subcommand_matches("serve") {

@@ -1,4 +1,4 @@
-use crate::{Scheduler, SchedulerSource, Sink, Source};
+use crate::{Scheduler, SchedulerSource, Sink, Source, Time};
 
 pub struct Manager<S, T> {
     sink: S,
@@ -30,8 +30,11 @@ where
         }
     }
 
-    pub fn advance(&mut self, frames: u64) -> anyhow::Result<()> {
-        self.offset += frames;
+    pub fn advance<Ti>(&mut self, frames: Ti) -> anyhow::Result<()>
+    where
+        Ti: Into<Time>,
+    {
+        self.offset += frames.into().to_frames(self.source.samplerate());
         while self.offset > self.buffersize {
             // emit a chunk
             let avail = self.source.force_fill(&mut self.buffer);
@@ -41,6 +44,18 @@ where
             self.offset -= self.buffersize;
         }
         Ok(())
+    }
+
+    pub fn skip<Ti>(&mut self, frames: Ti)
+    where
+        Ti: Into<Time>,
+    {
+        self.offset += frames.into().to_frames(self.source.samplerate());
+        while self.offset > self.buffersize {
+            // this *could* be done more efficiently, but this is fine
+            self.source.force_fill(&mut self.buffer);
+            self.offset -= self.buffersize;
+        }
     }
 
     pub fn advance_to_end(mut self) -> anyhow::Result<T> {
