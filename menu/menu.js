@@ -42,7 +42,9 @@ function play(name) {
     var npi = document.getElementById('nowplayingicon');
     npi.src = 'icons/' + name + '.png';
     audio.src = ICECAST_BASE + name;
-    audio.play();
+    if (setup_has_run) {
+        audio.play();
+    }
     current = name;
     window.location.hash = name;
     update();
@@ -174,7 +176,7 @@ status(stations => {
     }
 
     var audio = document.getElementById('player');
-    audio.onclick = () => {
+    audio.onplay = () => {
         setup();
     };
     var npi = document.getElementById('nowplayingicon');
