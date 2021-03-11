@@ -30,8 +30,8 @@ impl Radio {
         PI: Iterator<Item = P>,
         P: AsRef<std::path::Path>,
     {
-        // parameters: padding and over_volume
-        let scheduler = SoftScheduler::new(&mut scheduler, 0.5, 0.5);
+        // parameters: padding and over_volume and loudness
+        let scheduler = SoftScheduler::new(&mut scheduler, 0.5, 0.5, -14.0);
 
         Ok(Self {
             definitions: Definitions::open(paths)?,

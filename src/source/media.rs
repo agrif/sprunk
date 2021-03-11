@@ -8,6 +8,9 @@ pub struct Media<R> {
     file: *mut sf::SNDFILE,
 }
 
+// libsndfile isn't doing anything sneaky
+unsafe impl<R> Send for Media<R> where R: Send {}
+
 impl<R> Media<R>
 where
     R: Read + Seek,

@@ -1,10 +1,11 @@
-use crate::{source, Scheduler, Time, Source};
+use crate::{source, Scheduler, Source, Time};
 
 use std::path::PathBuf;
 
 pub struct SoftScheduler {
     padding: f32,
     over_volume: f32,
+    loudness: f32,
     soft: Time,
     hard: Time,
     main: Scheduler,
@@ -12,10 +13,11 @@ pub struct SoftScheduler {
 }
 
 impl SoftScheduler {
-    pub fn new(root: &mut Scheduler, padding: f32, over_volume: f32) -> Self {
+    pub fn new(root: &mut Scheduler, padding: f32, over_volume: f32, loudness: f32) -> Self {
         Self {
             padding,
             over_volume,
+            loudness,
             soft: Time::seconds(0.0),
             hard: Time::seconds(0.0),
             main: root.subscheduler(),
@@ -30,12 +32,13 @@ impl SoftScheduler {
         post: Option<f32>,
         force: bool,
     ) -> anyhow::Result<()> {
-        let main = source::Media::new(std::fs::File::open(&mainpath)?)?;
+        let main = source::Media::new(std::fs::File::open(&mainpath)?)?.normalize(self.loudness);
         let mut start = self.hard;
 
         // do we have a voiceover to do?
         if let Some(overpath) = overpath {
-            let over = source::Media::new(std::fs::File::open(overpath)?)?;
+            let over =
+                source::Media::new(std::fs::File::open(overpath)?)?.normalize(self.loudness);
             // figure out when our soft time ends, and how long it is
             let mut soft_end = start + pre;
             let soft_amt = (soft_end - self.soft).to_seconds(self.over.samplerate());

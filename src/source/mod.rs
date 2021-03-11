@@ -2,11 +2,13 @@ mod media;
 mod mix;
 mod resample;
 mod sine;
+mod volume;
 
 pub use media::Media;
 pub use mix::Mix;
 pub use resample::Resample;
 pub use sine::Sine;
+pub use volume::Volume;
 
 pub trait Source {
     fn samplerate(&self) -> f32;
@@ -71,5 +73,19 @@ pub trait Source {
         S: crate::Sink + ?Sized,
     {
         self.reformat(other.samplerate(), other.channels())
+    }
+
+    fn volume(self, volume: f32) -> Volume<Self>
+    where
+        Self: Sized,
+    {
+        Volume::new(self, volume)
+    }
+
+    fn normalize(self, lufs: f32) -> Volume<Self>
+    where
+        Self: Sized + Send + 'static,
+    {
+        Volume::new_lufs(self, lufs)
     }
 }
