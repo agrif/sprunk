@@ -122,26 +122,12 @@ function draw(canvas, g, data, analyser) {
     }
 }
 
-status(stations => {
-    var icons = document.getElementById('icons');
-    icons.innerHTML = '';
-
-    for (var i = 0; i < stations.length; i++) {
-        var icon = document.createElement('img');
-        icon.src = 'icons/' + stations[i]['id'] + '.png';
-        icon.alt = stations[i]['name'];
-        icon.title = stations[i]['name'];
-        var a = document.createElement('a');
-        a.appendChild(icon);
-        (function (capturename) {
-            a.onclick = () => play(capturename);
-        })(stations[i]['id']);
-        icons.appendChild(a);
+var setup_has_run = false;
+function setup() {
+    if (setup_has_run) {
+        return;
     }
 
-    if (window.location.hash) {
-        play(window.location.hash.substring(1));
-    }
     window.setInterval(update, 5000);
 
     // web audio funny business for analyser
@@ -158,6 +144,42 @@ status(stations => {
     var data = new Uint8Array(analyser.frequencyBinCount);
     var canvas = document.getElementById('visual');
     var g = canvas.getContext('2d');
-    draw(canvas, g, data, analyser);    
+    draw(canvas, g, data, analyser);
+
+    setup_has_run = true;
+}
+
+status(stations => {
+    var icons = document.getElementById('icons');
+    icons.innerHTML = '';
+
+    for (var i = 0; i < stations.length; i++) {
+        var icon = document.createElement('img');
+        icon.src = 'icons/' + stations[i]['id'] + '.png';
+        icon.alt = stations[i]['name'];
+        icon.title = stations[i]['name'];
+        var a = document.createElement('a');
+        a.appendChild(icon);
+        (function (capturename) {
+            a.onclick = () => {
+                setup();
+                play(capturename);
+            };
+        })(stations[i]['id']);
+        icons.appendChild(a);
+    }
+
+    if (window.location.hash) {
+        play(window.location.hash.substring(1));
+    }
+
+    var audio = document.getElementById('player');
+    audio.onclick = () => {
+        setup();
+    };
+    var npi = document.getElementById('nowplayingicon');
+    npi.onclick = () => {
+        setup();
+    };
 });
 
