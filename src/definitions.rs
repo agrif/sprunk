@@ -206,7 +206,7 @@ impl Definitions {
     }
 
     pub fn merge(&mut self, other: Definitions) {
-        if other.name.is_some() {
+        if self.name.is_none() {
             self.name = other.name;
         }
         self.solo.extend(other.solo);
