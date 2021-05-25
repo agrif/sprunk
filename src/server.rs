@@ -1,6 +1,7 @@
 use crate::Sink;
 
-use std::sync::{Arc, Mutex, Weak};
+use std::collections::HashMap;
+use std::sync::{Arc, Mutex, RwLock, Weak};
 use std::time::{Duration, Instant};
 
 use tokio_stream::StreamExt;
@@ -15,21 +16,26 @@ struct ServerState {
             Weak<tokio::sync::broadcast::Sender<hyper::body::Bytes>>,
         >,
     >,
-    json: hyper::body::Bytes,
-    json_icecast: hyper::body::Bytes,
+    metadata: RwLock<HashMap<String, String>>,
 }
 
 impl ServerState {
     fn new(index: crate::RadioIndex) -> Self {
-        let mut state = Self {
+        let mut metadata = HashMap::new();
+        for station in index.keys() {
+            if let Ok(defs) = index.load(station) {
+                metadata.insert(
+                    station.clone(),
+                    defs.name.as_deref().unwrap_or("Sprunk").to_owned(),
+                );
+            }
+        }
+
+        Self {
             index: Arc::new(index),
             running: Mutex::new(weak_table::WeakValueHashMap::new()),
-            json: hyper::body::Bytes::new(),
-            json_icecast: hyper::body::Bytes::new(),
-        };
-        state.json = state.status_json_generate(false);
-        state.json_icecast = state.status_json_generate(true);
-        state
+            metadata: RwLock::new(metadata),
+        }
     }
 
     fn can_handle(&self, req: &hyper::Request<hyper::Body>) -> bool {
@@ -47,7 +53,7 @@ impl ServerState {
     }
 
     fn serve(
-        &self,
+        self: &Arc<Self>,
         req: hyper::Request<hyper::Body>,
     ) -> anyhow::Result<hyper::Response<hyper::Body>> {
         let mut path = req.uri().path();
@@ -67,17 +73,35 @@ impl ServerState {
                 let index = self.index.clone();
                 let (tx, rx) = tokio::sync::broadcast::channel(32);
                 let tx = Arc::new(tx);
+                let metadata = self
+                    .metadata
+                    .read()
+                    .map_err(|_| anyhow::anyhow!("could not read metadata"))?;
+                let reset_metadata = metadata
+                    .get(&path)
+                    .ok_or_else(|| anyhow::anyhow!("could not read station metadata"))?;
                 let output = ServerOutputStream {
                     sender: tx.clone(),
+                    state: self.clone(),
+                    path: path.clone(),
+                    reset_metadata: reset_metadata.clone(),
                     timeout: None,
                 };
                 running.insert(path.clone(), tx);
                 // this must be an honest-to-god thread, because it never yields
                 // this could be fixed in the future, but for now...
+                let state = self.clone();
                 std::thread::spawn(move || {
                     if let Ok(enc) = crate::encoder::Mp3::new(48000, None, None) {
                         let sink = crate::sink::Stream::new(output, enc).realtime();
-                        let _ = index.play(path, Some(Box::new(sink)), true);
+                        let _ = index.play(path.clone(), Some(Box::new(sink)), true, move |m| {
+                            if let Ok(mut metadata) = state.metadata.write() {
+                                if let Some(v) = metadata.get_mut(&path) {
+                                    println!("{}", m);
+                                    *v = m;
+                                }
+                            }
+                        });
                     }
                 });
                 rx
@@ -93,7 +117,7 @@ impl ServerState {
         Ok(response)
     }
 
-    fn status_json_generate(&self, icecast: bool) -> hyper::body::Bytes {
+    fn status_json(&self, icecast: bool) -> anyhow::Result<hyper::Response<hyper::Body>> {
         // mimic status-json.xsl if icecast is true
         let mut body = String::new();
         if icecast {
@@ -101,32 +125,28 @@ impl ServerState {
         }
         body += "[";
         let mut first = true;
-        for station in self.index.keys() {
-            if let Ok(defs) = self.index.load(station) {
-                // FIXME json escaping
-                if !first {
-                    body += ", ";
-                }
-                first = false;
-                body += "{\"listenurl\": \"./";
-                body += station;
-                body += "\", \"title\": \"";
-                body += defs.name.as_deref().unwrap_or("Sprunk");
-                body += "\"}";
+        let metadata = self
+            .metadata
+            .read()
+            .map_err(|_| anyhow::anyhow!("could not read metadata"))?;
+        for (station, title) in metadata.iter() {
+            // FIXME json escaping
+            if !first {
+                body += ", ";
             }
+            first = false;
+            body += "{\"listenurl\": \"./";
+            body += station;
+            body += "\", \"title\": \"";
+            body += title;
+            body += "\"}";
         }
         body += "]";
         if icecast {
             body += "}}";
         }
-        hyper::body::Bytes::from(body)
-    }
-    fn status_json(&self, icecast: bool) -> anyhow::Result<hyper::Response<hyper::Body>> {
-        let mut response = hyper::Response::new(hyper::Body::from(if icecast {
-            self.json_icecast.clone()
-        } else {
-            self.json.clone()
-        }));
+
+        let mut response = hyper::Response::new(hyper::Body::from(body));
         response
             .headers_mut()
             .insert(hyper::header::CONTENT_TYPE, "application/json".parse()?);
@@ -136,6 +156,9 @@ impl ServerState {
 
 struct ServerOutputStream {
     sender: Arc<tokio::sync::broadcast::Sender<hyper::body::Bytes>>,
+    state: Arc<ServerState>,
+    path: String,
+    reset_metadata: String,
     timeout: Option<Instant>,
 }
 
@@ -143,6 +166,9 @@ impl std::io::Write for ServerOutputStream {
     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize> {
         if let Some(timeout) = self.timeout {
             if Instant::now() > timeout {
+                if let Ok(mut metadata) = self.state.metadata.write() {
+                    metadata.insert(self.path.clone(), self.reset_metadata.clone());
+                }
                 return Err(std::io::Error::new(
                     std::io::ErrorKind::BrokenPipe,
                     "radio timed out",

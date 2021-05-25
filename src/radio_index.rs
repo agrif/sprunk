@@ -91,9 +91,16 @@ impl RadioIndex {
         crate::Definitions::open(stationdef.files.iter())
     }
 
-    pub fn play<S>(&self, station: S, output: Option<Box<dyn crate::Sink>>, hotstart: bool) -> anyhow::Result<()>
+    pub fn play<S, F>(
+        &self,
+        station: S,
+        output: Option<Box<dyn crate::Sink>>,
+        hotstart: bool,
+        metadata: F,
+    ) -> anyhow::Result<()>
     where
         S: AsRef<str>,
+        F: FnMut(String) + 'static,
     {
         let stationdef = self
             .info
@@ -105,7 +112,7 @@ impl RadioIndex {
             .unwrap_or_else(|| stationdef.output.to_sink(bufsize))?;
         let files = stationdef.files.clone();
         let mut manager = crate::Manager::new(sink, bufsize, move |sched| async move {
-            let mut radio = crate::Radio::new(sched, files.iter())?;
+            let mut radio = crate::Radio::new(sched, files.iter(), metadata)?;
             radio.run().await
         });
 

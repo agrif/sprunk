@@ -3,9 +3,10 @@ use crate::{Definitions, RandomMixer, Scheduler, SoftScheduler};
 use rand::Rng;
 use std::path::PathBuf;
 
-pub struct Radio {
+pub struct Radio<F> {
     definitions: Definitions,
     scheduler: SoftScheduler,
+    metadata_callback: F,
 
     // some fun parameters
     intro_chance: f32,
@@ -24,8 +25,29 @@ pub struct Radio {
     r_solo: RandomMixer<PathBuf>,
 }
 
-impl Radio {
-    pub fn new<PI, P>(mut scheduler: Scheduler, paths: PI) -> anyhow::Result<Self>
+macro_rules! set_metadata {
+    ($self:expr, $fmt:expr) =>
+        (($self.metadata_callback)(
+            format!(concat!("{} - ", $fmt),
+                    $self.definitions.name.as_deref().unwrap_or("Sprunk"))
+        ));
+    ($self:expr, $fmt:expr, $($arg:tt)*) =>
+        (($self.metadata_callback)(
+            format!(concat!("{} - ", $fmt),
+                    $self.definitions.name.as_deref().unwrap_or("Sprunk"),
+                    $($arg)*))
+        );
+}
+
+impl<F> Radio<F>
+where
+    F: FnMut(String),
+{
+    pub fn new<PI, P>(
+        mut scheduler: Scheduler,
+        paths: PI,
+        metadata_callback: F,
+    ) -> anyhow::Result<Self>
     where
         PI: Iterator<Item = P>,
         P: AsRef<std::path::Path>,
@@ -36,6 +58,7 @@ impl Radio {
         Ok(Self {
             definitions: Definitions::open(paths)?,
             scheduler,
+            metadata_callback,
 
             // parameters
             intro_chance: 0.3,
@@ -108,12 +131,7 @@ impl Radio {
         self.scheduler
             .add(&song.path, over, song.pre, Some(song.post), false)
             .await?;
-        println!(
-            "{} - {} - {}",
-            self.definitions.name.as_deref().unwrap_or("Sprunk"),
-            song.metadata.artist,
-            song.metadata.title
-        );
+        set_metadata!(self, "{} - {}", song.metadata.artist, song.metadata.title);
         Ok(())
     }
 
@@ -121,10 +139,7 @@ impl Radio {
         if let Some(ad) = self.r_ad.choose(self.definitions.ad.iter(), |p| p) {
             let over = self.r_to_ad.choose(self.definitions.to_ad.iter(), |p| p);
             self.scheduler.add(&ad, over, 0.0, None, true).await?;
-            println!(
-                "{} - Advertisement",
-                self.definitions.name.as_deref().unwrap_or("Sprunk")
-            );
+            set_metadata!(self, "Advertisement");
         }
         Ok(())
     }
@@ -135,10 +150,7 @@ impl Radio {
                 .r_to_news
                 .choose(self.definitions.to_news.iter(), |p| p);
             self.scheduler.add(&news, over, 0.0, None, true).await?;
-            println!(
-                "{} - News",
-                self.definitions.name.as_deref().unwrap_or("Sprunk")
-            );
+            set_metadata!(self, "News");
         }
         Ok(())
     }
@@ -146,10 +158,7 @@ impl Radio {
     pub async fn play_id(&mut self) -> anyhow::Result<()> {
         if let Some(id) = self.r_id.choose(self.definitions.id.iter(), |p| p) {
             self.scheduler.add(&id, None, 0.0, None, false).await?;
-            println!(
-                "{} - Identification",
-                self.definitions.name.as_deref().unwrap_or("Sprunk")
-            );
+            set_metadata!(self, "Identification");
         }
         Ok(())
     }
@@ -157,10 +166,7 @@ impl Radio {
     pub async fn play_mono(&mut self) -> anyhow::Result<()> {
         if let Some(solo) = self.r_solo.choose(self.definitions.solo.iter(), |p| p) {
             self.scheduler.add(&solo, None, 0.0, None, false).await?;
-            println!(
-                "{} - Monologue",
-                self.definitions.name.as_deref().unwrap_or("Sprunk")
-            );
+            set_metadata!(self, "Monologue");
         }
         Ok(())
     }
