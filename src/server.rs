@@ -1,20 +1,22 @@
 use crate::Sink;
 
-use std::collections::HashMap;
+use std::collections::{HashMap, VecDeque};
 use std::sync::{Arc, Mutex, RwLock, Weak};
 use std::time::{Duration, Instant};
 
+use hyper::body::Bytes;
 use tokio_stream::StreamExt;
 
 const RADIO_TIMEOUT: Duration = Duration::from_secs(60 * 5);
+const RADIO_SAMPLERATE: u32 = 48000;
+const RADIO_KBITRATE: i32 = 300;
+const RADIO_QUALITY: u8 = 5;
+const RADIO_PRELOAD: usize = 128 * 1024;
 
 struct ServerState {
     index: Arc<crate::RadioIndex>,
     running: Mutex<
-        weak_table::WeakValueHashMap<
-            String,
-            Weak<tokio::sync::broadcast::Sender<hyper::body::Bytes>>,
-        >,
+        weak_table::WeakValueHashMap<String, Weak<tokio::sync::broadcast::Sender<(Bytes, Bytes)>>>,
     >,
     metadata: RwLock<HashMap<String, String>>,
 }
@@ -86,13 +88,18 @@ impl ServerState {
                     path: path.clone(),
                     reset_metadata: reset_metadata.clone(),
                     timeout: None,
+                    chunks: VecDeque::new(),
                 };
                 running.insert(path.clone(), tx);
                 // this must be an honest-to-god thread, because it never yields
                 // this could be fixed in the future, but for now...
                 let state = self.clone();
                 std::thread::spawn(move || {
-                    if let Ok(enc) = crate::encoder::Mp3::new(48000, None, None) {
+                    if let Ok(enc) = crate::encoder::Mp3::new(
+                        RADIO_SAMPLERATE,
+                        Some(RADIO_KBITRATE),
+                        Some(RADIO_QUALITY),
+                    ) {
                         let sink = crate::sink::Stream::new(output, enc).realtime();
                         let _ = index.play(path.clone(), Some(Box::new(sink)), true, move |m| {
                             if let Ok(mut metadata) = state.metadata.write() {
@@ -107,9 +114,18 @@ impl ServerState {
                 rx
             }
         };
+        let mut counter: usize = 0;
         let body = tokio_stream::wrappers::BroadcastStream::new(rx)
             .take_while(|r| r.is_ok())
-            .map(|r| r.map_err(|_| anyhow::anyhow!("end of stream")));
+            .map(move |r| {
+                let r = r.map_err(|_| anyhow::anyhow!("end of stream"));
+                counter += 1;
+                if counter == 1 {
+                    r.map(|t| t.0)
+                } else {
+                    r.map(|t| t.1)
+                }
+            });
         let mut response = hyper::Response::new(hyper::Body::wrap_stream(body));
         response
             .headers_mut()
@@ -155,11 +171,12 @@ impl ServerState {
 }
 
 struct ServerOutputStream {
-    sender: Arc<tokio::sync::broadcast::Sender<hyper::body::Bytes>>,
+    sender: Arc<tokio::sync::broadcast::Sender<(Bytes, Bytes)>>,
     state: Arc<ServerState>,
     path: String,
     reset_metadata: String,
     timeout: Option<Instant>,
+    chunks: VecDeque<Bytes>,
 }
 
 impl std::io::Write for ServerOutputStream {
@@ -176,7 +193,17 @@ impl std::io::Write for ServerOutputStream {
             }
         }
 
-        if let Err(_) = self.sender.send(hyper::body::Bytes::copy_from_slice(buf)) {
+        let chunk = Bytes::copy_from_slice(buf);
+        self.chunks.push_back(chunk.clone());
+        while self.chunks.iter().map(|c| c.len()).sum::<usize>() > RADIO_PRELOAD {
+            self.chunks.pop_front();
+        }
+        let mut preload = Vec::with_capacity(self.chunks.iter().map(|c| c.len()).sum());
+        for c in self.chunks.iter() {
+            preload.extend_from_slice(&c);
+        }
+
+        if let Err(_) = self.sender.send((preload.into(), chunk)) {
             if let None = self.timeout {
                 self.timeout = Some(Instant::now() + RADIO_TIMEOUT);
             }
