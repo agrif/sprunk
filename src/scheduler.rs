@@ -36,6 +36,10 @@ struct SchedulerData {
     ramps: Vec<(u64, f32)>,
 }
 
+pub struct SchedulerTask<T> {
+    task: Task<T>,
+}
+
 impl Time {
     pub fn frames(frames: u64) -> Self {
         Self {
@@ -165,15 +169,17 @@ impl Scheduler {
         end
     }
 
-    pub fn run<F, Fut, T>(self, f: F) -> Task<T>
+    pub fn run<F, Fut, T>(self, f: F) -> SchedulerTask<T>
     where
-        F: FnOnce(Scheduler) -> Fut,
+        F: FnOnce(Scheduler) -> Fut + 'static,
         Fut: std::future::Future<Output = T> + 'static,
         T: 'static,
     {
         let execcell = self.executor.clone();
         let exec = execcell.borrow();
-        exec.spawn(f(self))
+        let task = exec.spawn(f(self));
+
+        SchedulerTask { task }
     }
 
     pub async fn wait<T>(&mut self, time: T) -> anyhow::Result<Time>
@@ -231,6 +237,13 @@ impl Scheduler {
         self.add_ramp_point(start, orig);
         self.add_ramp_point(start + duration, volume);
         start + duration
+    }
+}
+
+impl SchedulerSource {
+    pub fn resolve<T>(&mut self, task: SchedulerTask<T>) -> T {
+        let exec = self.executor.borrow();
+        futures_lite::future::block_on(exec.run(task.task))
     }
 }
 

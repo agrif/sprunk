@@ -18,7 +18,7 @@ pub use manager::Manager;
 pub use radio::Radio;
 pub use radio_index::{Output, RadioIndex, RadioInfo};
 pub use random_mixer::RandomMixer;
-pub use scheduler::{Scheduler, SchedulerSource, Time};
+pub use scheduler::{Scheduler, SchedulerSource, SchedulerTask, Time};
 pub use server::server_run;
 pub use sink::Sink;
 pub use soft_scheduler::SoftScheduler;

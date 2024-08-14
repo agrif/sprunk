@@ -1,4 +1,4 @@
-use crate::{Scheduler, SchedulerSource, Sink, Source, Time};
+use crate::{Scheduler, SchedulerSource, SchedulerTask, Sink, Source, Time};
 
 pub struct Manager<S, T> {
     sink: S,
@@ -6,7 +6,7 @@ pub struct Manager<S, T> {
     buffersize: u64,
     offset: u64,
     source: SchedulerSource,
-    task: async_executor::Task<anyhow::Result<T>>,
+    task: SchedulerTask<anyhow::Result<T>>,
 }
 
 impl<S, T> Manager<S, T>
@@ -16,7 +16,7 @@ where
 {
     pub fn new<F, Fut>(sink: S, buffersize: usize, f: F) -> Self
     where
-        F: FnOnce(Scheduler) -> Fut,
+        F: FnOnce(Scheduler) -> Fut + 'static,
         Fut: std::future::Future<Output = anyhow::Result<T>> + 'static,
     {
         let (scheduler, source) = Scheduler::new(sink.samplerate(), sink.channels());
@@ -62,7 +62,7 @@ where
         loop {
             let avail = self.source.fill(&mut self.buffer);
             if avail == 0 {
-                return futures_lite::future::block_on(self.task);
+                return self.source.resolve(self.task);
             }
             self.sink.write(&self.buffer[..avail])?;
         }

@@ -4,7 +4,7 @@ use rb::{RbConsumer, RbProducer, RB};
 
 pub struct System {
     config: StreamConfig,
-    _stream: Stream,
+    stream: Option<Stream>,
     _buffer: rb::SpscRb<f32>,
     tx: rb::Producer<f32>,
 }
@@ -12,6 +12,16 @@ pub struct System {
 struct AudioThread {
     rx: rb::Consumer<f32>,
     buffer: Vec<f32>,
+}
+
+impl Drop for System {
+    fn drop(&mut self) {
+        // FIXME this is a MASSIVE HACK
+        // this will totally leak the output stream
+        // however, on my systems, dropping it normally hangs forever
+        // is this better? I don't know.
+        std::mem::forget(self.stream.take());
+    }
 }
 
 impl System {
@@ -54,7 +64,7 @@ impl System {
         stream.play()?;
         Ok(Self {
             config,
-            _stream: stream,
+            stream: Some(stream),
             _buffer: buffer,
             tx,
         })
@@ -71,13 +81,13 @@ impl AudioThread {
         }
         while data.len() > 0 {
             if let Some(cnt) = self.rx.read_blocking(&mut self.buffer[..data.len()]) {
-            for (i, sample) in self.buffer[..cnt].iter().enumerate() {
-                data[i] = Sample::from(sample);
+                for (i, sample) in self.buffer[..cnt].iter().enumerate() {
+                    data[i] = Sample::from(sample);
+                }
+                data = &mut data[cnt..];
+            } else {
+                break;
             }
-            data = &mut data[cnt..];
-        } else {
-            break;
-        }
         }
     }
 }
