@@ -1,167 +1,269 @@
-use std::io::{BufReader, Read, Seek, SeekFrom};
+use std::io::{Read, Seek, SeekFrom};
 
-use sndfile_sys as sf;
+use symphonia::core::audio::SampleBuffer;
+use symphonia::core::codecs::{Decoder, CODEC_TYPE_NULL};
+use symphonia::core::errors::Error;
+use symphonia::core::formats::{FormatReader, SeekMode, SeekTo};
+use symphonia::core::io::{MediaSource, MediaSourceStream};
 
-pub struct Media<R> {
-    info: sf::SF_INFO,
-    _user: Box<BufReader<R>>,
-    file: *mut sf::SNDFILE,
+pub struct Media {
+    track_id: u32,
+    format: Box<dyn FormatReader>,
+    decoder: Box<dyn Decoder>,
+    buffer: Option<SampleBuffer<f32>>,
+    used: usize,
+    reset_next: bool,
+    end_of_stream: bool,
 }
 
-// libsndfile isn't doing anything sneaky
-unsafe impl<R> Send for Media<R> where R: Send {}
+struct MediaReader<R> {
+    inner: R,
+    len: Option<u64>,
+}
 
-impl<R> Media<R>
+impl<R> MediaReader<R>
 where
-    R: Read + Seek,
+    R: Seek,
 {
-    pub fn new(data: R) -> anyhow::Result<Self> {
-        let mut fileio = sf::SF_VIRTUAL_IO {
-            get_filelen: Self::vio_get_filelen,
-            seek: Self::vio_seek,
-            read: Self::vio_read,
-            write: Self::vio_write,
-            tell: Self::vio_tell,
+    fn new(mut inner: R) -> Self {
+        let len = if let Ok(cur) = inner.stream_position() {
+            let end = inner.seek(SeekFrom::End(0));
+            let _ = inner.seek(SeekFrom::Start(cur));
+            end.ok()
+        } else {
+            None
         };
-        let mut info = sf::SF_INFO {
-            frames: 0,
-            samplerate: 0,
-            channels: 0,
-            format: 0,
-            sections: 0,
-            seekable: 0,
-        };
-        let mut user = Box::new(BufReader::new(data));
-        let userptr = (user.as_mut() as *mut _) as *mut libc::c_void;
-        let file = unsafe { sf::sf_open_virtual(&mut fileio, sf::SFM_READ, &mut info, userptr) };
-        if file.is_null() {
-            anyhow::bail!("could not open media file: {}", Self::error_string(file));
-        }
+        Self { inner, len }
+    }
+}
+
+impl<R> Read for MediaReader<R>
+where
+    R: Read,
+{
+    fn read(&mut self, buf: &mut [u8]) -> std::io::Result<usize> {
+        self.inner.read(buf)
+    }
+}
+
+impl<R> Seek for MediaReader<R>
+where
+    R: Seek,
+{
+    fn seek(&mut self, pos: SeekFrom) -> std::io::Result<u64> {
+        self.inner.seek(pos)
+    }
+}
+
+impl<R> MediaSource for MediaReader<R>
+where
+    R: Read + Seek + Send + Sync,
+{
+    fn is_seekable(&self) -> bool {
+        true
+    }
+
+    fn byte_len(&self) -> Option<u64> {
+        self.len
+    }
+}
+
+impl Media {
+    pub fn new<R>(data: R) -> anyhow::Result<Self>
+    where
+        R: Read + Seek + Send + Sync + 'static,
+    {
+        let mss = MediaSourceStream::new(Box::new(MediaReader::new(data)), Default::default());
+
+        let hint = Default::default();
+        let meta_opts = Default::default();
+        let fmt_opts = Default::default();
+
+        let probed = symphonia::default::get_probe()
+            .format(&hint, mss, &fmt_opts, &meta_opts)
+            .map_err(|_| anyhow::anyhow!("unsupported format"))?;
+
+        let format = probed.format;
+
+        let track = format
+            .tracks()
+            .iter()
+            .find(|t| t.codec_params.codec != CODEC_TYPE_NULL)
+            .ok_or_else(|| anyhow::anyhow!("no supported tracks"))?;
+
+        let dec_opts = Default::default();
+
+        let mut decoder = symphonia::default::get_codecs()
+            .make(&track.codec_params, &dec_opts)
+            .map_err(|_| anyhow::anyhow!("unsupported codec"))?;
+
+        let track_id = track.id;
+
         Ok(Self {
-            info,
-            _user: user,
-            file,
+            track_id,
+            format,
+            decoder,
+            buffer: None,
+            used: 0,
+            reset_next: true,
+            end_of_stream: false,
         })
     }
 
-    fn error_string(sndfile: *mut sf::SNDFILE) -> &'static str {
-        unsafe {
-            let cstr = std::ffi::CStr::from_ptr(sf::sf_strerror(sndfile));
-            std::str::from_utf8_unchecked(cstr.to_bytes())
+    fn get_packet(&mut self) -> anyhow::Result<bool> {
+        if self.end_of_stream {
+            return Ok(false);
         }
-    }
 
-    extern "C" fn vio_get_filelen(user: *mut libc::c_void) -> sf::sf_count_t {
-        unsafe {
-            let user = (user as *mut BufReader<R>).as_mut().unwrap();
-            if let Ok(cur) = user.seek(SeekFrom::Current(0)) {
-                if let Ok(end) = user.seek(SeekFrom::End(0)) {
-                    if let Ok(_) = user.seek(SeekFrom::Start(cur)) {
-                        return end as sf::sf_count_t;
+        loop {
+            let packet = match self.format.next_packet() {
+                Ok(packet) => packet,
+                Err(Error::ResetRequired) => {
+                    // as far as we care, this is end of stream
+                    self.end_of_stream = true;
+                    return Ok(false);
+                }
+                Err(Error::IoError(e)) if e.kind() == std::io::ErrorKind::UnexpectedEof => {
+                    // this is end of stream, I'm pretty sure.
+                    // symphonia doesn't document this
+                    self.end_of_stream = true;
+                    return Ok(false);
+                }
+                Err(e) => {
+                    anyhow::bail!("error getting packet: {:?}", e);
+                }
+            };
+
+            while !self.format.metadata().is_latest() {
+                self.format.metadata().pop();
+            }
+
+            if packet.track_id() != self.track_id {
+                continue;
+            }
+
+            match self.decoder.decode(&packet) {
+                Ok(decoded) => {
+                    let current = self.buffer.as_ref().map(|b| {
+                        b.capacity() >= decoded.capacity() * decoded.spec().channels.count()
+                    });
+
+                    if current != Some(true) {
+                        self.buffer = Some(SampleBuffer::new(
+                            (decoded.capacity() as u64) * 2,
+                            *decoded.spec(),
+                        ));
+                    }
+
+                    if let Some(buffer) = self.buffer.as_mut() {
+                        buffer.copy_interleaved_ref(decoded);
+
+                        if buffer.samples().is_empty() {
+                            continue;
+                        }
+
+                        return Ok(true);
+                    } else {
+                        anyhow::bail!("no buffer to write to");
                     }
                 }
+                Err(Error::IoError(_)) => {
+                    continue;
+                }
+                Err(Error::DecodeError(_)) => {
+                    continue;
+                }
+                Err(e) => {
+                    anyhow::bail!("decode error: {}", e);
+                }
             }
-            -1
         }
     }
 
-    extern "C" fn vio_seek(
-        offset: sf::sf_count_t,
-        whence: libc::c_int,
-        user: *mut libc::c_void,
-    ) -> sf::sf_count_t {
-        unsafe {
-            let user = (user as *mut BufReader<R>).as_mut().unwrap();
-            (match whence {
-                sf::SF_SEEK_CUR => user.seek(SeekFrom::Current(offset as i64)),
-                sf::SF_SEEK_END => user.seek(SeekFrom::End(offset as i64)),
-                sf::SF_SEEK_SET => user.seek(SeekFrom::Start(offset as u64)),
-                _ => panic!("bad seek whence"),
-            })
-            .map(|v| v as sf::sf_count_t)
-            .unwrap_or(-1)
+    fn get_data(&mut self, mut f: impl FnMut(&[f32]) -> usize) -> anyhow::Result<bool> {
+        if self.end_of_stream {
+            return Ok(false);
         }
-    }
 
-    extern "C" fn vio_read(
-        ptr: *mut libc::c_void,
-        count: sf::sf_count_t,
-        user: *mut libc::c_void,
-    ) -> sf::sf_count_t {
-        unsafe {
-            let user = (user as *mut BufReader<R>).as_mut().unwrap();
-            let buf = std::slice::from_raw_parts_mut(ptr as *mut u8, count as usize);
-            user.read(buf).unwrap_or(0) as sf::sf_count_t
+        if self.buffer.is_none() || self.reset_next {
+            self.used = 0;
+            self.reset_next = false;
+            if !self.get_packet()? {
+                return Ok(false);
+            }
         }
-    }
 
-    extern "C" fn vio_write(
-        _ptr: *const libc::c_void,
-        _count: sf::sf_count_t,
-        _user_data: *mut libc::c_void,
-    ) -> sf::sf_count_t {
-        panic!("libsndfile vio write");
-    }
-
-    extern "C" fn vio_tell(user: *mut libc::c_void) -> sf::sf_count_t {
-        unsafe {
-            let user = (user as *mut BufReader<R>).as_mut().unwrap();
-            user.seek(SeekFrom::Current(0))
-                .map(|v| v as sf::sf_count_t)
-                .unwrap_or(-1)
+        if let Some(buffer) = self.buffer.as_ref() {
+            let samples = buffer.samples();
+            assert!(self.used < samples.len());
+            self.used += f(&samples[self.used..]);
+            if self.used >= samples.len() {
+                self.reset_next = true;
+            }
+            Ok(true)
+        } else {
+            anyhow::bail!("failed to read buffer");
         }
     }
 }
 
-impl<R> Drop for Media<R> {
-    fn drop(&mut self) {
-        unsafe {
-            sf::sf_close(self.file);
-        }
-    }
-}
-
-impl<R> super::Source for Media<R>
-where
-    R: std::io::Read + std::io::Seek + std::marker::Send + 'static,
-{
+impl super::Source for Media {
     fn samplerate(&self) -> f32 {
-        self.info.samplerate as f32
+        self.decoder.codec_params().sample_rate.unwrap_or(0) as f32
     }
 
     fn channels(&self) -> u16 {
-        self.info.channels as u16
+        self.decoder
+            .codec_params()
+            .channels
+            .map(|c| c.count())
+            .unwrap_or(0) as u16
     }
 
     fn len(&self) -> Option<u64> {
-        Some(self.info.frames as u64)
+        self.decoder.codec_params().n_frames
     }
 
     fn fill(&mut self, buffer: &mut [f32]) -> usize {
-        let ourlen = (buffer.len() / self.info.channels as usize) * self.info.channels as usize;
-        let amt =
-            unsafe { sf::sf_read_float(self.file, buffer.as_mut_ptr(), ourlen as sf::sf_count_t) };
-        if amt < 0 {
-            0
-        } else {
-            amt as usize
+        let channels = self.channels();
+        let ourlen = (buffer.len() / channels as usize) * channels as usize;
+
+        let buffer = &mut buffer[..ourlen];
+        let mut written = 0;
+        while buffer.len() > written {
+            let more = self.get_data(|samples| {
+                let amt = samples.len().min(buffer.len() - written);
+                buffer[written..written + amt].copy_from_slice(&samples[..amt]);
+                written += amt;
+                amt
+            });
+
+            match more {
+                Ok(true) => continue,
+                Ok(false) => break,
+                Err(_) => {
+                    // this is a legitimate error, but we have no way to
+                    // propogate it
+                    return 0;
+                }
+            }
         }
+
+        written
     }
 
     fn seek(&mut self, frame: u64) -> anyhow::Result<()> {
-        if self.info.seekable > 0 {
-            unsafe {
-                let result = sf::sf_seek(self.file, frame as sf::sf_count_t, sf::SF_SEEK_SET);
-                if result < 0 {
-                    anyhow::bail!(
-                        "failed to seek media stream: {}",
-                        Self::error_string(self.file)
-                    );
-                }
-                Ok(())
-            }
-        } else {
-            anyhow::bail!("cannot seek media stream")
-        }
+        // FIXME precision seeking, also, is TimeStamp correct?
+        self.format.seek(
+            SeekMode::Coarse,
+            SeekTo::TimeStamp {
+                ts: frame,
+                track_id: self.track_id,
+            },
+        )?;
+        self.decoder.reset();
+        self.reset_next = true;
+        self.end_of_stream = false;
+        Ok(())
     }
 }
