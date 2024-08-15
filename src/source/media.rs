@@ -35,13 +35,20 @@ where
         let userptr = (user.as_mut() as *mut _) as *mut libc::c_void;
         let file = unsafe { sf::sf_open_virtual(&mut fileio, sf::SFM_READ, &mut info, userptr) };
         if file.is_null() {
-            anyhow::bail!("could not open media file");
+            anyhow::bail!("could not open media file: {}", Self::error_string(file));
         }
         Ok(Self {
             info,
             _user: user,
             file,
         })
+    }
+
+    fn error_string(sndfile: *mut sf::SNDFILE) -> &'static str {
+        unsafe {
+            let cstr = std::ffi::CStr::from_ptr(sf::sf_strerror(sndfile));
+            std::str::from_utf8_unchecked(cstr.to_bytes())
+        }
     }
 
     extern "C" fn vio_get_filelen(user: *mut libc::c_void) -> sf::sf_count_t {
@@ -146,7 +153,10 @@ where
             unsafe {
                 let result = sf::sf_seek(self.file, frame as sf::sf_count_t, sf::SF_SEEK_SET);
                 if result < 0 {
-                    anyhow::bail!("failed to seek media stream");
+                    anyhow::bail!(
+                        "failed to seek media stream: {}",
+                        Self::error_string(self.file)
+                    );
                 }
                 Ok(())
             }
