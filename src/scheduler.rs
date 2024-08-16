@@ -113,12 +113,16 @@ impl From<f32> for Time {
 
 impl Scheduler {
     pub fn new(samplerate: f32, channels: u16) -> (Scheduler, SchedulerSource) {
+        Self::new_with_volume(samplerate, channels, 1.0)
+    }
+    
+    pub fn new_with_volume(samplerate: f32, channels: u16, volume: f32) -> (Scheduler, SchedulerSource) {
         let data = Rc::new(RefCell::new(SchedulerData {
             offset: 0,
             timers: Vec::with_capacity(10),
             scheduled: Vec::with_capacity(10),
             active: Vec::with_capacity(10),
-            volume: 1.0,
+            volume,
             ramps: Vec::with_capacity(2),
         }));
         let executor = Rc::new(RefCell::new(LocalExecutor::new()));
@@ -147,7 +151,11 @@ impl Scheduler {
     }
 
     pub fn subscheduler(&mut self) -> Scheduler {
-        let (sched, src) = Scheduler::new(self.samplerate, self.channels);
+        self.subscheduler_with_volume(1.0)
+    }
+
+    pub fn subscheduler_with_volume(&mut self, volume: f32) -> Scheduler {
+        let (sched, src) = Scheduler::new_with_volume(self.samplerate, self.channels, volume);
         let mut subdata = sched.data.borrow_mut();
         let mut data = self.data.borrow_mut();
         subdata.offset = data.offset;
