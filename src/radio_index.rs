@@ -15,7 +15,14 @@ pub struct RadioIndex {
 #[derive(Debug, Clone)]
 pub struct RadioInfo {
     files: Vec<PathBuf>,
+    typ: RadioType,
     output: Output,
+}
+
+#[derive(Debug, Clone)]
+pub enum RadioType {
+    Normal,
+    Wow,
 }
 
 #[derive(Debug, Clone)]
@@ -80,7 +87,7 @@ impl RadioIndex {
         self.info.keys()
     }
 
-    pub fn load<S>(&self, station: S) -> anyhow::Result<crate::Definitions>
+    pub fn get_name<S>(&self, station: S) -> anyhow::Result<String>
     where
         S: AsRef<str>,
     {
@@ -88,7 +95,36 @@ impl RadioIndex {
             .info
             .get(station.as_ref())
             .ok_or_else(|| anyhow::anyhow!("could not find station"))?;
-        crate::Definitions::open(stationdef.files.iter())
+        let name = match stationdef.typ {
+            RadioType::Normal => crate::Definitions::open(stationdef.files.iter())?.name.clone(),
+            RadioType::Wow => crate::wow::Definitions::open(stationdef.files.iter())?.name.clone(),
+        };
+
+        name.ok_or_else(|| anyhow::anyhow!("station has no name"))
+    }
+
+    fn play_inner<S, F>(&self, typ: RadioType, sink: S, bufsize: usize, files: Vec<PathBuf>, hotstart: bool, metadata: F) -> anyhow::Result<()> where S: crate::Sink, F: FnMut(String) + 'static {
+        let mut manager = crate::Manager::new(sink, bufsize, move |sched| async move {
+            match typ {
+                RadioType::Normal => {
+                    let mut radio = crate::Radio::new(sched, files.iter(), metadata)?;
+                    radio.run().await
+                },
+                RadioType::Wow => {
+                    let mut radio = crate::wow::Radio::new(sched, files.iter(), metadata)?;
+                    radio.run().await
+                },
+            }
+        });
+
+        if hotstart {
+            use rand::Rng;
+            // advance a random amount
+            let amt = HOTSTART_WINDOW * rand::thread_rng().gen::<f32>();
+            manager.skip(amt);
+        }
+
+        manager.advance_to_end()
     }
 
     pub fn play<S, F>(
@@ -102,28 +138,18 @@ impl RadioIndex {
         S: AsRef<str>,
         F: FnMut(String) + 'static,
     {
+        let bufsize = 24000;
         let stationdef = self
             .info
             .get(station.as_ref())
             .ok_or_else(|| anyhow::anyhow!("could not find station"))?;
-        let bufsize = 24000;
         let sink = output
             .map(Ok)
             .unwrap_or_else(|| stationdef.output.to_sink(bufsize))?;
         let files = stationdef.files.clone();
-        let mut manager = crate::Manager::new(sink, bufsize, move |sched| async move {
-            let mut radio = crate::Radio::new(sched, files.iter(), metadata)?;
-            radio.run().await
-        });
+        let typ = stationdef.typ.clone();
 
-        if hotstart {
-            use rand::Rng;
-            // advance a random amount
-            let amt = HOTSTART_WINDOW * rand::thread_rng().gen::<f32>();
-            manager.skip(amt);
-        }
-
-        manager.advance_to_end()
+        self.play_inner(typ, sink, bufsize, files, hotstart, metadata)
     }
 }
 
@@ -131,13 +157,32 @@ impl RadioInfo {
     fn new() -> Self {
         Self {
             files: Vec::new(),
+            typ: RadioType::Normal,
             output: Output::System,
         }
     }
 
     fn update(&mut self, mount: &String, data: &StrictYaml) -> anyhow::Result<()> {
+        self.typ.update(&data["type"])?;
         self.output.update_icecast(mount, &data["icecast"])?;
         self.output.update(&data["output"])?;
+        Ok(())
+    }
+}
+
+impl RadioType {
+    fn update(&mut self, data: &StrictYaml) -> anyhow::Result<()> {
+        if data.is_badvalue() {
+            return Ok(());
+        }
+
+        let val = data.as_str().ok_or_else(|| anyhow::anyhow!("type should be a string"))?;
+        match val.to_lowercase().as_ref() {
+            "normal" => *self = RadioType::Normal,
+            "wow" => *self = RadioType::Wow,
+            _ => anyhow::bail!("unregocnized type: {:?}", val),
+        }
+
         Ok(())
     }
 }

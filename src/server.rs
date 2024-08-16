@@ -25,12 +25,10 @@ impl ServerState {
     fn new(index: crate::RadioIndex) -> Self {
         let mut metadata = HashMap::new();
         for station in index.keys() {
-            if let Ok(defs) = index.load(station) {
-                metadata.insert(
-                    station.clone(),
-                    defs.name.as_deref().unwrap_or("Sprunk").to_owned(),
-                );
-            }
+            metadata.insert(
+                station.clone(),
+                index.get_name(station).ok().as_deref().unwrap_or("Sprunk").to_owned(),
+            );
         }
 
         Self {

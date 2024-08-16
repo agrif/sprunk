@@ -1,0 +1,21 @@
+# WotLK, at least, according to Whitemane
+archives:
+  - ../Data/common.MPQ
+  - ../Data/common-2.MPQ
+  - ../Data/expansion.MPQ
+  - ../Data/lichking.MPQ
+  - ../Data/patch.MPQ
+
+  #- ../Data/enUS/backup-enUS.MPQ
+  #- ../Data/enUS/base-enUS.MPQ
+  #- ../Data/enUS/locale-enUS.MPQ
+  #- ../Data/enUS/speech-enUS.MPQ
+  #- ../Data/enUS/expansion-locale-enUS.MPQ
+  #- ../Data/enUS/expansion-speech-enUS.MPQ
+  #- ../Data/enUS/lichking-locale-enUS.MPQ
+  #- ../Data/enUS/lichking-speech-enUS.MPQ
+
+  #- ../Data/enUS/patch-enUS.MPQ
+  - ../Data/enUS/patch-enUS-2.MPQ
+  #- ../Data/enUS/patch-enUS-3.MPQ
+  #- ../Data/enUS/patch-enUS-W.MPQ

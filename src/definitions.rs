@@ -252,7 +252,7 @@ impl Definitions {
             .filter(move |i| Self::meta_match(&i.metadata, meta))
     }
 
-    fn get_str<'a>(data: &'a StrictYaml, k: &str) -> anyhow::Result<Option<&'a str>> {
+    pub(crate) fn get_str<'a>(data: &'a StrictYaml, k: &str) -> anyhow::Result<Option<&'a str>> {
         let v = if data[k].is_badvalue() {
             Some(None)
         } else {
@@ -261,7 +261,10 @@ impl Definitions {
         v.ok_or_else(|| anyhow::anyhow!("bad value for {:?}, expected string", k))
     }
 
-    fn get_vec<'a>(data: &'a StrictYaml, k: &str) -> anyhow::Result<Option<&'a Vec<StrictYaml>>> {
+    pub(crate) fn get_vec<'a>(
+        data: &'a StrictYaml,
+        k: &str,
+    ) -> anyhow::Result<Option<&'a Vec<StrictYaml>>> {
         let v = if data[k].is_badvalue() {
             Some(None)
         } else {
@@ -287,7 +290,9 @@ impl Definitions {
 
     fn verify_media(path: &Path) -> anyhow::Result<PathBuf> {
         let path = normalize(path);
-        let name = path.file_name().ok_or_else(|| anyhow::anyhow!("bad filename"))?;
+        let name = path
+            .file_name()
+            .ok_or_else(|| anyhow::anyhow!("bad filename"))?;
         let exts = &[".flac", ".wav", ".ogg"];
         for ext in exts {
             let mut mutpath = path.clone();
@@ -312,7 +317,7 @@ impl Definitions {
         Ok(r)
     }
 
-    fn check_keys(data: &StrictYaml, keys: &[&str]) -> anyhow::Result<()> {
+    pub(crate) fn check_keys(data: &StrictYaml, keys: &[&str]) -> anyhow::Result<()> {
         let hash = data
             .as_hash()
             .ok_or_else(|| anyhow::anyhow!("expected yaml dictionary"))?;

@@ -1,0 +1,16 @@
+name: WoW Test
+
+include:
+  - archives.yaml
+
+zones:
+  - Teldrassil
+  - Darnassus
+  - Darkshore
+  - Ashenvale
+  - The Barrens
+  - Dustwallow Marsh
+  - Theramore Isle
+  - Wetlands
+  - Loch Modan
+  - Dun Morogh

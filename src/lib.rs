@@ -11,6 +11,7 @@ mod server;
 pub mod sink;
 mod soft_scheduler;
 pub mod source;
+pub mod wow;
 
 pub use definitions::{Definitions, Intro, Metadata, Song};
 pub use encoder::Encoder;

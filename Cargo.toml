@@ -26,3 +26,6 @@ tokio-stream = {version = "0.1", features = ["sync"] }
 weak-table = "0.3"
 hyper-staticfile = "0.9"
 ebur128 = "0.1"
+wow_dbc = { version = "0.3", features = ["wrath"] }
+# changes in 0.8.1 needed to work on macos
+mpq = "0.8.1"
