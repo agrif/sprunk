@@ -4,13 +4,21 @@ include:
   - archives.yaml
 
 zones:
-  - Teldrassil
-  - Darnassus
-  - Darkshore
-  - Ashenvale
-  - The Barrens
-  - Dustwallow Marsh
-  - Theramore Isle
-  - Wetlands
+  - Stranglethorn Vale
+  - Duskwood
+  - Westfall
+  - Elwynn Forest
+  - Redridge Mountains
+  - Burning Steppes
+  - Searing Gorge
+  - Badlands
   - Loch Modan
-  - Dun Morogh
+  - Wetlands
+  - Arathi Highlands
+  - Hillsbrad Foothills
+  - Silverpine Forest
+  - Tirisfal Glades
+  - Western Plaguelands
+  - Eastern Plaguelands
+  - Ghostlands
+  - Eversong Woods
