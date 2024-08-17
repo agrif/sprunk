@@ -61,6 +61,7 @@ impl<M> Soundscape<M> {
 #[derive(Clone, Debug)]
 pub struct Area<M = String> {
     pub name: String,
+    pub parent: Option<Box<Area<M>>>,
     pub intro: Sound<M>,
 
     pub day: Soundscape<M>,
@@ -74,6 +75,10 @@ impl<M> Area<M> {
     {
         Ok(Area {
             name: self.name,
+            parent: self
+                .parent
+                .map(|p| p.map(&mut f).map(Box::new))
+                .transpose()?,
             intro: self.intro.map(&mut f)?,
             day: self.day.map(&mut f)?,
             night: self.night.map(&mut f)?,
@@ -120,7 +125,11 @@ impl Data {
         })
     }
 
-    fn parse_sound(&self, sound: Option<&tables::sound_entries::SoundEntriesRow>) -> Sound<String> {
+    fn parse_sound(
+        &self,
+        sound: Option<&tables::sound_entries::SoundEntriesRow>,
+        parent: Option<&Sound<String>>,
+    ) -> Sound<String> {
         if let Some(s) = sound {
             Sound {
                 volume: s.volume_float,
@@ -132,9 +141,13 @@ impl Data {
                     .collect(),
             }
         } else {
-            Sound {
-                volume: 0.0,
-                items: Vec::new(),
+            if let Some(s) = parent {
+                s.clone()
+            } else {
+                Sound {
+                    volume: 0.0,
+                    items: Vec::new(),
+                }
             }
         }
     }
@@ -144,32 +157,42 @@ impl Data {
         idx: usize,
         ambience_info: Option<&tables::sound_ambience::SoundAmbienceRow>,
         music_info: Option<&tables::zone_music::ZoneMusicRow>,
+        parent: Option<&Soundscape<String>>,
     ) -> Soundscape<String> {
-        let ambience =
-            self.parse_sound(ambience_info.and_then(|i| self.sounds.get(i.ambience_id[idx])));
+        let ambience = self.parse_sound(
+            ambience_info.and_then(|i| self.sounds.get(i.ambience_id[idx])),
+            parent.map(|s| &s.ambience),
+        );
 
-        let music = self.parse_sound(music_info.and_then(|i| self.sounds.get(i.sounds[idx])));
+        let music = self.parse_sound(
+            music_info.and_then(|i| self.sounds.get(i.sounds[idx])),
+            parent.map(|s| &s.music),
+        );
 
         Soundscape { ambience, music }
     }
 
     fn parse_area(&self, area: &tables::area_table::AreaTableRow) -> Area<String> {
+        let parent = self.get_zone_by_id(area.parent_area_id);
         let name = area.area_name_lang.en_gb.clone();
 
         let intro = self.parse_sound(
             self.intro_musics
                 .get(area.intro_sound)
                 .and_then(|s| self.sounds.get(s.sound_id)),
+            // intros do not get inherited
+            None,
         );
 
         let ambience = self.ambiences.get(area.ambience_id);
         let music = self.musics.get(area.zone_music);
 
-        let day = self.parse_soundscape(0, ambience, music);
-        let night = self.parse_soundscape(1, ambience, music);
+        let day = self.parse_soundscape(0, ambience, music, parent.as_ref().map(|a| &a.day));
+        let night = self.parse_soundscape(1, ambience, music, parent.as_ref().map(|a| &a.night));
 
         Area {
             name,
+            parent: parent.map(Box::new),
             intro,
             day,
             night,
@@ -177,11 +200,14 @@ impl Data {
     }
 
     pub fn list_zones<'a>(&'a self) -> impl Iterator<Item = Area<String>> + 'a {
-        self.areas
-            .rows()
-            .iter()
-            .filter(|area| area.parent_area_id.id == 0 && area.zone_music.id != 0)
-            .map(|area| self.parse_area(area))
+        self.areas.rows().iter().map(|area| self.parse_area(area))
+    }
+
+    pub fn get_zone_by_id(
+        &self,
+        key: impl TryInto<tables::area_table::AreaTableKey>,
+    ) -> Option<Area> {
+        self.areas.get(key).map(|area| self.parse_area(area))
     }
 
     pub fn get_zone<S>(&self, name: S) -> Option<Area>
