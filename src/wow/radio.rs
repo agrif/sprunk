@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::{Scheduler, source, Time};
 use super::{AmbientScheduler, Definitions, Data, Area, Soundscape, Sound};
 
@@ -7,6 +9,8 @@ pub struct Radio<F> {
     metadata_callback: F,
 
     data: Data,
+    areacache: HashMap<String, Area>,
+    last_played: Option<String>,
 }
 
 macro_rules! set_metadata {
@@ -31,19 +35,34 @@ impl<F> Radio<F> where F: FnMut(String) {
             metadata_callback,
 
             data: Data::new(),
+            areacache: HashMap::new(),
+            last_played: None,
         })
     }
 
     pub fn reload(&mut self) -> anyhow::Result<()> {
         self.definitions.reload()?;
         self.data.set_paths(self.definitions.archives.iter())?;
+
+        self.areacache.clear();
+        for zone in self.definitions.zones.values() {
+            let area = self.data.get_zone(&zone.name, zone.parent.as_ref()).ok_or_else(|| anyhow::anyhow!("could not get zone: {:?}", zone.name))?;
+            self.areacache.insert(zone.name.clone(), area);
+        }
+
         Ok(())
     }
 
     pub async fn play_sound_block(&mut self, zone: &Area, sound: &Sound) -> anyhow::Result<()> {
         for path in &sound.items {
+            // some intros are duplicated in the music block, so avoid that
+            if self.last_played.as_ref() == Some(path) {
+                continue;
+            }
+
             let data = self.data.read_file(path)?;
             self.scheduler.add_music(sound.volume, data).await?;
+            self.last_played = Some(path.clone());
 
             let file_name = path.rsplit_once('\\').map(|t| t.1);
             let file_stem = file_name.and_then(|name| name.rsplit_once('.').map(|t| t.0));
@@ -78,7 +97,9 @@ impl<F> Radio<F> where F: FnMut(String) {
     }
 
     pub async fn play_zone(&mut self, name: &str) -> anyhow::Result<()> {
-        let zone = self.data.get_zone(name).ok_or_else(|| anyhow::anyhow!("could not get zone: {:?}", name))?;
+        let zone = self.areacache.get(name).ok_or_else(|| anyhow::anyhow!("could not get zone: {:?}", name))?.clone();
+        //println!("{:#?}", zone);
+
         self.play_zone_soundscape(&zone, &zone.day).await?;
 
         Ok(())
@@ -87,8 +108,10 @@ impl<F> Radio<F> where F: FnMut(String) {
 
     pub async fn run(&mut self) -> anyhow::Result<()> {
         self.reload()?;
+        //println!("{:#?}", self.definitions);
+
         loop {
-            for name in self.definitions.zones.clone() {
+            for name in self.definitions.endpoints.clone() {
                 self.play_zone(&name).await?;
             }
         }

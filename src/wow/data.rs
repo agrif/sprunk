@@ -270,13 +270,19 @@ impl Data {
         self.areas.get(key).map(|area| self.parse_area(area))
     }
 
-    pub fn get_zone<S>(&self, name: S) -> Option<Area>
+    pub fn get_zone<S1, S2>(&self, name: S1, parent: Option<S2>) -> Option<Area>
     where
-        S: AsRef<str>,
+        S1: AsRef<str>,
+        S2: AsRef<str>,
     {
         for area in self.areas.rows() {
             if area.area_name_lang.en_gb == name.as_ref() {
-                return Some(self.parse_area(area));
+                let area = self.parse_area(area);
+                if area.parent.as_ref().map(|p| p.name.as_str())
+                    == parent.as_ref().map(|s| s.as_ref())
+                {
+                    return Some(area);
+                }
             }
         }
 

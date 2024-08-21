@@ -3,22 +3,30 @@ name: WoW Test
 include:
   - archives.yaml
 
+endpoints:
+  - "Rut'theran Village"
+  - The Veiled Sea
+  - Teldrassil
+  - Darkshore
+
 zones:
-  - Stranglethorn Vale
-  - Duskwood
-  - Westfall
-  - Elwynn Forest
-  - Redridge Mountains
-  - Burning Steppes
-  - Searing Gorge
-  - Badlands
-  - Loch Modan
-  - Wetlands
-  - Arathi Highlands
-  - Hillsbrad Foothills
-  - Silverpine Forest
-  - Tirisfal Glades
-  - Western Plaguelands
-  - Eastern Plaguelands
-  - Ghostlands
-  - Eversong Woods
+  - name: The Veiled Sea
+
+  - name: "Rut'theran Village"
+    parent: Teldrassil
+
+  - name: Teldrassil
+    direct:
+      - Darnassus
+
+  - name: Darnassus
+    direct:
+      - Teldrassil
+    via:
+      The Veiled Sea:
+        - Darkshore
+
+  - name: Darkshore
+    via:
+      The Veiled Sea:
+        - Darnassus
