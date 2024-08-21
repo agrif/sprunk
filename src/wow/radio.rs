@@ -25,21 +25,19 @@ macro_rules! set_metadata {
 
 impl<F> Radio<F> where F: FnMut(String) {
     pub fn new<PI, P>(mut scheduler: Scheduler, paths: PI, metadata_callback: F) -> anyhow::Result<Self> where PI: Iterator<Item = P>, P: AsRef<std::path::Path> {
-        let definitions = Definitions::open(paths)?;
-        let mut chain = mpq::Chain::new();
-
-        for archive in definitions.archives.clone() {
-            println!("loading {:?}", archive);
-            chain.add(archive)?;
-        }
-
         Ok(Self {
-            definitions,
+            definitions: Definitions::open(paths)?,
             scheduler: AmbientScheduler::new(scheduler, Time::seconds(3.0)),
             metadata_callback,
 
-            data: Data::new_from_chain(chain)?,
+            data: Data::new(),
         })
+    }
+
+    pub fn reload(&mut self) -> anyhow::Result<()> {
+        self.definitions.reload()?;
+        self.data.set_paths(self.definitions.archives.iter())?;
+        Ok(())
     }
 
     pub async fn play_sound_block(&mut self, zone: &Area, sound: &Sound) -> anyhow::Result<()> {
@@ -88,6 +86,7 @@ impl<F> Radio<F> where F: FnMut(String) {
     }
 
     pub async fn run(&mut self) -> anyhow::Result<()> {
+        self.reload()?;
         loop {
             for name in self.definitions.zones.clone() {
                 self.play_zone(&name).await?;

@@ -30,3 +30,4 @@ wow_dbc = { version = "0.3", features = ["wrath"] }
 # changes in 0.8.1 needed to work on macos
 mpq = "0.8.1"
 array-init = "2"
+rayon = "1"

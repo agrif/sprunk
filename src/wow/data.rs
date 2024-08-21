@@ -1,19 +1,13 @@
+use std::collections::{HashMap, HashSet};
+use std::path::{Path, PathBuf};
+
+use rayon::prelude::*;
 use wow_dbc::wrath_tables as tables;
 use wow_dbc::{DbcTable, Indexable};
 
-trait DbcTableExt: wow_dbc::DbcTable {
-    fn read_from(data: &mut mpq::Chain) -> anyhow::Result<Self> {
-        let path = format!("DBFilesClient/{}", Self::FILENAME);
-        let bytes = data.read(&path)?;
-        let table = Self::read(&mut bytes.as_slice())?;
-        Ok(table)
-    }
-}
-
-impl<T> DbcTableExt for T where T: wow_dbc::DbcTable {}
-
 pub struct Data {
-    chain: mpq::Chain,
+    paths: Vec<PathBuf>,
+    archives: HashMap<PathBuf, mpq::Archive>,
     areas: tables::area_table::AreaTable,
     sounds: tables::sound_entries::SoundEntries,
     ambiences: tables::sound_ambience::SoundAmbience,
@@ -87,42 +81,108 @@ impl<M> Area<M> {
 }
 
 impl Data {
-    pub fn new<P1, P2>(path: P1, locale: P2) -> anyhow::Result<Self>
+    pub fn new() -> Self {
+        Self {
+            paths: vec![],
+            archives: HashMap::new(),
+            areas: tables::area_table::AreaTable { rows: vec![] },
+            sounds: tables::sound_entries::SoundEntries { rows: vec![] },
+            ambiences: tables::sound_ambience::SoundAmbience { rows: vec![] },
+            musics: tables::zone_music::ZoneMusic { rows: vec![] },
+            intro_musics: tables::zone_intro_music_table::ZoneIntroMusicTable { rows: vec![] },
+        }
+    }
+    pub fn set_paths_from_dir<P1, P2>(&mut self, path: P1, locale: P2) -> anyhow::Result<Self>
     where
         P1: AsRef<std::path::Path>,
         P2: AsRef<std::path::Path>,
     {
-        let mut chain = mpq::Chain::new();
+        let mut paths = vec![];
 
         // FIXME this does need to be in order, probably
         // but directory order is fine for now
-        fn load_dir(chain: &mut mpq::Chain, path: &std::path::Path) -> anyhow::Result<()> {
+        fn load_dir(paths: &mut Vec<PathBuf>, path: &std::path::Path) -> anyhow::Result<()> {
             for leaf in std::fs::read_dir(path)? {
                 let leaf = leaf?.path();
 
                 if leaf.extension() == Some(std::ffi::OsStr::new("MPQ")) {
-                    chain.add(leaf)?;
+                    paths.push(leaf);
                 }
             }
 
             Ok(())
         }
 
-        load_dir(&mut chain, path.as_ref())?;
-        load_dir(&mut chain, &path.as_ref().join(locale))?;
+        load_dir(&mut paths, path.as_ref())?;
+        load_dir(&mut paths, &path.as_ref().join(locale))?;
 
-        Self::new_from_chain(chain)
+        let mut new = Self::new();
+        new.set_paths(paths.iter())?;
+        Ok(new)
     }
 
-    pub fn new_from_chain(mut chain: mpq::Chain) -> anyhow::Result<Self> {
-        Ok(Self {
-            areas: DbcTableExt::read_from(&mut chain)?,
-            sounds: DbcTableExt::read_from(&mut chain)?,
-            ambiences: DbcTableExt::read_from(&mut chain)?,
-            musics: DbcTableExt::read_from(&mut chain)?,
-            intro_musics: DbcTableExt::read_from(&mut chain)?,
-            chain,
-        })
+    pub fn set_paths<P>(&mut self, paths: impl Iterator<Item = P>) -> anyhow::Result<()>
+    where
+        P: AsRef<Path>,
+    {
+        let paths: Vec<PathBuf> = paths.map(|p| p.as_ref().to_owned()).collect();
+        let to_add: Vec<PathBuf> = paths
+            .iter()
+            .filter(|p| !self.archives.contains_key(p.as_path()))
+            .cloned()
+            .collect();
+
+        let to_remove: Vec<PathBuf> = self
+            .archives
+            .keys()
+            .filter(|p| !paths.contains(p))
+            .cloned()
+            .collect();
+
+        let add_archives = to_add
+            .as_slice()
+            .into_par_iter()
+            .map(|path| {
+                println!("loading {}", path.display());
+                let archive = mpq::Archive::open(path)?;
+                Ok((path.clone(), archive))
+            })
+            .collect::<anyhow::Result<HashMap<PathBuf, mpq::Archive>>>()?;
+
+        for remove in &to_remove {
+            self.archives.remove(remove).expect("archive not removed");
+        }
+
+        self.archives.extend(add_archives);
+
+        let current_paths: HashSet<&PathBuf> = self.archives.keys().collect();
+        let expected_paths: HashSet<&PathBuf> = paths.iter().collect();
+        assert_eq!(expected_paths, current_paths);
+
+        self.paths = paths;
+        self.reload()?;
+
+        Ok(())
+    }
+
+    fn reload(&mut self) -> anyhow::Result<()> {
+        self.areas = self.read_table()?;
+        self.sounds = self.read_table()?;
+        self.ambiences = self.read_table()?;
+        self.musics = self.read_table()?;
+        self.intro_musics = self.read_table()?;
+
+        Ok(())
+    }
+
+    fn read_table<T>(&mut self) -> anyhow::Result<T>
+    where
+        T: DbcTable,
+    {
+        let path = format!("DBFilesClient/{}", T::FILENAME);
+        let bytes = self.read_file(&path)?;
+        let table = T::read(&mut bytes.as_slice())?;
+        Ok(table)
     }
 
     fn parse_sound(
@@ -227,6 +287,20 @@ impl Data {
     where
         S: AsRef<str>,
     {
-        Ok(self.chain.read(path.as_ref())?)
+        for archive_path in self.paths.iter().rev() {
+            let archive = self
+                .archives
+                .get_mut(archive_path)
+                .expect("archive not loaded");
+
+            if let Ok(file) = archive.open_file(path.as_ref()) {
+                //println!("loaded {} from {}", path.as_ref(), archive_path.display());
+                let mut buf = vec![0; file.size() as usize];
+                file.read(archive, &mut buf)?;
+                return Ok(buf);
+            }
+        }
+
+        Err(anyhow::anyhow!("file not found in archives"))
     }
 }
