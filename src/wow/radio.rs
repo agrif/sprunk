@@ -169,6 +169,11 @@ impl<F> Radio<F> where F: FnMut(String) {
 
             self.path(&start, &end).await?;
             start = end;
+
+            // it is... mostly safe to ignore this error
+            // it's possible to reload definitions but then fail to
+            // find zones, but that should be an Err from play_zone later
+            let _ = self.reload();
         }
     }
 }
