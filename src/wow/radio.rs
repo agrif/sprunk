@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::{Scheduler, source, Time};
+use crate::{Scheduler, source, Time, RandomMixer};
 use super::{AmbientScheduler, Definitions, Data, Area, Soundscape, Sound};
 
 pub struct Radio<F> {
@@ -11,6 +11,7 @@ pub struct Radio<F> {
     data: Data,
     areacache: HashMap<String, Area>,
     last_played: Option<String>,
+    r_zones: RandomMixer<String>,
 }
 
 macro_rules! set_metadata {
@@ -37,6 +38,7 @@ impl<F> Radio<F> where F: FnMut(String) {
             data: Data::new(),
             areacache: HashMap::new(),
             last_played: None,
+            r_zones: RandomMixer::new(),
         })
     }
 
@@ -100,20 +102,73 @@ impl<F> Radio<F> where F: FnMut(String) {
         let zone = self.areacache.get(name).ok_or_else(|| anyhow::anyhow!("could not get zone: {:?}", name))?.clone();
         //println!("{:#?}", zone);
 
+        // FIXME day/night
         self.play_zone_soundscape(&zone, &zone.day).await?;
 
         Ok(())
 
     }
 
+    pub async fn path(&mut self, start: &String, end: &String) -> anyhow::Result<()> {
+        let path_outline = pathfinding::directed::dijkstra::dijkstra(&start, |name| {
+            self.definitions.zones.get(name.as_str()).expect("could not get zone").connections.iter().map(|conn| (&conn.destination, if conn.via.is_some() { 2 } else { 1 }))
+        }, |name| *name == end);
+
+        let Some((path_outline, _)) = path_outline else {
+            // no path found, fudge it
+            self.play_zone(end).await?;
+            return Ok(());
+        };
+
+        // discard start, which has already played, and clone
+        let path_outline: Vec<String> = path_outline[1..].into_iter().map(|n| n.as_str().to_owned()).collect();
+
+        let mut current = self.definitions.zones.get(start).expect("could not get zone");
+        for zone in &path_outline {
+            // look for a via connection and route through the via if found
+            for conn in &current.connections {
+                if &conn.destination == zone {
+                    if let Some(via) = &conn.via {
+                        self.play_zone(&via.clone()).await?;
+                        break;
+                    }
+                }
+            }
+
+            // play the zone itself
+            self.play_zone(zone).await?;
+
+            // update the current zone
+            current = self.definitions.zones.get(zone).expect("could not get zone");
+        }
+
+        Ok(())
+    }
+
     pub async fn run(&mut self) -> anyhow::Result<()> {
         self.reload()?;
         //println!("{:#?}", self.definitions);
 
+        // make sure we don't loop forever looking for a unique pair
+        assert!(self.definitions.endpoints.len() >= 2);
+
+        // start in a random zone
+        let mut start = self.r_zones.choose(self.definitions.endpoints.iter(), |z| z).expect("could not get start zone").clone();
+        self.play_zone(&start).await?;
+
         loop {
-            for name in self.definitions.endpoints.clone() {
-                self.play_zone(&name).await?;
-            }
+            // where are we going?
+
+            // loop until we find an end that differs from the start
+            let end = loop {
+                let end = self.r_zones.choose(self.definitions.endpoints.iter(), |z| z).expect("could not get end zone").clone();
+                if end != start {
+                    break end;
+                }
+            };
+
+            self.path(&start, &end).await?;
+            start = end;
         }
     }
 }
