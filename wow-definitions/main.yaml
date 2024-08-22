@@ -5,3 +5,6 @@ include:
 
   - zones-kalimdor.yaml
   - endpoints-kalimdor.yaml
+
+  - zones-eastern-kingdoms.yaml
+  - endpoints-eastern-kingdoms.yaml

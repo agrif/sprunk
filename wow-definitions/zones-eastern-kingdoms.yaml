@@ -1,0 +1,163 @@
+zones:
+  - name: The Great Sea
+
+  - name: Tirisfal Glades
+    direct:
+      #- Undercity
+      - Silverpine Forest
+      - Western Plaguelands
+      - Stranglethorn Vale # zeppelin
+    via:
+      The Great Sea:
+        - Durotar
+
+  #- name: Undercity
+
+  - name: Western Plaguelands
+    direct:
+      - Tirisfal Glades
+      - Alterac Mountains
+      - Eastern Plaguelands
+      - The Hinterlands
+
+  - name: Eastern Plaguelands
+    direct:
+      - Western Plaguelands
+      - Ghostlands
+
+  - name: Ghostlands
+    direct:
+      - Eastern Plaguelands
+      - Eversong Woods
+
+  - name: Eversong Woods
+    direct:
+      - Ghostlands
+      - Silvermoon City
+
+  - name: Silvermoon City
+    direct:
+      - Eversong Woods
+
+  - name: Silverpine Forest
+    direct:
+      - Tirisfal Glades
+      - Hillsbrad Foothills
+      - Alterac Mountains
+
+  - name: Hillsbrad Foothills
+    direct:
+      - Silverpine Forest
+      - Alterac Mountains
+      - Arathi Highlands
+
+  - name: Alterac Mountains
+    direct:
+      - Hillsbrad Foothills
+      - Western Plaguelands
+      - Silverpine Forest
+
+  - name: The Hinterlands
+    direct:
+      - Western Plaguelands
+      - Arathi Highlands
+
+  - name: Arathi Highlands
+    direct:
+      - Hillsbrad Foothills
+      - The Hinterlands
+      - Wetlands
+
+  - name: Wetlands
+    direct:
+      - Arathi Highlands
+      - Loch Modan
+    via:
+      The Great Sea:
+        - Theramore Isle # ... menethil?
+
+  - name: Loch Modan
+    direct:
+      - Wetlands
+      - Dun Morogh
+      - Badlands
+      - Searing Gorge
+
+  - name: Dun Morogh
+    direct:
+      - Loch Modan
+      #- Ironforge
+
+  #- name: Ironforge
+
+  - name: Badlands
+    direct:
+      - Loch Modan
+      - Searing Gorge
+
+  - name: Searing Gorge
+    direct:
+      - Loch Modan
+      - Badlands
+      - Burning Steppes
+
+  - name: Burning Steppes
+    direct:
+      - Searing Gorge
+      - Redridge Mountains
+
+  - name: Redridge Mountains
+    direct:
+      - Burning Steppes
+      - Elwynn Forest
+      - Duskwood
+
+  - name: Elwynn Forest
+    direct:
+      - Stormwind City
+      - Redridge Mountains
+      - Duskwood
+      - Westfall
+
+  - name: Stormwind City
+    direct:
+      - Elwynn Forest
+    via:
+      The Great Sea:
+        - Darkshore
+
+  - name: Westfall
+    direct:
+      - Elwynn Forest
+      - Duskwood
+
+  - name: Duskwood
+    direct:
+      - Elwynn Forest
+      - Westfall
+      - Stranglethorn Vale
+      - Redridge Mountains
+      - Deadwind Pass
+
+  - name: Deadwind Pass
+    direct:
+      - Duskwood
+      - Swamp of Sorrows
+
+  - name: Swamp of Sorrows
+    direct:
+      - Deadwind Pass
+      - Blasted Lands
+
+  - name: Blasted Lands
+    direct:
+      - Swamp of Sorrows
+
+  - name: Stranglethorn Vale
+    direct:
+      - Duskwood
+      - Tirisfal Glades # zeppelin
+    via:
+      The Great Sea:
+        - Durotar
+        - The Barrens

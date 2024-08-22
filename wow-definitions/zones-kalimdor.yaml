@@ -35,6 +35,8 @@ zones:
       The Veiled Sea:
         - Teldrassil
         - Azuremyst Isle
+      The Great Sea:
+        - Stormwind City
 
   - name: Ashenvale
     direct:
@@ -77,11 +79,18 @@ zones:
       - Thousand Needles
       - Dustwallow Marsh
       - Orgrimmar
+    via:
+      The Great Sea:
+        - Stranglethorn Vale
 
   - name: Durotar
     direct:
       - Orgrimmar
       - The Barrens
+    via:
+      The Great Sea:
+        - Tirisfal Glades
+        - Stranglethorn Vale
 
   - name: Orgrimmar
     direct:
@@ -111,6 +120,9 @@ zones:
     parent: Dustwallow Marsh
     direct:
       - Dustwallow Marsh
+    via:
+      The Great Sea:
+        - Wetlands # ... menethil?
 
   - name: Feralas
     direct:
