@@ -1,32 +1,7 @@
-name: WoW Test
+name: World of Warcraft
 
 include:
   - archives.yaml
 
-endpoints:
-  - "Rut'theran Village"
-  - The Veiled Sea
-  - Teldrassil
-  - Darkshore
-
-zones:
-  - name: The Veiled Sea
-
-  - name: "Rut'theran Village"
-    parent: Teldrassil
-
-  - name: Teldrassil
-    direct:
-      - Darnassus
-
-  - name: Darnassus
-    direct:
-      - Teldrassil
-    via:
-      The Veiled Sea:
-        - Darkshore
-
-  - name: Darkshore
-    via:
-      The Veiled Sea:
-        - Darnassus
+  - zones-kalimdor.yaml
+  - endpoints-kalimdor.yaml

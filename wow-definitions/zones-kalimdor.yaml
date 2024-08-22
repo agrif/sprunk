@@ -1,0 +1,119 @@
+zones:
+  - name: The Veiled Sea
+
+  - name: Teldrassil
+    direct:
+      - Darnassus
+
+  - name: Darnassus
+    direct:
+      - Teldrassil
+    via:
+      The Veiled Sea:
+        - Darkshore
+
+  - name: Darkshore
+    direct:
+      - Ashenvale
+    via:
+      The Veiled Sea:
+        - Darnassus
+
+  - name: Ashenvale
+    direct:
+      - Darkshore
+      - Felwood
+      - Stonetalon Mountains
+      - The Barrens
+      - Azshara
+
+  - name: Felwood
+    direct:
+      - Ashenvale
+      - Moonglade
+      - Winterspring
+
+  - name: Moonglade
+    direct:
+      - Felwood
+
+  - name: Winterspring
+    direct:
+      - Felwood
+
+  - name: Azshara
+    direct:
+      - Ashenvale
+
+  - name: Stonetalon Mountains
+    direct:
+      - Ashenvale
+      - The Barrens
+      - Desolace
+
+  - name: The Barrens
+    direct:
+      - Ashenvale
+      - Stonetalon Mountains
+      - Durotar
+      - Mulgore
+      - Thousand Needles
+      - Dustwallow Marsh
+
+  - name: Durotar
+    direct:
+      - Orgrimmar
+      - The Barrens
+
+  - name: Orgrimmar
+    direct:
+      - Durotar
+
+  - name: Desolace
+    direct:
+      - Stonetalon Mountains
+      - Feralas
+
+  - name: Mulgore
+    direct:
+      - The Barrens
+      - Thunder Bluff
+
+  - name: Thunder Bluff
+    direct:
+      - Mulgore
+
+  - name: Dustwallow Marsh
+    direct:
+      - The Barrens
+      - Theramore Isle
+
+  - name: Theramore Isle
+    parent: Dustwallow Marsh
+    direct:
+      - Dustwallow Marsh
+
+  - name: Feralas
+    direct:
+      - Desolace
+      - Thousand Needles
+
+  - name: Thousand Needles
+    direct:
+      - Feralas
+      - The Barrens
+      - Tanaris
+
+  - name: Silithus
+    direct:
+      - Un'Goro Crater
+
+  - name: Un'Goro Crater
+    direct:
+      - Silithus
+      - Tanaris
+
+  - name: Tanaris
+    direct:
+      - Thousand Needles
+      - Un'Goro Crater
