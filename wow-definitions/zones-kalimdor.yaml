@@ -7,7 +7,6 @@ zones:
     via:
       The Veiled Sea:
         - Darkshore
-        - Azuremyst Isle
 
   - name: Darnassus
     direct:
@@ -23,7 +22,7 @@ zones:
       - Bloodmyst Isle
     via:
       The Veiled Sea:
-        - Teldrassil
+        - Darkshore
 
   - name: Bloodmyst Isle
     direct:
@@ -35,6 +34,7 @@ zones:
     via:
       The Veiled Sea:
         - Teldrassil
+        - Azuremyst Isle
 
   - name: Ashenvale
     direct:
