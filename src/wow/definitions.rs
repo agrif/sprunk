@@ -64,6 +64,7 @@ impl Definitions {
         for path in self.paths.iter() {
             new.merge(Definitions::load_one(path)?);
         }
+        new.verify()?;
         std::mem::swap(&mut new.paths, &mut self.paths);
         *self = new;
         Ok(())
@@ -150,8 +151,6 @@ impl Definitions {
                 );
             }
         }
-
-        new.verify()?;
 
         Ok(new)
     }
