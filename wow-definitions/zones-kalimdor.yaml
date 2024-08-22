@@ -4,20 +4,37 @@ zones:
   - name: Teldrassil
     direct:
       - Darnassus
+    via:
+      The Veiled Sea:
+        - Darkshore
+        - Azuremyst Isle
 
   - name: Darnassus
     direct:
       - Teldrassil
+
+  - name: The Exodar
+    direct:
+      - Azuremyst Isle
+
+  - name: Azuremyst Isle
+    direct:
+      - The Exodar
+      - Bloodmyst Isle
     via:
       The Veiled Sea:
-        - Darkshore
+        - Teldrassil
+
+  - name: Bloodmyst Isle
+    direct:
+      - Azuremyst Isle
 
   - name: Darkshore
     direct:
       - Ashenvale
     via:
       The Veiled Sea:
-        - Darnassus
+        - Teldrassil
 
   - name: Ashenvale
     direct:
@@ -59,6 +76,7 @@ zones:
       - Mulgore
       - Thousand Needles
       - Dustwallow Marsh
+      - Orgrimmar
 
   - name: Durotar
     direct:
@@ -68,6 +86,7 @@ zones:
   - name: Orgrimmar
     direct:
       - Durotar
+      - The Barrens
 
   - name: Desolace
     direct:
