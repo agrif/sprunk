@@ -1,0 +1,44 @@
+zones:
+  - name: Hellfire Peninsula
+    direct:
+      - Blasted Lands
+      - Zangarmarsh
+
+  - name: Zangarmarsh
+    direct:
+      - Hellfire Peninsula
+      - Blade's Edge Mountains
+      - Terokkar Forest
+      - Nagrand
+
+  - name: Blade's Edge Mountains
+    direct:
+      - Zangarmarsh
+      - Netherstorm
+
+  - name: Netherstorm
+    direct:
+      - Blade's Edge Mountains
+
+  - name: Nagrand
+    direct:
+      - Shattrath City
+      - Zangarmarsh
+      - Terokkar Forest
+
+  - name: Terokkar Forest
+    direct:
+      - Shattrath City
+      - Nagrand
+      - Zangarmarsh
+      - Shadowmoon Valley
+
+  - name: Shattrath City
+    direct:
+      - Terokkar Forest
+      - Nagrand
+      # one-way portals? might be neat
+
+  - name: Shadowmoon Valley
+    direct:
+      - Terokkar Forest

@@ -152,6 +152,7 @@ zones:
   - name: Blasted Lands
     direct:
       - Swamp of Sorrows
+      - Hellfire Peninsula
 
   - name: Stranglethorn Vale
     direct:
