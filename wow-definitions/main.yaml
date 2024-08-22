@@ -11,3 +11,6 @@ include:
 
   - zones-outland.yaml
   - endpoints-outland.yaml
+
+  - zones-northrend.yaml
+  - endpoints-northrend.yaml

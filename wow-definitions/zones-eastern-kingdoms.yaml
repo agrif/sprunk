@@ -10,6 +10,8 @@ zones:
     via:
       The Great Sea:
         - Durotar
+      The North Sea:
+        - Howling Fjord
 
   #- name: Undercity
 
@@ -75,6 +77,8 @@ zones:
     via:
       The Great Sea:
         - Theramore Isle # ... menethil?
+      The North Sea:
+        - Howling Fjord # .. menethil?
 
   - name: Loch Modan
     direct:
@@ -125,6 +129,8 @@ zones:
     via:
       The Great Sea:
         - Darkshore
+      The North Sea:
+        - Borean Tundra
 
   - name: Westfall
     direct:

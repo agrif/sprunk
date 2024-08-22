@@ -1,0 +1,66 @@
+zones:
+  - name: The North Sea
+
+  - name: Borean Tundra
+    direct:
+      - Sholazar Basin
+      - Dragonblight
+    via:
+      The North Sea:
+        - Durotar
+        - Stormwind City
+
+  - name: Sholazar Basin
+    direct:
+      - Borean Tundra
+
+  - name: Icecrown
+    direct:
+      - Crystalsong Forest
+      - The Storm Peaks
+
+  #- name: Wintergrasp
+
+  - name: Dragonblight
+    direct:
+      - Crystalsong Forest
+      - Borean Tundra
+      - Zul'Drak
+      - Grizzly Hills
+
+  - name: Crystalsong Forest
+    direct:
+      - Dalaran
+      - Icecrown
+      - Dragonblight
+      - The Storm Peaks
+      - Zul'Drak
+
+  - name: Dalaran
+    direct:
+      - Crystalsong Forest
+
+  - name: The Storm Peaks
+    direct:
+      - Crystalsong Forest
+      - Icecrown
+
+  - name: Zul'Drak
+    direct:
+      - Crystalsong Forest
+      - Dragonblight
+      - Grizzly Hills
+
+  - name: Grizzly Hills
+    direct:
+      - Zul'Drak
+      - Dragonblight
+      - Howling Fjord
+
+  - name: Howling Fjord
+    direct:
+      - Grizzly Hills
+    via:
+      The North Sea:
+        - Tirisfal Glades
+        - Wetlands # .. menethil?

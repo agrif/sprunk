@@ -91,6 +91,8 @@ zones:
       The Great Sea:
         - Tirisfal Glades
         - Stranglethorn Vale
+      The North Sea:
+        - Borean Tundra
 
   - name: Orgrimmar
     direct:
