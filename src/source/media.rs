@@ -93,7 +93,7 @@ impl Media {
 
         let dec_opts = Default::default();
 
-        let mut decoder = symphonia::default::get_codecs()
+        let decoder = symphonia::default::get_codecs()
             .make(&track.codec_params, &dec_opts)
             .map_err(|_| anyhow::anyhow!("unsupported codec"))?;
 

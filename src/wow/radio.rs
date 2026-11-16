@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::{Scheduler, source, Time, RandomMixer};
+use crate::{Scheduler, Time, RandomMixer};
 use super::{AmbientScheduler, Definitions, Data, Area, Soundscape, Sound};
 
 pub struct Radio<F> {
@@ -29,7 +29,7 @@ macro_rules! set_metadata {
 }
 
 impl<F> Radio<F> where F: FnMut(String) {
-    pub fn new<PI, P>(mut scheduler: Scheduler, paths: PI, metadata_callback: F) -> anyhow::Result<Self> where PI: Iterator<Item = P>, P: AsRef<std::path::Path> {
+    pub fn new<PI, P>(scheduler: Scheduler, paths: PI, metadata_callback: F) -> anyhow::Result<Self> where PI: Iterator<Item = P>, P: AsRef<std::path::Path> {
         Ok(Self {
             definitions: Definitions::open(paths)?,
             scheduler: AmbientScheduler::new(scheduler, Time::seconds(3.0)),

@@ -1,7 +1,5 @@
 use crate::{source, Scheduler, Source, Time};
 
-use std::path::PathBuf;
-
 pub struct AmbientScheduler {
     crossfade: Time,
 
@@ -69,7 +67,7 @@ impl AmbientScheduler {
         };
 
         let new_active_ambience = (self.active_ambience + 1) % self.ambience.len();
-        let mut old_ambience = &mut self.ambience[self.active_ambience];
+        let old_ambience = &mut self.ambience[self.active_ambience];
         let mut new_ambience = self.root.subscheduler_with_volume(0.0);
 
         old_ambience.set_volume(self.music_end, 0.0, self.crossfade);
