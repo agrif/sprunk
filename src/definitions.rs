@@ -246,7 +246,7 @@ impl Definitions {
         a.artist == b.artist && a.title == b.title
     }
 
-    pub fn get_intros<'a>(&'a self, meta: &'a Metadata) -> impl Iterator<Item = &'a Intro> {
+    pub fn get_intros<'a>(&'a self, meta: &'a Metadata) -> impl Iterator<Item = &'a Intro> + Clone {
         self.intro
             .iter()
             .filter(move |i| Self::meta_match(&i.metadata, meta))

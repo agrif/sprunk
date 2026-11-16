@@ -38,7 +38,7 @@ impl<F> Radio<F> where F: FnMut(String) {
             data: Data::new(),
             areacache: HashMap::new(),
             last_played: None,
-            r_zones: RandomMixer::new(),
+            r_zones: RandomMixer::new(50, 0.2),
         })
     }
 

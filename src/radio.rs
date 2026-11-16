@@ -63,17 +63,17 @@ where
             // parameters
             intro_chance: 0.3,
 
-            r_music: RandomMixer::new(),
-            r_general: RandomMixer::new(),
-            r_intro: RandomMixer::new(),
-            r_time_morning: RandomMixer::new(),
-            r_time_evening: RandomMixer::new(),
-            r_ad: RandomMixer::new(),
-            r_to_ad: RandomMixer::new(),
-            r_news: RandomMixer::new(),
-            r_to_news: RandomMixer::new(),
-            r_id: RandomMixer::new(),
-            r_solo: RandomMixer::new(),
+            r_music: RandomMixer::new(50, 0.2),
+            r_general: RandomMixer::new(10, 0.2),
+            r_intro: RandomMixer::new(10, 0.2),
+            r_time_morning: RandomMixer::new(10, 0.2),
+            r_time_evening: RandomMixer::new(10, 0.2),
+            r_ad: RandomMixer::new(10, 0.2),
+            r_to_ad: RandomMixer::new(10, 0.2),
+            r_news: RandomMixer::new(10, 0.2),
+            r_to_news: RandomMixer::new(10, 0.2),
+            r_id: RandomMixer::new(10, 0.2),
+            r_solo: RandomMixer::new(10, 0.2),
         })
     }
 
@@ -90,7 +90,10 @@ where
             let mut choices = Vec::with_capacity(3);
 
             // general choices are always available
-            if let Some(p) = self.r_general.possibility(self.definitions.general.iter()) {
+            if let Some(p) = self
+                .r_general
+                .possibility(self.definitions.general.iter(), |p| p)
+            {
                 choices.push(p);
             }
 
@@ -100,14 +103,14 @@ where
             if now.hour() >= 4 && now.hour() < 12 {
                 if let Some(p) = self
                     .r_time_morning
-                    .possibility(self.definitions.time_morning.iter())
+                    .possibility(self.definitions.time_morning.iter(), |p| p)
                 {
                     choices.push(p);
                 }
             } else if now.hour() >= 17 && now.hour() < 24 {
                 if let Some(p) = self
                     .r_time_evening
-                    .possibility(self.definitions.time_evening.iter())
+                    .possibility(self.definitions.time_evening.iter(), |p| p)
                 {
                     choices.push(p);
                 }
@@ -116,7 +119,7 @@ where
             // what about a song-specific intro?
             if let Some(p) = self
                 .r_intro
-                .possibility(self.definitions.get_intros(&song.metadata))
+                .possibility(self.definitions.get_intros(&song.metadata), |i| &i.path)
             {
                 choices.push(p.map(|i| &i.path));
             }
@@ -124,7 +127,7 @@ where
             // choose one of these!
             if choices.len() > 0 {
                 let possibility = choices.remove(rng.gen_range(0..choices.len()));
-                over = Some(possibility.accept(|p| p));
+                over = Some(possibility.accept());
             }
         }
 
