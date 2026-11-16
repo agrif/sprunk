@@ -19,13 +19,15 @@ impl<S> VolumeState<S> {
 
         let m = std::mem::replace(self, VolumeState::Failed);
         match m {
-            VolumeState::Calculating(handle, target) => {
-                if let Ok(Ok((src, measured))) = handle.join() {
+            VolumeState::Calculating(handle, target) => match handle.join() {
+                Ok(Ok((src, measured))) => {
                     let volume = f32::powf(10.0, (target - measured) / 20.0);
                     *self = VolumeState::Ready(src, volume);
+                    return self.get();
                 }
-                return self.get();
-            }
+                Err(_) => anyhow::bail!("volume normalization thread failed"),
+                Ok(Err(e)) => anyhow::bail!("volume normalization failed: {:?}", e),
+            },
             _ => anyhow::bail!("volume normalization failed"),
         }
     }
@@ -101,14 +103,18 @@ where
     }
 
     fn fill(&mut self, buffer: &mut [f32]) -> usize {
-        if let Ok((source, volume)) = self.state.get() {
-            let size = source.fill(buffer);
-            for i in 0..size {
-                buffer[i] *= volume;
+        match self.state.get() {
+            Ok((source, volume)) => {
+                let size = source.fill(buffer);
+                for i in 0..size {
+                    buffer[i] *= volume;
+                }
+                size
             }
-            size
-        } else {
-            0
+            Err(e) => {
+                eprintln!("{}", e);
+                0
+            }
         }
     }
 }
