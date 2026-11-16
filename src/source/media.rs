@@ -253,14 +253,25 @@ impl super::Source for Media {
     }
 
     fn seek(&mut self, frame: u64) -> anyhow::Result<()> {
-        // FIXME precision seeking, also, is TimeStamp correct?
+        // FIXME precision seeking
+
+        // convert samplerate based frame into frame expected by codec
+        let codec_params = self.decoder.codec_params();
+        let ts = match (codec_params.time_base, codec_params.sample_rate) {
+            // base * (frame / rate)
+            (Some(base), Some(rate)) => (frame * base.denom as u64) / (rate * base.numer) as u64,
+            // best guess, honestly
+            _ => frame,
+        };
+
         self.format.seek(
             SeekMode::Coarse,
             SeekTo::TimeStamp {
-                ts: frame,
+                ts: codec_params.start_ts + ts,
                 track_id: self.track_id,
             },
         )?;
+
         self.decoder.reset();
         self.reset_next = true;
         self.end_of_stream = false;
