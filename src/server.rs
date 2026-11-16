@@ -39,7 +39,7 @@ impl ServerState {
     }
 
     fn can_handle(&self, req: &hyper::Request<hyper::Body>) -> bool {
-        if req.method() != hyper::Method::GET {
+        if req.method() != hyper::Method::GET && req.method() != hyper::Method::HEAD {
             return false;
         }
         let mut path = req.uri().path();
@@ -62,6 +62,22 @@ impl ServerState {
         }
         let path = path.to_owned();
 
+        let mut response = if req.method() == hyper::Method::HEAD {
+            let body = hyper::Body::wrap_stream(futures_lite::stream::empty::<
+                anyhow::Result<hyper::body::Bytes>,
+            >());
+            hyper::Response::new(body)
+        } else {
+            let body = self.stream_body(path)?;
+            hyper::Response::new(body)
+        };
+        response
+            .headers_mut()
+            .insert(hyper::header::CONTENT_TYPE, "audio/mpeg".parse()?);
+        Ok(response)
+    }
+
+    fn stream_body(self: &Arc<Self>, path: String) -> anyhow::Result<hyper::Body> {
         let rx = {
             let mut running = self
                 .running
@@ -124,14 +140,14 @@ impl ServerState {
                     r.map(|t| t.1)
                 }
             });
-        let mut response = hyper::Response::new(hyper::Body::wrap_stream(body));
-        response
-            .headers_mut()
-            .insert(hyper::header::CONTENT_TYPE, "audio/mpeg".parse()?);
-        Ok(response)
+        Ok(hyper::Body::wrap_stream(body))
     }
 
-    fn status_json(&self, icecast: bool) -> anyhow::Result<hyper::Response<hyper::Body>> {
+    fn status_json(
+        &self,
+        icecast: bool,
+        head: bool,
+    ) -> anyhow::Result<hyper::Response<hyper::Body>> {
         // mimic status-json.xsl if icecast is true
         let mut body = String::new();
         if icecast {
@@ -160,7 +176,14 @@ impl ServerState {
             body += "}}";
         }
 
-        let mut response = hyper::Response::new(hyper::Body::from(body));
+        let mut response = if head {
+            let mut r = hyper::Response::new(hyper::Body::empty());
+            r.headers_mut()
+                .insert(hyper::header::CONTENT_LENGTH, body.len().into());
+            r
+        } else {
+            hyper::Response::new(hyper::Body::from(body))
+        };
         response
             .headers_mut()
             .insert(hyper::header::CONTENT_TYPE, "application/json".parse()?);
@@ -238,14 +261,15 @@ where
                 async move {
                     if state.can_handle(&req) {
                         state.serve(req)
-                    } else if req.method() == &hyper::Method::GET
-                        && req.uri().path().ends_with("/status-json.xsl")
+                    } else if (req.method() == &hyper::Method::GET
+                        || req.method() == &hyper::Method::HEAD)
+                        && (req.uri().path().ends_with("/status-json.xsl")
+                            || req.uri().path().ends_with("/status.json"))
                     {
-                        state.status_json(true)
-                    } else if req.method() == &hyper::Method::GET
-                        && req.uri().path().ends_with("/status.json")
-                    {
-                        state.status_json(false)
+                        state.status_json(
+                            req.uri().path().ends_with(".xsl"),
+                            req.method() == &hyper::Method::HEAD,
+                        )
                     } else {
                         static_.serve(req).await.map_err(|e| e.into())
                     }
